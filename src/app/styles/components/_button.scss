@@ -1,0 +1,23 @@
+.button {
+    border-radius: var(--border-radius);
+    background-color: var(--color-light);
+    cursor: pointer;
+
+    &__login {
+        height: 32px;
+        min-height: var(--app-button-min-height);
+        padding: 0 12px;
+        margin-left: 14px;border: 1px solid var(--button-secondary-border-color);
+        color: var(--button-secondary-border-color);
+        font-size: 1.4rem;
+    }
+
+    &__cart {
+        height: 40px;
+        min-width: 140px;
+        font-size: 1.4rem;
+        background-color: var(--button-primary-bg-color);
+        color: var(--cart-page-position-bg-color);
+        border: none;
+    }
+}

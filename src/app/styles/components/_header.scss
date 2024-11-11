@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1274px;
+
+    &__container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    &__location {
+        
+    }
+    
+    &__btn-location {
+
+    }
+
+    &__btn-login {
+
+    }
+}
