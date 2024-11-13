@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles.scss";
-
+import { Roboto } from 'next/font/google'
+ 
+const MuseoSansCyrl = localFont({
+  src: "./fonts/MuseoSansCyrl-100.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${MuseoSansCyrl.className}`}>
         {children}
       </body>
     </html>
