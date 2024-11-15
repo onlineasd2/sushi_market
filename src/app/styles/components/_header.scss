@@ -14,11 +14,26 @@
         margin: 0 50px;
     }
     
+    &__find {
+        
+    }
+
     &__btn-location {
 
     }
 
     &__btn-login {
 
+    }
+
+    &__button-location {
+        position: relative;
+
+        & img {
+            width: 16px;
+            left: 10;
+            top: 5;
+            position: absolute;
+        }
     }
 }

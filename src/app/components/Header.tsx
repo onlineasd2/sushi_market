@@ -20,10 +20,15 @@ export default function Header() {
                         <h3>Ваш город <span className="text-red">Павлодар</span></h3>
                         <h3><span className="text-red">+7 747 095 83 04</span></h3>
                     </div>
-                    <button className="header__btn-location">Выберите адрес</button>
-                    <Button style={"button"}>Выберите адрес</Button>
+                    <div className="header__find">
+                        <Button style={"button button__location header__button-location"}>
+                            <img src="./placeholder.png" alt="" />
+                            Выберите адрес
+                        </Button>
+                    </div>
                 </div>
-                <Button style={'button button__login'}>Войти</Button>
+                <Button style={'button button__login'}>Войти
+                </Button>
             </div>
         </section>
     </>
