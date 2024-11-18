@@ -134,5 +134,17 @@ h4 {
   font-display: swap;
 }
 .text-red {
-  color: var(--city-desktop-color);
+  color: var(--color-accent);
+}
+
+@media (max-width: 1023px) {
+  .mobile__hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1280px) {
+  .mobile__active {
+    display: block !important;
+  }
 }/*# sourceMappingURL=styles.css.map */

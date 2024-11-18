@@ -1,0 +1,11 @@
+.mobile__hidden {
+    @include tablet {
+        display: none !important;
+    }
+}
+
+.mobile__active {
+    @include desktop {
+        display: block !important;
+    }
+}

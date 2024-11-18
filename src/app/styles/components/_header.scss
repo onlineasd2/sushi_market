@@ -1,13 +1,21 @@
+@import './../globals/media';
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1274px;
+    //width: 1274px;
+
+    @include tablet {
+        display: none;
+    }
 
     &__container {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+
+
     }
 
     &__location {
@@ -34,6 +42,13 @@
             left: 10;
             top: 5;
             position: absolute;
+        }
+    }
+
+    &-mobile {
+        display: none;
+        @include tablet {
+            display: block;
         }
     }
 }
