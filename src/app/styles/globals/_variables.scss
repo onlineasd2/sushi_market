@@ -1,9 +1,12 @@
 :root {
 
     --color-light: #FFFFFF;
-    --color-dark: #203842;
+    --color-dark: #000000;
+    --color-gray-dark: #203842;
     --color-gray: #BCC3C6;
     --color-light-gray: #BCC3C6;
+
+    --color-bg-alt: #FAFAFA;
 
     --color-accent: #E13D48;
 
@@ -21,6 +24,7 @@
     --section-mobile-padding-y: 40px;
 
     --border-radius: 20px;
+    --border-radius-small: 5px;
     
     --transition-duration: 0.2s;
 }

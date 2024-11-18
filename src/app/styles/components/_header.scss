@@ -1,4 +1,4 @@
-@import './../globals/media';
+@import './../../styles';
 
 .header {
     display: flex;
@@ -14,8 +14,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-
-
+        position: relative;
     }
 
     &__location {
@@ -31,7 +30,7 @@
     }
 
     &__btn-login {
-
+        
     }
 
     &__button-location {
@@ -47,8 +46,141 @@
 
     &-mobile {
         display: none;
+        width: 100%;
+        padding: 16px 24px;
         @include tablet {
             display: block;
+            
+        }
+
+        &__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & button {
+                margin-left: 40px;
+            }
+        }
+
+        &__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        &__button-login {
+            position: absolute;
+        }
+
+        &__burger-menu {
+            display: flex;
+            position: relative;
+            z-index: 51;
+            align-items: center;
+            justify-content: flex-end;
+            width: 24px;
+            height: 24px;
+
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                background-color: var(--color-dark);
+                transition: all 0.3s ease 0s;
+            }
+
+            &::before {
+                top: 4;
+            }
+
+            &::after {
+                bottom: 4;
+            }
+
+            &.active span {
+                transform: scale(0);
+            }
+
+            &.active::before {
+                top: 50%;
+                transform: rotate(-45deg) translate(0, -50%);
+            }
+
+            &.active::after {
+                bottom: 50%;
+                transform: rotate(45deg) translate(0, 50%);
+            }
+
+            & span {
+                height: 2px;
+                width: 100%;
+                transform: scale(1);
+                background: var(--color-dark);
+            }
+        }
+
+        &__nav-menu {
+            position: fixed;
+            width: 85vw;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: var(--color-bg-alt);
+            box-shadow: 5px 5px 15px rgba($color: #000000, $alpha: 0.07);
+            z-index: 50;
+            transition: transform 0.3s ease-in-out; /* Плавный переход */
+            transform: translateX(0); /* Начальная трансформация */
+
+            &.hidden {
+                transform: translateX(-100%); /* Выезд внутрь экрана */
+            }
+        }
+
+        &__menu-box {
+            display: flex;
+            flex-direction: column;
+            padding-top: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            z-index: 50;
+            gap: 10;
+
+            & li {
+                display: flex;
+                align-items: center;
+                background: var(--color-light);
+                z-index: 50;
+                padding: 15px 10px;
+                color: var(--color-dark);
+                border-radius: var(--border-radius-small);
+                
+                img {
+                    padding-right: 10px;
+                }
+            }
+        }
+        
+        &__overlay {
+            display: block;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 0;
+            background-color: var(--color-dark);
+            opacity: 0.7;
+            transition: opacity 0.3s ease-in-out;
+            visibility: 0.3s ease-in-out; /* Доступен для взаимодействия */
+
+            &.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
     }
+
 }
