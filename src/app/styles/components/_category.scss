@@ -1,0 +1,27 @@
+@import './../../styles';
+
+.category {
+    &__content {
+
+    }
+
+    &__list {
+        ul {
+            li {
+                
+            }
+        }
+    }
+
+    &__delivery {
+        & h4 {
+
+        }
+    }
+
+    &__language {
+        & h4 {
+
+        }
+    }
+}

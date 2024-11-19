@@ -173,8 +173,8 @@
             z-index: 0;
             background-color: var(--color-dark);
             opacity: 0.7;
-            transition: opacity 0.3s ease-in-out;
-            visibility: 0.3s ease-in-out; /* Доступен для взаимодействия */
+            // Анимация затухаеия
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 
             &.hidden {
                 opacity: 0;
