@@ -42,6 +42,11 @@ h4 {
     @include fluid-text(60, 43);
 }
 
+ul {
+    padding: 0px;
+    margin: 0px;
+}
+
 li {
     list-style-type: none;
 }

@@ -42,6 +42,11 @@ h4 {
   font-size: clamp(43px, calc(60 / 1440 * 100) vw, 60px);
 }
 
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+
 li {
   list-style-type: none;
 }
