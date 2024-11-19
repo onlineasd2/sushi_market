@@ -15,25 +15,26 @@
     }
 
     &__list {
-        width: 560px;
-        overflow: hidden;
+        width: 60%;
+        overflow-x: hidden;
         ul {
             display: flex;
             li {
                 padding: 0px 10px;
+                white-space: nowrap;
             }
         }
     }
 
     &__delivery {
         & h4 {
-
+            white-space: nowrap;
         }
     }
 
     &__language {
         & h4 {
-
+            white-space: nowrap;
         }
     }
 }
