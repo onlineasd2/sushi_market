@@ -15,11 +15,12 @@
     }
 
     &__list {
-        width: 840px;
+        width: 560px;
         overflow: hidden;
         ul {
             display: flex;
             li {
+                padding: 0px 10px;
             }
         }
     }
