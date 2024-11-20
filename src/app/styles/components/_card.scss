@@ -1,0 +1,38 @@
+.card {
+    width: 262px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+
+    &__image {
+        border-top-right-radius: var(--border-radius);
+        border-top-left-radius: var(--border-radius);
+    }
+
+    &__content {
+        padding: 10px;
+    }
+    &__title {
+    }
+
+    &__year {
+
+    }
+
+    &__description {
+        height: 100px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--color-gray);
+    }
+    
+    &__option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__price {
+
+    }
+}

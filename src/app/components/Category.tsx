@@ -26,6 +26,7 @@ export default function Category() {
                     <div className="category__delivery">
                         <h4>Доставка и оплата</h4>
                     </div>
+                    <span className="category__line"></span>
                     <div className="category__language">
                         <h4>RU</h4>
                         <h4>/</h4>
