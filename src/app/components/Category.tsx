@@ -7,11 +7,11 @@ export default function Category() {
   return (
     <>
     <div className="section">
-        <div className="category">
+        <div className="category wrapper">
             <div className="category__content">
                 <div className="category__list">
                     <ul>
-                        <li><Link href="">Наборы</Link></li>
+                        <li className='active'><Link href="">Наборы</Link></li>
                         <li><Link href="">Роллы и суши</Link></li>
                         <li><Link href="">Премиум</Link></li>
                         <li><Link href="">Темпура</Link></li>
@@ -22,11 +22,15 @@ export default function Category() {
                         <li><Link href="">Соусы</Link></li>
                     </ul>
                 </div>
-                <div className="category__delivery">
-                    <h4>Доставка и оплата</h4>
-                </div>
-                <div className="category__language">
-                    <h4>RU/KZ</h4>
+                <div className="category__options">
+                    <div className="category__delivery">
+                        <h4>Доставка и оплата</h4>
+                    </div>
+                    <div className="category__language">
+                        <h4>RU</h4>
+                        <h4>/</h4>
+                        <h4>KZ</h4>
+                    </div>
                 </div>
             </div>
         </div>

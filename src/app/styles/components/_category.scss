@@ -4,8 +4,13 @@
     display: flex;
     justify-content: space-between;
     height: 64px;
+    width: 100%;
     padding: 0 20px;
-    width: var(--container-width);
+
+    @include tablet {
+        width: 100%;
+        padding: 0;
+    }
 
     &__content {
         display: flex;
@@ -15,15 +20,29 @@
     }
 
     &__list {
-        width: 60%;
-        overflow-x: hidden;
+        width: 75%;
+
+        @include tablet {
+            width: 65%;
+        }
+
         ul {
             display: flex;
+            overflow-x: auto;
             li {
                 padding: 0px 10px;
                 white-space: nowrap;
+
+                &.active {
+                    color: var(--color-accent);
+                }
             }
         }
+    }
+
+    &__options {
+        display: flex;
+        gap: 20;
     }
 
     &__delivery {
@@ -33,6 +52,7 @@
     }
 
     &__language {
+        display: flex;
         & h4 {
             white-space: nowrap;
         }

@@ -22,7 +22,7 @@ export default function Header() {
     <>
         <section className="section">
 
-            <div className="header">
+            <div className="header wrapper">
                 <div className="header__container">
                     <div className="header__logo">
                         <Image

@@ -72,6 +72,12 @@ li {
   --transition-duration: 0.2s;
 }
 
+.section {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+}
+
 .container {
   max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
   margin-inline: auto;
@@ -104,10 +110,8 @@ li {
   }
 }
 
-.section {
-  height: 80px;
-  display: flex;
-  justify-content: center;
+.wrapper {
+  width: var(--container-width);
 }
 
 @font-face {
