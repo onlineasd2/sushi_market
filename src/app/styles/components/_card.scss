@@ -11,19 +11,26 @@
     &__content {
         padding: 10px;
     }
+
     &__title {
+
     }
 
     &__year {
-
+        font-size: 12px;
+        color: var(--color-dark-gray);
     }
 
     &__description {
         height: 100px;
         width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: var(--color-gray);
+        margin-bottom: 10px;
+        overflow: hidden; /* Скрываем избыточный текст */
+        display: -webkit-box; /* Используем для управления блоками */
+        -webkit-line-clamp: 5; /* Количество строк до обрезания */
+        -webkit-box-orient: vertical; /* Определяем ориентацию боксов */
+        text-overflow: ellipsis; /* Добавляем многоточие */
+        color: var(--color-dark-gray);
     }
     
     &__option {
