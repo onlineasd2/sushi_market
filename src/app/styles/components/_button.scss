@@ -1,7 +1,11 @@
 .button {
     border-radius: var(--border-radius);
     background-color: var(--color-light);
+    -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    &:focus {
+        
+    }
 
     &__login {
         height: 32px;

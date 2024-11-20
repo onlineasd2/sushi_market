@@ -9,7 +9,7 @@ export default function Button({ children, style }: ButtonProps) {
 
   return (
     <>
-        <button className={style}>
+        <button className={style} role="button" tabIndex={0} aria-label="Кнопка">
           { children }
         </button>
     </>
