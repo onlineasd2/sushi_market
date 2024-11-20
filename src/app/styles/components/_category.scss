@@ -24,15 +24,21 @@
 
         @include tablet {
             width: 65%;
+            padding-left: 20px;
         }
 
         ul {
             display: flex;
             overflow-x: auto;
+            scrollbar-width: none; /* Убрать полосу прокрутки в Firefox */
+            -ms-overflow-style: none; /* Убрать полосу прокрутки в IE и Edge */
+            &::-webkit-scrollbar {
+                display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
+            }
             li {
                 padding: 0px 10px;
                 white-space: nowrap;
-
+                font-size: 14px;
                 &.active {
                     color: var(--color-accent);
                 }
@@ -43,6 +49,10 @@
     &__options {
         display: flex;
         gap: 20;
+        
+        @include tablet {
+            padding-right: 20px;
+        }
     }
 
     &__delivery {

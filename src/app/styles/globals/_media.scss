@@ -27,6 +27,21 @@ $mobile: 767px;
 
 @mixin tablet {
     @media (max-width: $tablet) {
+        *:focus {
+            outline: none; /* Убираем обводку, если не нужна */
+            }
+        
+            /* Убираем фокус с активных элементов после клика */
+            a:active, button:active, input:active, select:active {
+            outline: none;
+            box-shadow: none; /* Убираем возможные тени */
+            }
+        
+            /* Для ссылок и кнопок при потере фокуса */
+            a, button {
+            outline: none;
+            box-shadow: none;
+        }
         @content;
     }
 }
