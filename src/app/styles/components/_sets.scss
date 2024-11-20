@@ -1,0 +1,18 @@
+@import './../../styles';
+
+.sets {
+    display: flex;
+    justify-content: center;
+    padding: 0 1px;
+    &__container {
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        gap: 36px;
+    }
+    
+    @include tablet {
+        display: flex;
+        justify-content: center;
+    }
+}

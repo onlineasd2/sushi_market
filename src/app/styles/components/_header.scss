@@ -6,6 +6,7 @@
     align-items: center;
     width: var(--container-width);
     padding: 0px 20px;
+    padding-top: 20px;
 
     @include tablet {
         display: none;

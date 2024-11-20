@@ -1,13 +1,13 @@
 import Category from "./components/Category";
 import Header from "./components/Header";
-import Card from "./components/Card";
+import Sets from "./components/Sets";
 
 export default function Home() {
   return (
     <>
       <Header />
       <Category/>
-      <Card />
+      <Sets />
     </>
   );
 }
