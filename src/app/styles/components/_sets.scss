@@ -3,6 +3,7 @@
 .sets {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     padding: 0 1px;
     &__container {
         display: flex;
@@ -14,5 +15,9 @@
     @include tablet {
         display: flex;
         justify-content: center;
+    }
+
+    &__title {
+        padding: 20px 0;
     }
 }

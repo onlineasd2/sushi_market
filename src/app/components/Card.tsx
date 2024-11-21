@@ -2,15 +2,8 @@ import React from 'react'
 import './../styles/components/_card.scss';
 import Button from './Button'
 import Image from 'next/image';
+import ICard from '../interfaces/ICard';
 
-interface ICard {
-    id:number;
-    image:string;
-    title:string;
-    description:string;
-    weight:number;
-    price:number;
-}
 
 interface CardProps {
   card: ICard;
@@ -31,7 +24,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
             <div className="card__content">
                 <div className="card__option">
                     <h4 className='card__title'>{card.title}</h4>
-                    <p className='card__year'>{card.weight}</p>
+                    <p className='card__weight'>{card.weight} г</p>
                 </div>
                 <p className='card__description'>{card.description}</p>
                 <div className="card__option">

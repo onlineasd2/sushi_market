@@ -1,11 +1,10 @@
 .card {
     width: 262px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius-medium);
+    //box-shadow: var(--box-shadow);
 
     &__image {
-        border-top-right-radius: var(--border-radius);
-        border-top-left-radius: var(--border-radius);
+        border-radius: var(--border-radius-medium);
     }
 
     &__content {
@@ -16,8 +15,8 @@
 
     }
 
-    &__year {
-        font-size: 12px;
+    &__weight {
+        font-size: 14px;
         color: var(--color-dark-gray);
     }
 
