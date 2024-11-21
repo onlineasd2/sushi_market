@@ -5,6 +5,7 @@
     justify-content: space-between;
     height: 64px;
     width: 100%;
+    overflow-x: hidden;
 
     @include tablet {
         width: 100%;
@@ -31,13 +32,15 @@
 
         ul {
             display: flex;
-            overflow-x: hidden;
+            overflow-x: auto;
             scrollbar-width: none; /* Убрать полосу прокрутки в Firefox */
             -ms-overflow-style: none; /* Убрать полосу прокрутки в IE и Edge */
             margin-right: 15px;
+
             &::-webkit-scrollbar {
                 display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
             }
+            
             li {
                 padding: 0px 10px;
                 white-space: nowrap;

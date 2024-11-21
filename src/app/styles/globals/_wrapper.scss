@@ -2,10 +2,14 @@
     width: var(--container-width);
 
     @include desktop {
-        width: 100%;
+        width: 80%;
     }
 
     @include tablet {
+        width: 80%;
+    }
+
+    @include mobile {
         width: 100%;
     }
 }
