@@ -102,11 +102,11 @@
             }
 
             &::before {
-                top: 4;
+                top: 4px;
             }
 
             &::after {
-                bottom: 4;
+                bottom: 4px;
             }
 
             &.active span {
@@ -159,7 +159,7 @@
             padding-left: 20px;
             padding-right: 20px;
             z-index: 50;
-            gap: 10;
+            gap: 10px;
 
             & li {
                 display: flex;
