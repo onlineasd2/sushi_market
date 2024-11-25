@@ -38,7 +38,7 @@ export default function Header() {
                     </div>
                     <div className="header__find">
                         <Button style={"button button__location header__button-location"}>
-                            <img src="./placeholder.png"/>
+                            <Image src="/placeholder.png" alt='' />
                             Выберите адрес
                         </Button>
                     </div>
@@ -73,14 +73,17 @@ export default function Header() {
                 </div>
                 <nav className={`header-mobile__nav-menu ${isBurgerActive ? "" : "hidden"}`}>
                     <ul className="header-mobile__menu-box">
-                        <li><img src="./free-icon-profile-9344418.png" width={24} height={24}/>
+                        <li>
+                            <Image src="/free-icon-profile-9344418.png" width={24} height={24} alt='' />
                             <Link href={"#"}>Войти</Link>
                         </li>
-                        <li><img src="./free-icon-building-2568551.png" width={24} height={24}/>
+                        <li>
+                            <Image src="/free-icon-building-2568551.png" width={24} height={24} alt='' />
                             <Link href={"#"}>Павлодар</Link>
                             <p>Сменить город</p>
                         </li>
-                        <li><img src="./free-icon-world-16002767.png" width={24} height={24}/>
+                        <li>
+                            <Image src="/free-icon-world-16002767.png" width={24} height={24} alt='' />
                             <Link href={"#"}>Русский</Link>
                             <p>Сменить язык</p>
                         </li>

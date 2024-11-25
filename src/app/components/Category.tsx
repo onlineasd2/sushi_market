@@ -40,13 +40,15 @@ export default function Category() {
                             <Image 
                             width={14}
                             height={14}
-                            src="/free-icon-search-8272068.png"></Image>
+                            src="/free-icon-search-8272068.png"
+                            alt=''></Image>
                         </Button>
                         <Button style='button button__mobile'>
                             <Image 
                             width={14}
                             height={14}
-                            src="/free-icon-sort-8105950.png"></Image>
+                            src="/free-icon-sort-8105950.png"
+                            alt=''></Image>
                         </Button>
                     </div>
                 </div>
