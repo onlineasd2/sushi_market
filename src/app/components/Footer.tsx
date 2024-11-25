@@ -21,20 +21,24 @@ export default function Footer() {
               </div>
               <hr className='footer-show-mobile' />
               <div className="footer__apps">
-                <Image
-                    src="/appstore.svg"
-                    width={120}
-                    height={40}
-                    className='card__image'
-                    alt="">
-                </Image>
-                <Image
-                    src="/googleplay.png"
-                    width={120}
-                    height={40}
-                    className='card__image'
-                    alt="">
-                </Image>
+                <Link href={"#"}>
+                  <Image
+                      src="/appstore.svg"
+                      width={120}
+                      height={40}
+                      className='card__image'
+                      alt="">
+                  </Image>
+                </Link>
+                <Link href={"#"}>
+                  <Image
+                      src="/googleplay.png"
+                      width={120}
+                      height={40}
+                      className='card__image'
+                      alt="">
+                  </Image>
+                </Link>
               </div>
               <hr className='footer-show-mobile' />
               <div className="footer__options">

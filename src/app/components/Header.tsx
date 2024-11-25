@@ -38,7 +38,7 @@ export default function Header() {
                     </div>
                     <div className="header__find">
                         <Button style={"button button__location header__button-location"}>
-                            <Image src="/placeholder.png" alt='' />
+                            <Image src="/placeholder.png" width={16} height={16} alt='' />
                             Выберите адрес
                         </Button>
                     </div>
@@ -69,7 +69,6 @@ export default function Header() {
                         height={24}
                         alt="logo"
                     />
-
                 </div>
                 <nav className={`header-mobile__nav-menu ${isBurgerActive ? "" : "hidden"}`}>
                     <ul className="header-mobile__menu-box">
