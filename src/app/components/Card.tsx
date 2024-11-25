@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
                 </div>
                 <p className='card__description'>{card.description}</p>
                 <div className="card__option">
-                    <h3 className='card__price'><b>{card.price}</b></h3>
+                    <h3 className='card__price'><b>{card.price} ₸</b></h3>
                     <Button style='button button__cart-alt'>В Корзину</Button>                
                 </div>
             </div>

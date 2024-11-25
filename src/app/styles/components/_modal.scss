@@ -1,9 +1,33 @@
 @import './../../styles';
 
 .modal {
+  position: relative;
   background: white;
   padding: 20px;
   border-radius: 8px;
+
+  @include tablet {
+    border-radius: 8px 8px 0px 0px;
+    width: 100vw;
+
+    &::after {
+      content: '';
+      position: absolute;
+      height: 6px;
+      width: 10%;
+      top: -15px;
+      left: 50%; /* Смещение на середину родителя */
+      transform: translateX(-50%); /* Сдвиг назад на половину ширины самого элемента */
+      background-color: var(--color-light);
+      border-radius: var(--border-radius);
+    }
+  }
+
+
+}
+
+.overlay {
+  display: none;
 }
 
 /* modal.scss */
@@ -17,5 +41,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
+    z-index: 51;
+
+    @include tablet {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+    }
+}
