@@ -41,4 +41,17 @@
         border-color: var(--color-gray);
         border: 1px solid lightgray;
     }
+
+    &__mobile {
+        padding: 10px;
+        background-color: var(--color-light-gray);
+        color: var(--color-text-light-gray);
+        border-radius: 50px;
+        border: none;
+
+        &.active {
+            color: var(--color-light);
+            background-color: var(--color-accent);
+        }
+    }
 }
