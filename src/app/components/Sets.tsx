@@ -5,7 +5,6 @@ import './../styles/components/_sets.scss';
 import Card from './Card';
 import ICard from '../interfaces/ICard';
 import axios from 'axios'
-import test from 'node:test';
 
 interface SetsProps {
   titleMain: string;
