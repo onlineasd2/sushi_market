@@ -13,7 +13,7 @@ interface SetsProps {
 
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
-  const [sets, setSets] = useState([]);
+  const [sets, setSets] = useState<ICard[]>([]);
 
   useEffect(() => {
   
