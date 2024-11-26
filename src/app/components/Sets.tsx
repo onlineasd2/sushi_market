@@ -18,9 +18,13 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
   useEffect(() => {
   
     const fetchdata = async () => {
-      const response = await axios.get('https://671796f7b910c6a6e0290314.mockapi.io/Sets');
-      setSets(response.data);
-      console.log(sets);
+      try {
+        const response = await axios.get('https://671796f7b910c6a6e0290314.mockapi.io/Sets');
+        setSets(response.data);
+        console.log(sets);
+      } catch (error) {
+        console.log(error);
+      }
     };
   
     fetchdata();

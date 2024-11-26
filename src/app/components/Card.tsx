@@ -13,7 +13,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ card }) => {
   return (
     <>
-        <div className="card">
+        <div key={card.id} className="card">
             <Image
                 src={card.image}
                 width={262}
