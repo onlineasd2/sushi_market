@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
     <>
         <div key={card.id} className="card">
             <Image
-                src={card.image}
+                src={card.image  || '/productBlurIcon.svg'}
                 width={262}
                 height={262}
                 className='card__image'
