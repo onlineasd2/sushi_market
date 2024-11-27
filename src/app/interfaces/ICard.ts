@@ -3,7 +3,7 @@ interface ICard {
     title:string;
     weight:number;
     description:string;
-    image:string;
+    image?:string;
     price:number;
 }
 
