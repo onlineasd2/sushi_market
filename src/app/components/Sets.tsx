@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import './../styles/components/_sets.scss';
 import Card from './Card';
 import ICard from '../interfaces/ICard';
-import axios from 'axios'
+import sushiApi from './../services/sushiApi';
 
 interface SetsProps {
   titleMain: string;
@@ -14,19 +14,11 @@ interface SetsProps {
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
   const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
-  const limit:number = 10;
 
   useEffect(() => {  
     const fetchdata = async () => {
-      try {
-        // Фечим только определенную страницу с лимитом
-        const response = await axios.get(`https://671796f7b910c6a6e0290314.mockapi.io/Sets?page=1&limit=${limit}`);
-        setSets(response.data);
-
-        console.log(sets);
-      } catch (error) {
-        console.log(error);
-      }
+      const data = await sushiApi.getSushiSets(1, 10);
+      setSets(data); 
     };
   
     fetchdata();
