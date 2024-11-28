@@ -14,11 +14,17 @@ interface SetsProps {
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
   const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
+  const [errorSets, setErrorSets] = useState('');
 
   useEffect(() => {  
     const fetchdata = async () => {
-      const data = await sushiApi.getSushiSets(1, 10);
-      setSets(data); 
+      try {
+        const data = await sushiApi.getSushiSets(1, 10);
+        setSets(data); 
+      } catch (error) {
+        setErrorSets(String(error));
+        throw error;
+      }
     };
   
     fetchdata();
@@ -35,6 +41,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         <Card key={set.id} card={set} />
                       ))}
                   </div>
+                  <h3>{errorSets}</h3>
                 </div>
             </div>
         </div>
