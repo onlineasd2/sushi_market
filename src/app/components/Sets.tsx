@@ -8,26 +8,28 @@ import sushiApi from './../services/sushiApi';
 
 interface SetsProps {
   titleMain: string;
+  cards: ICard[];
 }
 
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
-    const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
-    const [errorSets, setErrorSets] = useState('');
-    const limit = 5;
+  const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
+  const [errorSets, setErrorSets] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-    const fetchSets = async () => {
-        try {
-            const data = await sushiApi.getSushiSets(1, limit);
-            setSets(data);
-        } catch (error) {
-            setErrorSets(String(error));
-        }
+  const fetchdata = async () => {
+    try {
+      const data = await sushiApi.getSushiSets(currentPage, 5);
+      setSets((prev) => [...prev, ...data]);
+    } catch (error) {
+      setErrorSets(String(error));
+      throw error;
     }
+  };
 
-    useEffect(() => {
-        fetchSets();
-    }, []);
+  useEffect(() => {
+    fetchdata();
+  }, [currentPage]);
   
   return (
     <>
