@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import './../styles/components/_sets.scss';
-import Card from './Card';
-import ICard from '../interfaces/ICard';
-import sushiApi from './../services/sushiApi';
-import Button from './Button';
+import ICard from '../../interfaces/ICard';
+import sushiApi from '../../services/sushiApi';
+import Button from '../button/Button';
+import './styles.scss';
+import Card from '../card/Card';
 
 interface SetsProps {
   titleMain: string;
