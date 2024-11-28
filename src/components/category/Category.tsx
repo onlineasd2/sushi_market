@@ -2,7 +2,7 @@ import React from 'react'
 import './../styles/components/_category.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import Button from './Button';
+import Button from '../button/Button';
 
 export default function Category() {
   return (
