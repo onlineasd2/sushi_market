@@ -1,6 +1,5 @@
 "use client"
 
-import './../styles.scss';
 import './styles.scss';
 import Image from "next/image";
 import Link from "next/link";
