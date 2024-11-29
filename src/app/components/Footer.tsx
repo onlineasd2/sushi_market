@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import './styles.scss';
+import './../styles/components/_footer.scss';
 
 export default function Footer() {
   return (

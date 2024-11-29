@@ -1,7 +1,7 @@
 "use client"
 
 import React, { ReactNode } from 'react'
-import './styles.scss';
+import './../styles/components/_modal.scss';
 
 interface ModalProps {
     children: ReactNode; // Тип для дочерних элементов

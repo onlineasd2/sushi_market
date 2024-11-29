@@ -1,8 +1,8 @@
 import React from 'react'
-import "./styles.scss"
+import './../styles/components/_category.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import Button from '../button/Button';
+import Button from './Button';
 
 export default function Category() {
   return (
