@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.scss';
 import Image from 'next/image';
-import ICard from './../../interfaces/ICard';
+import ICard from '../sets/ICard';
 import Button from '../button/Button';
 
 
