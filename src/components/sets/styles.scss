@@ -1,4 +1,4 @@
-@import './../../styles';
+@import '../../app/styles';
 
 .sets {
     display: flex;
@@ -38,6 +38,16 @@
         @include mobile {
             display: flex;
             justify-content: center;
+        }
+    }
+
+    &__more {
+        display: flex;
+        justify-content: center;
+        padding: 40px 0;
+
+        button {
+            padding: 0px 25px;
         }
     }
 }

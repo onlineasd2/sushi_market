@@ -1,10 +1,10 @@
-import Category from "./components/Category";
-import Header from "./components/Header";
-import Sets from "./components/Sets";
-import Modal from "./components/Modal";
-import ICard from "./interfaces/ICard";
-import Slider from "./components/Slider";
-import Footer from "./components/Footer";
+import Category from './../components/category/Category';
+import Header from './../components/header/Header';
+import Sets from "../components/sets/Sets";
+import Modal from "../components/modal/Modal";
+import ICard from "../components/sets/ICard";
+import Slider from "../components/slider/Slider";
+import Footer from "../components/footer/Footer";
 
 const cards: ICard[] = [
   {
