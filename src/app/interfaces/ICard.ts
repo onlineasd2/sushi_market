@@ -1,9 +1,9 @@
 interface ICard {
     id:number;
+    image:string;
     title:string;
-    weight:number;
     description:string;
-    image?:string;
+    weight:number;
     price:number;
 }
 

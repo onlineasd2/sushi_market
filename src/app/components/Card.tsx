@@ -1,8 +1,8 @@
 import React from 'react'
-import './styles.scss';
+import './../styles/components/_card.scss';
+import Button from './Button'
 import Image from 'next/image';
-import ICard from '../sets/ICard';
-import Button from '../button/Button';
+import ICard from '../interfaces/ICard';
 
 
 interface CardProps {
@@ -13,9 +13,9 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ card }) => {
   return (
     <>
-        <div key={card.id} className="card">
+        <div className="card">
             <Image
-                src={card.image  || '/productBlurIcon.svg'}
+                src={card.image}
                 width={262}
                 height={262}
                 className='card__image'
@@ -23,13 +23,13 @@ const Card: React.FC<CardProps> = ({ card }) => {
             </Image>
             <div className="card__content">
                 <div className="card__option">
-                    <h4 className='card__title'><b>{card.title}</b></h4>
+                    <h4 className='card__title'>{card.title}</h4>
                     <p className='card__weight'>{card.weight} г</p>
                 </div>
                 <p className='card__description'>{card.description}</p>
                 <div className="card__option">
                     <h3 className='card__price'><b>{card.price} ₸</b></h3>
-                    <Button onClick={() => {}} style='button button__cart-alt'>В Корзину</Button>                
+                    <Button style='button button__cart-alt'>В Корзину</Button>                
                 </div>
             </div>
         </div>
