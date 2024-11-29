@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import ICard from '../../interfaces/ICard';
+import ICard from './ICard';
 import sushiApi from '../../services/sushiApi';
 import Button from '../button/Button';
 import './styles.scss';

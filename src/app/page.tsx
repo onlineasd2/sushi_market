@@ -2,7 +2,7 @@ import Category from './../components/category/Category';
 import Header from './../components/header/Header';
 import Sets from "../components/sets/Sets";
 import Modal from "../components/modal/Modal";
-import ICard from "../interfaces/ICard";
+import ICard from "../components/sets/ICard";
 import Slider from "../components/slider/Slider";
 import Footer from "../components/footer/Footer";
 
