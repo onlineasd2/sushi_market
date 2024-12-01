@@ -8,22 +8,21 @@ import sushiApi from './../services/sushiApi';
 
 interface SetsProps {
   titleMain: string;
-  cards: ICard[];
 }
 
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
   const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
   const [errorSets, setErrorSets] = useState('');
+  const limit = 5;
 
   useEffect(() => {  
     const fetchdata = async () => {
       try {
-        const data = await sushiApi.getSushiSets(1, 10);
+        const data = await sushiApi.getSushiSets(1, limit);
         setSets(data); 
       } catch (error) {
         setErrorSets(String(error));
-        throw error;
       }
     };
   
@@ -41,7 +40,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         <Card key={set.id} card={set} />
                       ))}
                   </div>
-                  <h3>{errorSets}</h3>
+                  <h3>{errorSets ? errorSets.toString() : null}</h3>
                 </div>
             </div>
         </div>
