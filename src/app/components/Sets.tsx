@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './../styles/components/_sets.scss';
 import Card from './Card';
 import ICard from '../interfaces/ICard';
@@ -18,14 +18,14 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_LIMIT = 5;
 
-    const fetchSets = async () => {
+    const fetchSets = useCallback(async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
             setSets((prevSets) => [...prevSets, ...data]);
         } catch (error) {
             setErrorSets(String(error));
         }
-    }
+    }, [currentPage, PAGE_LIMIT]);
 
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
