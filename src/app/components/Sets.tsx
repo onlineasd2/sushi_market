@@ -17,10 +17,11 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
   const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
   const [errorSets, setErrorSets] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_LIMIT = 5;
 
   const fetchData = async () => {
     try {
-      const data = await sushiApi.getSushiSets(currentPage, 5);
+      const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
       setSets((prev) => [...prev, ...data]); 
     } catch (error) {
       setErrorSets(String(error));
