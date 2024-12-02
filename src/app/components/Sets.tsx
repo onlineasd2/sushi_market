@@ -9,7 +9,6 @@ import Button from './Button';
 
 interface SetsProps {
     titleMain: string;
-    cards: ICard[];
 }
 
 const Sets: React.FC<SetsProps> = ({ titleMain }) => {
@@ -19,28 +18,22 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_LIMIT = 5;
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-    }
-
-
     const fetchSets = async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
-            setSets(data);
+            setSets((prevSets) => [...prevSets, ...data]);
         } catch (error) {
             setErrorSets(String(error));
         }
     }
 
+    const nextPage = () => {
+        setCurrentPage(currentPage + 1);
+    }
+
     useEffect(() => {
         fetchSets()
     }, [currentPage]);
-
-
-    useEffect(() => {
-        fetchSets();
-    }, []);
 
     return (
         <>
