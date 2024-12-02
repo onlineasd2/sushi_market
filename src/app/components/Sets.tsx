@@ -18,18 +18,21 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
   const [errorSets, setErrorSets] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchdata = async () => {
+  const fetchData = async () => {
     try {
       const data = await sushiApi.getSushiSets(currentPage, 5);
       setSets((prev) => [...prev, ...data]); 
     } catch (error) {
       setErrorSets(String(error));
-      throw error;
     }
   };
 
-  useEffect(() => {  
-    fetchdata();
+  const nextPage = () => {
+      setCurrentPage(currentPage + 1);
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [currentPage]);
   
   return (
@@ -44,7 +47,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                       ))}
                   </div>
                   <div className="sets__more">
-                        <Button onClick={() => setCurrentPage(currentPage + 1)} style="button button__login">Ещё</Button>
+                        <Button onClick={nextPage} style="button button__login">Ещё</Button>
                   </div>
                   <h3>{errorSets}</h3>
                 </div>
