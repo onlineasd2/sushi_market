@@ -32,7 +32,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     }
 
     useEffect(() => {
-        fetchSets()
+        fetchSets();
     }, [currentPage]);
 
     return (
@@ -44,7 +44,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         {errorSets ? // Проверка на ошибки запроса fetchSets()
                             <h3>{errorSets.toString()}</h3>
                             :
-                            <div>
+                            <>
                                 <div className="sets__container">
                                     {sets.map((set) => (
                                         <Card key={set.id} card={set}/>
@@ -53,7 +53,7 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                 <div className="sets__more">
                                     <Button onClick={nextPage} style="button button__login">Ещё</Button>
                                 </div>
-                            </div>
+                            </>
                         }
                     </div>
                 </div>

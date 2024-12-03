@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f70663f6-e00b-4431-ac2d-51290758e378" name="Changes" comment="">
+    <list default="true" id="f70663f6-e00b-4431-ac2d-51290758e378" name="Changes" comment="fsd-fix-3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/sets/Sets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sets/Sets.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,6 +140,15 @@
       <workItem from="1733200220070" duration="842000" />
       <workItem from="1733201088968" duration="275000" />
     </task>
+    <task id="LOCAL-00001" summary="fsd-fix-3">
+      <option name="closed" value="true" />
+      <created>1733207517636</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733207517636</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,12 +162,12 @@
             <list>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="fsd" />
+                  <option value="master" />
                 </option>
               </RecentGroup>
               <RecentGroup>
                 <option name="FILTER_VALUES">
-                  <option value="master" />
+                  <option value="fsd" />
                 </option>
               </RecentGroup>
               <RecentGroup>
@@ -193,5 +201,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fsd-fix-3" />
+    <option name="LAST_COMMIT_MESSAGE" value="fsd-fix-3" />
   </component>
 </project>
