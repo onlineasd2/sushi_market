@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f70663f6-e00b-4431-ac2d-51290758e378" name="Changes" comment="" />
+    <list default="true" id="f70663f6-e00b-4431-ac2d-51290758e378" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sets/Sets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sets/Sets.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +84,7 @@
     "nodejs_package_manager_path": "npm",
     "npm.dev (1).executor": "Run",
     "npm.dev.executor": "Run",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "D:\\Front\\sushi_market\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -143,6 +147,31 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="fsd" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
