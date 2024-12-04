@@ -5,7 +5,7 @@ import './styles.scss';
 import { Card } from "@/components/card/Card";
 import { ICard } from '@/components/sets/ICard';
 import { sushiApi } from '@/services/sushiApi';
-import Button from '@/components/button/Button';
+import { Button } from '@/components/button/Button';
 
 interface SetsProps {
     titleMain: string;

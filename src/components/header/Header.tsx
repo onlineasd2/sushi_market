@@ -4,7 +4,7 @@ import './styles.scss';
 import Image from "next/image";
 import Link from "next/link";
 import React from 'react';
-import Button from '@/components/button/Button';
+import { Button } from '@/components/button/Button';
 
 export const Header = () => {
     {/* Кнопка бургер-меню */}
