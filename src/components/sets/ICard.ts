@@ -1,4 +1,4 @@
-interface ICard {
+export interface ICard {
     id:number;
     title:string;
     weight:number;
@@ -6,5 +6,3 @@ interface ICard {
     image?:string;
     price:number;
 }
-
-export default ICard;

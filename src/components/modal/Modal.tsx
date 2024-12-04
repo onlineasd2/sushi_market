@@ -9,7 +9,7 @@ interface ModalProps {
 
 
 
-const Modal: React.FC<ModalProps> = ({ children }) => {
+export const Modal: React.FC<ModalProps> = ({ children }) => {
     {/* Функционал модального окна */}
     const [isModalActive, setIsModalActive] = React.useState(false);
 
@@ -30,5 +30,3 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
     </>
   )
 }
-
-export default Modal;

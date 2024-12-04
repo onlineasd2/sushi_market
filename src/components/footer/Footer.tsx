@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import './styles.scss';
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <>
         <div className="section section-footer">

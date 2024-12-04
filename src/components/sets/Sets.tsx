@@ -2,16 +2,16 @@
 
 import React, {useCallback, useEffect, useState} from 'react';
 import './styles.scss';
-import Card from "./../card/Card";
-import ICard from './../sets/ICard';
-import sushiApi from './../../services/sushiApi';
-import Button from './../button/Button';
+import { Card } from "@/components/card/Card";
+import { ICard } from '@/components/sets/ICard';
+import { sushiApi } from '@/services/sushiApi';
+import Button from '@/components/button/Button';
 
 interface SetsProps {
     titleMain: string;
 }
 
-const Sets: React.FC<SetsProps> = ({ titleMain }) => {
+export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
     const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
     const [errorSets, setErrorSets] = useState('');
@@ -60,5 +60,3 @@ const Sets: React.FC<SetsProps> = ({ titleMain }) => {
             </div>
         </>
     )};
-
-export default Sets;
