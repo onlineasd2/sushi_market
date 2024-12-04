@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.scss';
 import Image from 'next/image';
 import { ICard } from '@/components/sets/ICard';
-import Button from '@/components/button/Button';
+import { Button } from '@/components/button/Button';
 
 interface CardProps {
   card: ICard;
@@ -10,7 +10,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ card }) => {
 
-    const [src, setSrc] = React.useState(card.image || '/productBlurIcon.svg');
+    const [src, setSrc] = React.useState(card.image || '/productBlurIcon.png');
 
   return (
     <>
@@ -21,7 +21,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                 height={262}
                 className='card__image'
                 alt="Product Image"
-                onError={() => setSrc('/productBlurIcon.svg')}>
+                onError={() => setSrc('/productBlurIcon.png')}>
             </Image>
             <div className="card__content">
                 <div className="card__option">

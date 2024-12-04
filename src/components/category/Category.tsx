@@ -2,7 +2,7 @@ import React from 'react'
 import "./styles.scss"
 import Link from 'next/link';
 import Image from 'next/image';
-import Button from '@/components/button/Button';
+import { Button } from '@/components/button/Button';
 
 export const Category = () => {
   return (
