@@ -7,7 +7,7 @@ import './styles.scss';
     style: string;
   }
 
-export default function Button({ onClick, children, style }: ButtonProps) {
+export const Button = ({ onClick, children, style }: ButtonProps) => {
 
   return (
     <>
