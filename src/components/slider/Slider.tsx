@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Slider() {
+export const Slider = () => {
   return (
     <>
         <div className="section">

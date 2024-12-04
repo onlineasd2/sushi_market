@@ -1,5 +1,5 @@
 import React from 'react';
-import './../styles/components/_button.scss';
+import './styles.scss';
 
   interface ButtonProps {
     onClick?: () => void;
@@ -7,7 +7,7 @@ import './../styles/components/_button.scss';
     style: string;
   }
 
-export default function Button({ onClick, children, style }: ButtonProps) {
+export const Button = ({ onClick, children, style }: ButtonProps) => {
 
   return (
     <>
