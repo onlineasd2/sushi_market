@@ -1,11 +1,12 @@
 import React from "react";
+import { Section } from "@/components/section/Section";
 
 export const Slider = () => {
     return (
-        <div className="section">
-            <div className="slider wrapper">
+        <Section>
+            <div className="slider">
                 <h1>Slider Blank</h1>
             </div>
-        </div>
+        </Section>
     );
 };
