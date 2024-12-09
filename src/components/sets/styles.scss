@@ -1,11 +1,11 @@
-@import '../../app/styles';
+@import "../../app/styles";
 
 .sets {
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 0 1px;
-    
+
     &__container {
         display: flex;
         justify-content: start;
@@ -22,11 +22,11 @@
         @include tablet {
             display: flex;
             justify-content: space-evenly;
-            gap: 0;
-            padding: 0;
+            gap: 20px;
+            padding: 0px;
         }
     }
-    
+
     @include tablet {
         display: flex;
         justify-content: center;

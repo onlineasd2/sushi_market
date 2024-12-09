@@ -1,19 +1,22 @@
-import React from 'react';
-import './styles.scss';
+import React from "react";
+import "./styles.scss";
 
-  interface ButtonProps {
+interface ButtonProps {
     onClick?: () => void;
     children: React.ReactNode;
-    style: string;
-  }
-
-export const Button = ({ onClick, children, style }: ButtonProps) => {
-
-  return (
-    <>
-        <button onClick={onClick} className={style} role="button" tabIndex={0} aria-label="Кнопка">
-          { children }
-        </button>
-    </>
-  );
+    className: string;
 }
+
+export const Button = ({ onClick, children, className }: ButtonProps) => {
+    return (
+        // eslint-disable-next-line jsx-a11y/no-redundant-roles
+        <button
+            onClick={onClick}
+            className={className}
+            tabIndex={0}
+            aria-label="Кнопка"
+        >
+            {children}
+        </button>
+    );
+};

@@ -1,11 +1,9 @@
-@import '../../app/styles';
+@import "../../app/styles";
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: var(--container-width);
-    padding: 0px 20px;
     padding-top: 20px;
 
     @include tablet {
@@ -34,17 +32,14 @@
             font-size: 14px;
         }
     }
-    
+
     &__find {
-        
     }
 
     &__btn-location {
-
     }
 
     &__btn-login {
-        
     }
 
     &__button-location {
@@ -52,8 +47,8 @@
 
         & img {
             width: 16px;
-            left: 10;
-            top: 5;
+            left: 10px;
+            top: 5px;
             position: absolute;
         }
     }
@@ -61,7 +56,8 @@
     &-mobile {
         display: none;
         width: 100%;
-        padding: 16px 24px;
+        padding: 16px 0px;
+
         @include tablet {
             display: block;
         }
@@ -72,11 +68,8 @@
             align-items: center;
 
             & button {
-                margin-left: 40px;
-
                 @include mobile {
-                    margin: 32px;
-                    padding: 0 10px;
+                    padding: 0px 10px;
                     height: 30px;
                     font-size: 12px;
                 }
@@ -92,19 +85,20 @@
 
         &__button-login {
             position: absolute;
+            left: 40px;
         }
 
         &__burger-menu {
             display: flex;
             position: relative;
-            z-index: 51;
             align-items: center;
             justify-content: flex-end;
             width: 24px;
             height: 24px;
 
-            &::before, &::after {
-                content: '';
+            &::before,
+            &::after {
+                content: "";
                 position: absolute;
                 height: 2px;
                 width: 100%;
@@ -140,6 +134,11 @@
                 transform: scale(1);
                 background: var(--color-dark);
             }
+        }
+
+        &__close-btn {
+            margin-left: 20px;
+            margin-top: 20px;
         }
 
         &__nav-menu {
@@ -180,7 +179,7 @@
                 padding: 15px 10px;
                 color: var(--color-dark);
                 border-radius: var(--border-radius-small);
-                
+
                 img {
                     object-fit: contain;
                     padding-right: 10px;
@@ -192,7 +191,7 @@
                 }
             }
         }
-        
+
         &__overlay {
             display: block;
             position: fixed;
@@ -204,7 +203,9 @@
             background-color: var(--color-dark);
             opacity: 0.7;
             // Анимация затухаеия
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            transition:
+                opacity 0.3s ease-in-out,
+                visibility 0.3s ease-in-out;
 
             &.hidden {
                 opacity: 0;
@@ -212,5 +213,4 @@
             }
         }
     }
-
 }

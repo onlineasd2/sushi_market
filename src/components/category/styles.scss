@@ -1,4 +1,4 @@
-@import '../../app/styles';
+@import "../../app/styles";
 
 .category {
     display: flex;
@@ -17,7 +17,7 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: 0 20px;
+        padding-right: 20px;
     }
 
     &__content {
@@ -54,7 +54,7 @@
             &::-webkit-scrollbar {
                 display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
             }
-            
+
             li {
                 white-space: nowrap;
                 font-size: 14px;
@@ -65,7 +65,6 @@
                         color: var(--color-light);
                     }
                 }
-
 
                 @include tablet {
                     padding: 10px;
@@ -88,7 +87,7 @@
         gap: 20px;
         padding-right: 20px;
         font-size: 14px;
-        
+
         @include tablet {
             display: none;
             visibility: hidden;
@@ -117,7 +116,7 @@
     &__filters {
         display: flex;
         gap: 5px;
-        
+
         @include tablet {
             justify-content: space-evenly;
         }
@@ -125,6 +124,5 @@
         & img {
             object-fit: cover;
         }
-
     }
 }
