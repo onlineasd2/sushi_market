@@ -28,8 +28,10 @@
         "react/button-has-type": "off",
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
-        "import/prefer-default-export": "warn",
+        "import/prefer-default-export": "off",
         "semi": 0, // let it handle by prettier
+        "max-depth": ["error", 7],
+        "react/jsx-max-depth": ["warn", { "max": 7 }],
         "react/function-component-definition": "off",
         "indent": "off", // let it handle by prettier
         "max-len": "off", // let it handle by prettier

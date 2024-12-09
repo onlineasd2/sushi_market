@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/button/Button";
+import { Section } from "@/components/section/Section";
 
 export const Header = () => {
     /* Кнопка бургер-меню */
@@ -16,8 +17,8 @@ export const Header = () => {
     /* Кнопка бургер-меню */
 
     return (
-        <section className="section">
-            <div className="header wrapper">
+        <Section>
+            <div className="header">
                 <div className="header__container">
                     <div className="header__logo">
                         <Image
@@ -53,12 +54,19 @@ export const Header = () => {
             <div className="header-mobile">
                 <div className="header-mobile__container">
                     <div className="header-mobile__content">
-                        <Button
+                        <div
+                            role="button"
+                            tabIndex={0}
                             onClick={toggleMenu}
+                            aria-label="menu"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ")
+                                    toggleMenu();
+                            }}
                             className={`header-mobile__burger-menu ${isBurgerActive ? "active" : ""}`}
                         >
                             <span />
-                        </Button>
+                        </div>
                         <Button className="button button__login header-mobile__button-login">
                             Позвонить
                         </Button>
@@ -79,6 +87,16 @@ export const Header = () => {
                 <nav
                     className={`header-mobile__nav-menu ${isBurgerActive ? "" : "hidden"}`}
                 >
+                    <Image
+                        onClick={toggleMenu}
+                        role={isBurgerActive ? "button" : "button"}
+                        tabIndex={0}
+                        width={24}
+                        height={24}
+                        src="/close.png"
+                        alt=""
+                        className="header-mobile__close-btn"
+                    />
                     <ul className="header-mobile__menu-box">
                         <li>
                             <Image
@@ -148,6 +166,6 @@ export const Header = () => {
                     className={`header-mobile__overlay ${isBurgerActive ? "" : "hidden"}`}
                 />
             </div>
-        </section>
+        </Section>
     );
 };
