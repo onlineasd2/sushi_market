@@ -6,17 +6,17 @@ import { Slider } from "@/components/slider/Slider";
 import { Footer } from "@/components/footer/Footer";
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <Category/>
-      <Slider />
-      <Sets titleMain="Наборы"></Sets>
-      <Modal>
-        <h2>Welcome to the Modal</h2>
-        <p>This is a sample modal component.</p>
-      </Modal>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <Category />
+            <Slider />
+            <Sets titleMain="Наборы" />
+            <Modal>
+                <h2>Welcome to the Modal</h2>
+                <p>This is a sample modal component.</p>
+            </Modal>
+            <Footer />
+        </>
+    );
 }
