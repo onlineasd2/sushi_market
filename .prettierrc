@@ -1,0 +1,16 @@
+{
+    "tabWidth": 4,
+    "semi": true,
+    "useTabs": false,
+    "singleQuote": false,
+    "trailingComma": "es5",
+
+    "overrides": [
+        {
+            "files": "commitlint.config.js",
+            "options": {
+                "singleQuote": true
+            }
+        }
+    ]
+}
