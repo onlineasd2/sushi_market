@@ -41,9 +41,6 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     return (
         <Section>
             <div className="sets">
-                <h2 className="sets__title">
-                    <b>{titleMain}</b>
-                </h2>
                 {errorSets ? ( // Проверка на ошибки запроса fetchSets()
                     <div className="sets__error">
                         <h2>Ошибка обращения к серверу</h2>
@@ -56,6 +53,9 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                     </div>
                 ) : (
                     <>
+                        <h2 className="sets__title">
+                            <b>{titleMain}</b>
+                        </h2>
                         <div className="sets__container">
                             {sets.map((set) => (
                                 <Card key={set.id} card={set} /> // Вывод карточек суш
