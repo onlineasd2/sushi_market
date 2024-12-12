@@ -7,6 +7,7 @@ import { ICard } from "@/components/sets/ICard";
 import { sushiApi } from "@/services/sushiApi";
 import { Button } from "@/components/button/Button";
 import { Section } from "@/components/section/Section";
+import Image from "next/image";
 
 interface SetsProps {
     titleMain: string;
@@ -40,26 +41,36 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     return (
         <Section>
             <div className="sets">
-                <h2 className="sets__title">
-                    <b>{titleMain}</b>
-                </h2>
                 {errorSets ? ( // Проверка на ошибки запроса fetchSets()
-                    <h3>{errorSets.toString()}</h3>
+                    <div className="sets__error">
+                        <h2>Ошибка обращения к серверу</h2>
+                        <Image
+                            src="/error500.webp"
+                            width={100}
+                            height={100}
+                            alt=""
+                        />
+                    </div>
                 ) : (
                     <>
+                        <h2 className="sets__title">
+                            <b>{titleMain}</b>
+                        </h2>
                         <div className="sets__container">
                             {sets.map((set) => (
                                 <Card key={set.id} card={set} /> // Вывод карточек суш
                             ))}
                         </div>
-                        <div className="sets__more">
-                            <Button // Кнопка еще
-                                onClick={nextPage}
-                                className="button button__login"
-                            >
-                                Ещё
-                            </Button>
-                        </div>
+                        {sets.length > 0 && (
+                            <div className="sets__more">
+                                <Button // Кнопка еще
+                                    onClick={nextPage}
+                                    className="button button__login"
+                                >
+                                    Ещё
+                                </Button>
+                            </div>
+                        )}
                     </>
                 )}
             </div>
