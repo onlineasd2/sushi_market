@@ -8,6 +8,8 @@ import { sushiApi } from "@/services/sushiApi";
 import { Button } from "@/components/button/Button";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface SetsProps {
     titleMain: string;
@@ -17,6 +19,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
     const [errorSets, setErrorSets] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true); // Состояние для загрузки
     const PAGE_LIMIT = 5;
 
     // Подгружаем суши
@@ -24,6 +27,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
             setSets((prevSets) => [...prevSets, ...data]);
+            setIsLoading(false);
         } catch (error) {
             setErrorSets(String(error));
         }
@@ -57,9 +61,45 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                             <b>{titleMain}</b>
                         </h2>
                         <div className="sets__container">
-                            {sets.map((set) => (
-                                <Card key={set.id} card={set} /> // Вывод карточек суш
-                            ))}
+                            {isLoading
+                                ? // Создаем массив с 5 элементами и выводим скелетоны
+                                  Array(5)
+                                      .fill(null)
+                                      .map((_, index) => (
+                                          <div
+                                              key={index}
+                                              className="skeleton__card"
+                                          >
+                                              <Skeleton
+                                                  width={262}
+                                                  height={262}
+                                              />
+                                              <div className="skeleton__space-between">
+                                                  <Skeleton
+                                                      width={170}
+                                                      height={20}
+                                                  />
+                                                  <Skeleton
+                                                      width={60}
+                                                      height={20}
+                                                  />
+                                              </div>
+                                              <Skeleton height={100} />
+                                              <div className="skeleton__space-between">
+                                                  <Skeleton
+                                                      width={72}
+                                                      height={40}
+                                                  />
+                                                  <Skeleton
+                                                      width={140}
+                                                      height={40}
+                                                  />
+                                              </div>
+                                          </div>
+                                      ))
+                                : sets.map((set) => (
+                                      <Card key={set.id} card={set} />
+                                  ))}
                         </div>
                         {sets.length > 0 && (
                             <div className="sets__more">
