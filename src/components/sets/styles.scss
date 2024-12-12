@@ -66,3 +66,16 @@
         }
     }
 }
+
+.skeleton {
+    &__card {
+        display: flex;
+        flex-direction: column;
+        width: 262px;
+    }
+
+    &__space-between {
+        display: flex;
+        justify-content: space-between;
+    }
+}
