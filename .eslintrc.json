@@ -40,6 +40,7 @@
         "react/jsx-indent": "off", // let it handle by prettier
         "no-unused-vars": "off", // let it handle by TypeScript
         "prettier/prettier": ["error", { "endOfLine": "auto" }],
+        "react/no-array-index-key": "off",
         "operator-linebreak": "off", // let it handle by prettier
         "object-curly-newline": "off", // let it handle by prettier
         "function-paren-newline": "off", // let it handle by prettier
