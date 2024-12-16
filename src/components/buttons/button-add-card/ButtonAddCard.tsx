@@ -16,7 +16,7 @@ export const ButtonAddCard = ({ children }: ButtonProps): React.JSX.Element => {
         setOrderCount(orderCount < 10 ? orderCount + 1 : 10);
     };
     const handleOrderMinus = () => {
-        if (orderCount === 0) setToggleCounter(false);
+        if (orderCount === 1) setToggleCounter(false);
         else setOrderCount(orderCount - 1);
     };
 
