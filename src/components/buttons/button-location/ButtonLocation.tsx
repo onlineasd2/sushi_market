@@ -4,15 +4,14 @@ import "./styles.scss";
 interface ButtonProps {
     onClick?: () => void;
     children: React.ReactNode;
-    className: string;
 }
 
-export const Button = ({ onClick, children, className }: ButtonProps) => {
+export const ButtonLocation = ({ onClick, children }: ButtonProps) => {
     return (
         // eslint-disable-next-line jsx-a11y/no-redundant-roles
         <button
             onClick={onClick}
-            className={className}
+            className="button button__location header__button-location"
             tabIndex={0}
             aria-label="Кнопка"
         >
