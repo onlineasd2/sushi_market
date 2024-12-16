@@ -9,9 +9,7 @@ type WrappedButtonProps = {
 export const withButton = (
     WrappedButton: React.ComponentType<WrappedButtonProps>
 ) => {
-    // eslint-disable-next-line react/display-name
     return ({ ...props }: WrappedButtonProps) => {
-        // eslint-disable-next-line react/jsx-props-no-spreading
         return <WrappedButton {...props} />;
     };
 };

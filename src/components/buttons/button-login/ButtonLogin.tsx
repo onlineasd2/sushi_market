@@ -8,7 +8,6 @@ interface ButtonProps {
 
 export const ButtonLogin = ({ onClick, children }: ButtonProps) => {
     return (
-        // eslint-disable-next-line jsx-a11y/no-redundant-roles
         <button
             onClick={onClick}
             className="button button__login"

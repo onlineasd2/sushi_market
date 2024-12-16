@@ -11,7 +11,6 @@ export const ButtonIcon = ({
     children,
 }: ButtonProps): React.JSX.Element => {
     return (
-        // eslint-disable-next-line jsx-a11y/no-redundant-roles
         <button
             onClick={onClick}
             className="button button__mobile"
