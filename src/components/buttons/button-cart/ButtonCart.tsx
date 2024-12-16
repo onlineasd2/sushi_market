@@ -11,7 +11,6 @@ export const ButtonCart = ({
     children,
 }: ButtonProps): React.JSX.Element => {
     return (
-        // eslint-disable-next-line jsx-a11y/no-redundant-roles
         <button
             onClick={onClick}
             className="button button__cart"
