@@ -5,9 +5,10 @@ import "./styles.scss";
 import { Card } from "@/components/card/Card";
 import { ICard } from "@/components/sets/ICard";
 import { sushiApi } from "@/services/sushiApi";
-import { Button } from "@/components/button/Button";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
+import { withButton } from "@/components/buttons/HOC/withButton";
+import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 
 interface SetsProps {
     titleMain: string;
@@ -18,6 +19,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [errorSets, setErrorSets] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const PAGE_LIMIT = 5;
+    const ButtonLoginExtended = withButton(ButtonLogin);
 
     // Подгружаем суши
     const fetchSets = useCallback(async () => {
@@ -63,12 +65,11 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         </div>
                         {sets.length > 0 && (
                             <div className="sets__more">
-                                <Button // Кнопка еще
+                                <ButtonLoginExtended // Кнопка еще
                                     onClick={nextPage}
-                                    className="button button__login"
                                 >
                                     Ещё
-                                </Button>
+                                </ButtonLoginExtended>
                             </div>
                         )}
                     </>
