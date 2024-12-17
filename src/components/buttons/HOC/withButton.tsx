@@ -6,10 +6,10 @@ type WrappedButtonProps = {
     children: React.ReactNode;
 };
 
-export const withButton = (
-    WrappedButton: React.ComponentType<WrappedButtonProps>
+export const withButton = <P extends object>(
+    WrappedButton: React.ComponentType<WrappedButtonProps & P>
 ) => {
-    return ({ ...props }: WrappedButtonProps) => {
+    return (props: WrappedButtonProps & P) => {
         return <WrappedButton {...props} />;
     };
 };
