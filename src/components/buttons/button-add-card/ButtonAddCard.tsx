@@ -1,13 +1,16 @@
-import React from "react";
 import "./styles.scss";
 
 interface ButtonProps {
     children: React.ReactNode;
+    orderCountProp?: number;
 }
 
-export const ButtonAddCard = ({ children }: ButtonProps): React.JSX.Element => {
+export const ButtonAddCard = ({
+    children,
+    orderCountProp,
+}: ButtonProps): React.JSX.Element => {
     const [toggleCounter, setToggleCounter] = React.useState(false);
-    const [orderCount, setOrderCount] = React.useState(0);
+    const [orderCount, setOrderCount] = React.useState(orderCountProp || 0);
     const handleAddCart = () => {
         setToggleCounter(true);
         setOrderCount(1);
