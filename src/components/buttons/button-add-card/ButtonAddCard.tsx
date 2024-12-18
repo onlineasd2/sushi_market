@@ -1,16 +1,13 @@
 import "./styles.scss";
+import React from "react";
 
 interface ButtonProps {
-    children: React.ReactNode;
-    orderCountProp?: number;
+    children?: React.ReactNode;
 }
 
-export const ButtonAddCard = ({
-    children,
-    orderCountProp,
-}: ButtonProps): React.JSX.Element => {
+export const ButtonAddCard = ({ children }: ButtonProps): React.JSX.Element => {
     const [toggleCounter, setToggleCounter] = React.useState(false);
-    const [orderCount, setOrderCount] = React.useState(orderCountProp || 0);
+    const [orderCount, setOrderCount] = React.useState(0);
     const handleAddCart = () => {
         setToggleCounter(true);
         setOrderCount(1);
@@ -20,7 +17,7 @@ export const ButtonAddCard = ({
     };
     const handleOrderMinus = () => {
         if (orderCount === 1) setToggleCounter(false);
-        else setOrderCount(orderCount - 1);
+        else setOrderCount(1);
     };
 
     return toggleCounter ? (

@@ -6,13 +6,15 @@ import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
-import { withButton } from "@/components/buttons/HOC/withButton";
-import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
-import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
+// import { withButton } from "@/components/buttons/HOC/withButton";
+// import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
+// import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
+import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
+import { ButtonDeleteCart } from "@/components/buttons/button-delete-cart/ButtonDeleteCart";
 
 export default function Page() {
-    const ButtonIconCardExtended = withButton(ButtonIcon);
-    const ButtonAddCardExtended = withButton(ButtonAddCard);
+    // const ButtonIconCardExtended = withButton(ButtonIcon);
+    // const ButtonAddCardExtended = withButton(ButtonAddCard);
     return (
         <>
             <Header />
@@ -38,18 +40,16 @@ export default function Page() {
                                     <p>1670 г</p>
                                 </h3>
                             </div>
-                            <ButtonAddCardExtended orderCountProp={2}>
-                                _
-                            </ButtonAddCardExtended>
+                            <ButtonListCart />
                             <h3>12 990 ₸</h3>
-                            <ButtonIconCardExtended>
+                            <ButtonDeleteCart>
                                 <Image
                                     width={16}
                                     height={16}
-                                    src="/delete.png"
+                                    src="/trash-svgrepo-com.svg"
                                     alt="delete"
                                 />
-                            </ButtonIconCardExtended>
+                            </ButtonDeleteCart>
                         </div>
                     </div>
                 </div>
