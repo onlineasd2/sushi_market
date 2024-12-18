@@ -7,6 +7,11 @@
         width: 626px;
         display: flex;
         flex-direction: column;
+        padding: 60px 0px;
+    }
+
+    &__title {
+        padding-bottom: 20px;
     }
 
     &__item {
@@ -14,5 +19,35 @@
         align-items: center;
         justify-content: space-between;
         padding: 20px 0px;
+
+        & img {
+            border-radius: var(--border-radius-small);
+        }
+    }
+}
+
+.order-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 40px;
+
+    & h2 {
+        display: flex;
+        justify-content: end;
+    }
+
+    &__button-conainer {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 40px;
+    }
+
+    & button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 60px;
+        font-size: 18px;
     }
 }

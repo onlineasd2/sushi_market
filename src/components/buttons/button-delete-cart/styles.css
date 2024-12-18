@@ -1,0 +1,20 @@
+.button {
+    border-radius: var(--border-radius);
+    background-color: var(--color-light);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
+}
+.button:focus {
+    fill: var(--color-accent);
+}
+.button__trash {
+    padding: 10px;
+    color: var(--color-text-light-gray);
+    border: none;
+}
+.button__trash img {
+    fill: black;
+}
+
+/*# sourceMappingURL=styles.css.map */
