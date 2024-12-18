@@ -39,6 +39,7 @@
         &.disable {
             background-color: var(--color-light-gray) !important;
             color: var(--color-light) !important;
+            cursor: auto;
         }
     }
     .counter {

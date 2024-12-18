@@ -11,6 +11,8 @@ import Image from "next/image";
 // import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
 import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
 import { ButtonDeleteCart } from "@/components/buttons/button-delete-cart/ButtonDeleteCart";
+import { ButtonOrder } from "@/components/buttons/button-order/ButtonOrder";
+import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 
 export default function Page() {
     // const ButtonIconCardExtended = withButton(ButtonIcon);
@@ -22,7 +24,7 @@ export default function Page() {
                 <div className="cart">
                     <div className="cart__content">
                         <hr />
-                        <div className="cart__trash">
+                        <div className="cart__title">
                             <h1>
                                 <b>Корзина</b>
                             </h1>
@@ -44,12 +46,54 @@ export default function Page() {
                             <h3>12 990 ₸</h3>
                             <ButtonDeleteCart>
                                 <Image
-                                    width={16}
-                                    height={16}
+                                    width={18}
+                                    height={18}
                                     src="/trash-svgrepo-com.svg"
                                     alt="delete"
                                 />
                             </ButtonDeleteCart>
+                        </div>
+                    </div>
+                </div>
+                <div className="cart">
+                    <div className="cart__content">
+                        <hr />
+                        <div className="cart__title">
+                            <h2>
+                                <b>Приборы</b>
+                            </h2>
+                        </div>
+                        <div className="cart__item">
+                            <Image
+                                src="/sushi-card1.png"
+                                width={60}
+                                height={60}
+                                alt="Суша"
+                            />
+                            <div className="cart__text">
+                                <h3>
+                                    <b>Палочки</b>
+                                </h3>
+                            </div>
+                            <ButtonListCart />
+                            <h3>20 ₸</h3>
+                            <ButtonDeleteCart>
+                                <Image
+                                    width={18}
+                                    height={18}
+                                    src="/trash-svgrepo-com.svg"
+                                    alt="delete"
+                                />
+                            </ButtonDeleteCart>
+                        </div>
+                        <div className="order-details">
+                            <h2>
+                                <b>Сумма заказа: 72 980 ₸</b>
+                            </h2>
+                            <div className="order-details__button-conainer">
+                                <ButtonOrderCancel>Отменить</ButtonOrderCancel>
+                                <ButtonOrder>Заказать</ButtonOrder>
+                            </div>
                         </div>
                     </div>
                 </div>
