@@ -18,20 +18,22 @@ export const ButtonAddCard = ({
     const [key, setKey] = React.useState(0);
     const [id, setId] = React.useState(0);
 
-    const EditOrder = async () => {
+    const EditOrder = async (newOrderCount: number) => {
         db.orders.update(id, {
-            count: orderCount,
+            count: newOrderCount,
         });
+        console.log("Едит");
     };
     const AddOrder = async () => {
         try {
             setId(
                 await db.orders.add({
                     key,
-                    count: orderCount + 1,
+                    count,
                 })
             );
             setStatus(`Count ${count} Key ${key}`);
+            console.log(`Адд ${count}`);
         } catch (error) {
             setStatus(`Failed to add ${count}: ${error}`);
         }
@@ -39,17 +41,28 @@ export const ButtonAddCard = ({
 
     const handleOrderPlus = () => {
         if (orderCount < 10) {
+            const newOrderCount = orderCount + 1;
             setOrderCount(orderCount + 1);
-            EditOrder();
-        } else setOrderCount(10);
+            EditOrder(newOrderCount);
+            console.log("Плюс");
+        } else {
+            const newOrderCount = 10;
+            setOrderCount(10);
+            EditOrder(newOrderCount);
+        }
 
         setStatus(`Count ${count} Key ${key}`);
     };
     const handleOrderMinus = () => {
-        if (orderCount === 1) setToggleCounter(false);
-        else {
-            setOrderCount(orderCount - 1);
-            EditOrder();
+        if (orderCount === 1) {
+            setToggleCounter(false);
+            const newOrderCount = 0;
+            EditOrder(newOrderCount);
+        } else {
+            const newOrderCount = orderCount - 1;
+            setOrderCount(newOrderCount);
+            EditOrder(newOrderCount);
+            console.log("Минус");
         }
     };
 
