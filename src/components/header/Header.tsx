@@ -4,8 +4,10 @@ import "./styles.scss";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/components/button/Button";
 import { Section } from "@/components/section/Section";
+import { withButton } from "@/components/buttons/HOC/withButton";
+import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
+import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
 
 export const Header = () => {
     /* Кнопка бургер-меню */
@@ -15,6 +17,8 @@ export const Header = () => {
         setIsBurgerActive(!isBurgerActive);
     };
     /* Кнопка бургер-меню */
+    const ButtonLocationExtended = withButton(ButtonLocation);
+    const ButtonLoginExtended = withButton(ButtonLogin);
 
     return (
         <Section>
@@ -37,7 +41,7 @@ export const Header = () => {
                         </h3>
                     </div>
                     <div className="header__find">
-                        <Button className="button button__location header__button-location">
+                        <ButtonLocationExtended>
                             <Image
                                 src="/placeholder.png"
                                 width={16}
@@ -45,9 +49,9 @@ export const Header = () => {
                                 alt=""
                             />
                             Выберите адрес
-                        </Button>
+                        </ButtonLocationExtended>
                     </div>
-                    <Button className="button button__login">Войти</Button>
+                    <ButtonLoginExtended>Войти</ButtonLoginExtended>
                 </div>
             </div>
 
@@ -67,9 +71,7 @@ export const Header = () => {
                         >
                             <span />
                         </div>
-                        <Button className="button button__login header-mobile__button-login">
-                            Позвонить
-                        </Button>
+                        <ButtonLoginExtended>Позвонить</ButtonLoginExtended>
                     </div>
                     <Image
                         src="./mobileLogo.svg"

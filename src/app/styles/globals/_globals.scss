@@ -21,7 +21,10 @@ a {
     color: inherit;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-weight: 500;
     margin: 0;
 }
@@ -50,9 +53,3 @@ ul {
 li {
     list-style-type: none;
 }
-
-// Для поиска ошибок в верстке
-// * {
-//     outline: 1px solid green !important;
-// }
-// Для поиска ошибок в верстке

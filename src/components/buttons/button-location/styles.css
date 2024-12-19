@@ -1,0 +1,8 @@
+.button__location {
+    min-width: 363px;
+    height: 30px;
+    border-color: var(--color-gray);
+    border: 1px solid lightgray;
+}
+
+/*# sourceMappingURL=styles.css.map */

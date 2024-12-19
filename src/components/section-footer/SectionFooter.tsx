@@ -2,7 +2,7 @@ import "./styles.scss";
 import React, { ReactNode } from "react";
 
 interface CategoryProps {
-    children: ReactNode; // Тип для children
+    children: ReactNode;
 }
 
 export const SectionFooter: React.FC<CategoryProps> = ({ children }) => (

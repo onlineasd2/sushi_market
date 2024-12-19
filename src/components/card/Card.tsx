@@ -2,7 +2,8 @@ import React from "react";
 import "./styles.scss";
 import Image from "next/image";
 import { ICard } from "@/components/sets/ICard";
-import { Button } from "@/components/button/Button";
+import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
+import { withButton } from "@/components/buttons/HOC/withButton";
 
 interface CardProps {
     card: ICard;
@@ -10,6 +11,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ card }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
+    const ButtonAddCardExtended = withButton(ButtonAddCard);
 
     return (
         <div key={card.id} className="card">
@@ -33,9 +35,9 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     <h3 className="card__price">
                         <b>{card.price} ₸</b>
                     </h3>
-                    <Button className="button button__cart-alt">
-                        В Корзину
-                    </Button>
+                    <ButtonAddCardExtended keyCard={card.id}>
+                        В корзину
+                    </ButtonAddCardExtended>
                 </div>
             </div>
         </div>

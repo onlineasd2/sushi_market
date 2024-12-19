@@ -1,0 +1,19 @@
+.button {
+    border-radius: var(--border-radius);
+    background-color: var(--color-light);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+.button__mobile {
+    padding: 10px;
+    background-color: var(--color-light-gray);
+    color: var(--color-text-light-gray);
+    border-radius: 50px;
+    border: none;
+}
+.button__mobile.active {
+    color: var(--color-light);
+    background-color: var(--color-accent);
+}
+
+/*# sourceMappingURL=styles.css.map */
