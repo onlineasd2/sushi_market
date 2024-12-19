@@ -35,7 +35,9 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     <h3 className="card__price">
                         <b>{card.price} ₸</b>
                     </h3>
-                    <ButtonAddCardExtended>В корзину</ButtonAddCardExtended>
+                    <ButtonAddCardExtended keyCard={card.id}>
+                        В корзину
+                    </ButtonAddCardExtended>
                 </div>
             </div>
         </div>
