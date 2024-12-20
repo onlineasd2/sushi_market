@@ -1,15 +1,25 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import "./styles.scss";
+import { db } from "@/services/db";
 
 interface ButtonProps {
     onClick?: () => void;
-    children: React.ReactNode;
 }
+export const ButtonCart = ({ onClick }: ButtonProps): React.JSX.Element => {
+    const [countOrders, setCountOrders] = React.useState<number>(0);
+    const GetOrder = async () => {
+        setCountOrders(
+            await db.orders.toArray().then((values) => {
+                return values.length;
+            })
+        );
+    };
+    useEffect(() => {
+        GetOrder();
+    }, []);
 
-export const ButtonCart = ({
-    onClick,
-    children,
-}: ButtonProps): React.JSX.Element => {
     return (
         <button
             onClick={onClick}
@@ -17,7 +27,7 @@ export const ButtonCart = ({
             tabIndex={0}
             aria-label="Кнопка"
         >
-            {children}
+            {`${countOrders ? `Корзина | ${countOrders}` : `Корзина`}`}
         </button>
     );
 };
