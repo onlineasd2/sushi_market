@@ -11,10 +11,8 @@ export const ButtonAddCard = ({
     children,
     keyCard,
 }: ButtonProps): React.JSX.Element => {
-    const [toggleCounter, setToggleCounter] = React.useState(false);
-    const [orderCount, setOrderCount] = React.useState(1);
     const [status, setStatus] = React.useState("");
-    const [count, setCount] = React.useState(0);
+    const [count, setCount] = React.useState(1);
     const [key, setKey] = React.useState(0);
     const [id, setId] = React.useState(0);
 
@@ -32,7 +30,7 @@ export const ButtonAddCard = ({
         try {
             const newId = await db.orders.add({
                 key,
-                count,
+                count: 1,
             });
             setId(newId);
         } catch (error) {
@@ -41,44 +39,40 @@ export const ButtonAddCard = ({
     };
 
     const handleOrderPlus = () => {
-        if (orderCount < 10) {
-            const newOrderCount = orderCount + 1;
-            setOrderCount(orderCount + 1);
+        if (count < 10) {
+            const newOrderCount = count + 1;
+            setCount(count + 1);
             EditOrder(newOrderCount);
         } else {
             const newOrderCount = 10;
-            setOrderCount(10);
+            setCount(10);
             EditOrder(newOrderCount);
         }
     };
 
     const handleOrderMinus = () => {
-        if (orderCount === 1) {
-            setToggleCounter(false);
-            const newOrderCount = 0;
-            EditOrder(newOrderCount);
-            DeleteOrder();
-        } else {
-            const newOrderCount = orderCount - 1;
-            setOrderCount(newOrderCount);
+        if (count <= 1) DeleteOrder();
+        else {
+            const newOrderCount = count - 1;
+            setCount(newOrderCount);
             EditOrder(newOrderCount);
         }
     };
 
     const handleAddCart = () => {
-        setOrderCount(1);
+        const newOrderCount = count + 1;
+        setCount(1);
+        EditOrder(newOrderCount);
         AddOrder();
-        setToggleCounter(true);
     };
 
     const GetStateButton = async () => {
         try {
             const res = await db.orders.where("key").equals(keyCard).first();
             if (res?.key === keyCard) {
-                setToggleCounter(true);
-                setOrderCount(res.count);
+                setCount(res.count);
                 setId(res.id);
-            } else setToggleCounter(false);
+            } else setCount(0);
         } catch (error) {
             setStatus(`Error ${error}`);
         }
@@ -86,20 +80,20 @@ export const ButtonAddCard = ({
 
     useEffect(() => {
         GetStateButton();
-    });
+    }, []);
 
     useEffect(() => {
-        setCount(orderCount);
+        setCount(count);
         setKey(keyCard);
-    }, [keyCard, orderCount]);
+    }, [keyCard, count]);
 
-    return toggleCounter ? (
+    return count ? (
         <div className="counter-order">
             <button className="button-counter" onClick={handleOrderMinus}>
                 -
             </button>
             <h3 className="counter">
-                <b>{status || orderCount}</b>
+                <b>{status || count}</b>
             </h3>
             <button className="button-counter" onClick={handleOrderPlus}>
                 +
