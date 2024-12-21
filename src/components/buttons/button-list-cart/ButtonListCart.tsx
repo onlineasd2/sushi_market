@@ -1,9 +1,8 @@
 import "./styles.scss";
-import React, { useEffect } from "react";
+import React from "react";
 
 export const ButtonListCart = (): React.JSX.Element => {
     const [orderCount, setOrderCount] = React.useState(1);
-    const [activeCounter, setActiveCounter] = React.useState(false);
 
     const handleOrderPlus = () => {
         setOrderCount(orderCount < 10 ? orderCount + 1 : 10);
@@ -12,16 +11,13 @@ export const ButtonListCart = (): React.JSX.Element => {
         if (orderCount > 1) setOrderCount(orderCount - 1);
     };
 
-    useEffect(() => {
-        if (orderCount === 1) setActiveCounter(true);
-        else setActiveCounter(false);
-    }, [orderCount]);
-
     return (
         <div className="counter-order">
             <button
                 className={
-                    activeCounter ? "button-counter disable" : "button-counter"
+                    orderCount === 1
+                        ? "button-counter disable"
+                        : "button-counter"
                 }
                 onClick={handleOrderMinus}
             >
