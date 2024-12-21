@@ -6,17 +6,12 @@ import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
-// import { withButton } from "@/components/buttons/HOC/withButton";
-// import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
-// import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
 import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
 import { ButtonDeleteCart } from "@/components/buttons/button-delete-cart/ButtonDeleteCart";
 import { ButtonOrder } from "@/components/buttons/button-order/ButtonOrder";
 import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 
 export default function Page() {
-    // const ButtonIconCardExtended = withButton(ButtonIcon);
-    // const ButtonAddCardExtended = withButton(ButtonAddCard);
     return (
         <>
             <Header />
