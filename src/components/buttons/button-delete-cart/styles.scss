@@ -1,0 +1,23 @@
+.button {
+    border-radius: var(--border-radius);
+    background-color: var(--color-light);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
+    &:focus {
+        fill: var(--color-accent);
+    }
+
+    &__trash {
+        padding: 10px;
+        color: var(--color-text-light-gray);
+        border: none;
+
+        &.active {
+        }
+
+        & img {
+            fill: black;
+        }
+    }
+}
