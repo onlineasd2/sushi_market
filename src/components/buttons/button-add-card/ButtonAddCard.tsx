@@ -12,30 +12,31 @@ export const ButtonAddCard = ({
     keyCard,
 }: ButtonProps): React.JSX.Element => {
     const [toggleCounter, setToggleCounter] = React.useState(false);
-    const [orderCount, setOrderCount] = React.useState(0);
+    const [orderCount, setOrderCount] = React.useState(1);
     const [status, setStatus] = React.useState("");
     const [count, setCount] = React.useState(0);
     const [key, setKey] = React.useState(0);
     const [id, setId] = React.useState(0);
 
-    const EditOrder = async (newOrderCount: number) => {
-        db.orders.update(id, {
+    const DeleteOrder = async (): Promise<void> => {
+        await db.orders.delete(id);
+    };
+
+    const EditOrder = async (newOrderCount: number): Promise<void> => {
+        await db.orders.update(id, {
             count: newOrderCount,
         });
-        console.log("Едит");
     };
+
     const AddOrder = async () => {
         try {
-            setId(
-                await db.orders.add({
-                    key,
-                    count,
-                })
-            );
-            setStatus(`Count ${count} Key ${key}`);
-            console.log(`Адд ${count}`);
+            const newId = await db.orders.add({
+                key,
+                count,
+            });
+            setId(newId);
         } catch (error) {
-            setStatus(`Failed to add ${count}: ${error}`);
+            setStatus(`Error ${error}`);
         }
     };
 
@@ -44,45 +45,61 @@ export const ButtonAddCard = ({
             const newOrderCount = orderCount + 1;
             setOrderCount(orderCount + 1);
             EditOrder(newOrderCount);
-            console.log("Плюс");
         } else {
             const newOrderCount = 10;
             setOrderCount(10);
             EditOrder(newOrderCount);
         }
-
-        setStatus(`Count ${count} Key ${key}`);
     };
+
     const handleOrderMinus = () => {
         if (orderCount === 1) {
             setToggleCounter(false);
             const newOrderCount = 0;
             EditOrder(newOrderCount);
+            DeleteOrder();
         } else {
             const newOrderCount = orderCount - 1;
             setOrderCount(newOrderCount);
             EditOrder(newOrderCount);
-            console.log("Минус");
         }
     };
 
     const handleAddCart = () => {
-        setToggleCounter(true);
         setOrderCount(1);
         AddOrder();
+        setToggleCounter(true);
     };
+
+    const GetStateButton = async () => {
+        try {
+            const res = await db.orders.where("key").equals(keyCard).first();
+            if (res?.key === keyCard) {
+                setToggleCounter(true);
+                setOrderCount(res.count);
+                setId(res.id);
+            } else setToggleCounter(false);
+        } catch (error) {
+            setStatus(`Error ${error}`);
+        }
+    };
+
+    useEffect(() => {
+        GetStateButton();
+    });
+
     useEffect(() => {
         setCount(orderCount);
         setKey(keyCard);
     }, [keyCard, orderCount]);
+
     return toggleCounter ? (
         <div className="counter-order">
-            <p>{status}</p>
             <button className="button-counter" onClick={handleOrderMinus}>
                 -
             </button>
             <h3 className="counter">
-                <b>{orderCount}</b>
+                <b>{status || orderCount}</b>
             </h3>
             <button className="button-counter" onClick={handleOrderPlus}>
                 +
