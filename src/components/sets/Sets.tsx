@@ -5,24 +5,25 @@ import "./styles.scss";
 import { Card } from "@/components/card/Card";
 import { ICard } from "@/components/sets/ICard";
 import { sushiApi } from "@/services/sushiApi";
-import { Button } from "@/components/button/Button";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { withButton } from "@/components/buttons/HOC/withButton";
+import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 
 interface SetsProps {
     titleMain: string;
 }
 
 export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
-    const [sets, setSets] = useState<ICard[]>([]); // Карточки на одной странице
+    const [sets, setSets] = useState<ICard[]>([]);
     const [errorSets, setErrorSets] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(true); // Состояние для загрузки
+    const [isLoading, setIsLoading] = useState(true);
     const PAGE_LIMIT = 5;
+    const ButtonLoginExtended = withButton(ButtonLogin);
 
-    // Подгружаем суши
     const fetchSets = useCallback(async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
@@ -33,7 +34,6 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
         }
     }, [currentPage, PAGE_LIMIT]);
 
-    // Функция следущей страницы
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
     };
@@ -45,7 +45,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     return (
         <Section>
             <div className="sets">
-                {errorSets ? ( // Проверка на ошибки запроса fetchSets()
+                {errorSets ? (
                     <div className="sets__error">
                         <h2>Ошибка обращения к серверу</h2>
                         <Image
@@ -62,8 +62,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         </h2>
                         <div className="sets__container">
                             {isLoading
-                                ? // Создаем массив с 5 элементами и выводим скелетоны
-                                  Array(5)
+                                ? Array(5)
                                       .fill(null)
                                       .map((_, index) => (
                                           <div
@@ -103,12 +102,9 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         </div>
                         {sets.length > 0 && (
                             <div className="sets__more">
-                                <Button // Кнопка еще
-                                    onClick={nextPage}
-                                    className="button button__login"
-                                >
+                                <ButtonLoginExtended onClick={nextPage}>
                                     Ещё
-                                </Button>
+                                </ButtonLoginExtended>
                             </div>
                         )}
                     </>
