@@ -1,9 +1,12 @@
 import Dexie, { type EntityTable } from "dexie";
 
 interface Order {
-    id: number;
+    id?: number;
+    name: string;
+    weight: number;
     key: number;
     count: number;
+    price: number;
 }
 
 const db = new Dexie("OrdersDatabase") as Dexie & {
@@ -11,7 +14,7 @@ const db = new Dexie("OrdersDatabase") as Dexie & {
 };
 
 db.version(1).stores({
-    orders: "++id, key, count",
+    orders: "++id, name, weight, key, count, price",
 });
 
 export type { Order };
