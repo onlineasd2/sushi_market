@@ -40,7 +40,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
     useEffect(() => {
         fetchSets();
-    }, [currentPage]);
+    }, []);
 
     return (
         <Section>

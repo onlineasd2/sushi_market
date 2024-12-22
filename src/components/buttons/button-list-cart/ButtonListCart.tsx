@@ -1,30 +1,65 @@
 import "./styles.scss";
-import React from "react";
+import React, { useEffect } from "react";
+import { db, Order } from "@/services/db";
 
-export const ButtonListCart = (): React.JSX.Element => {
-    const [orderCount, setOrderCount] = React.useState(1);
+interface ButtonProps {
+    props: Order;
+}
+
+export const ButtonListCart = ({ props }: ButtonProps): React.JSX.Element => {
+    const [count, setCount] = React.useState(1);
+
+    const DeleteOrder = async (): Promise<void> => {
+        await db.orders.delete(props.id);
+    };
+
+    const EditOrder = async (newOrderCount: number): Promise<void> => {
+        await db.orders.update(props.id, {
+            count: newOrderCount,
+        });
+    };
 
     const handleOrderPlus = () => {
-        setOrderCount(orderCount < 10 ? orderCount + 1 : 10);
+        if (count < 10) {
+            const newOrderCount = count + 1;
+            setCount(count + 1);
+            EditOrder(newOrderCount);
+        } else {
+            const newOrderCount = 10;
+            setCount(10);
+            EditOrder(newOrderCount);
+        }
     };
+
     const handleOrderMinus = () => {
-        if (orderCount > 1) setOrderCount(orderCount - 1);
+        if (count <= 1) {
+            const newOrderCount = count - 1;
+            setCount(newOrderCount);
+            DeleteOrder();
+        } else {
+            const newOrderCount = count - 1;
+            setCount(newOrderCount);
+            EditOrder(newOrderCount);
+        }
     };
+
+    useEffect(() => {
+        setCount(props.count);
+    }, []);
 
     return (
         <div className="counter-order">
             <button
                 className={
-                    orderCount === 1
-                        ? "button-counter disable"
-                        : "button-counter"
+                    count === 1 ? "button-counter disable" : "button-counter"
                 }
                 onClick={handleOrderMinus}
+                disabled={count === 1}
             >
                 -
             </button>
             <h3 className="counter">
-                <b>{orderCount}</b>
+                <b>{count}</b>
             </h3>
             <button className="button-counter" onClick={handleOrderPlus}>
                 +
