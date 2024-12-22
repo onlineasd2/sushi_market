@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import "./styles.scss";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
@@ -50,6 +49,7 @@ export default function Page() {
                         </div>
                     </div>
                 </div>
+
                 <div className="cart">
                     <div className="cart__content">
                         <hr />
