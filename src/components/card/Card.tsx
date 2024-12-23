@@ -14,7 +14,6 @@ export const Card: React.FC<CardProps> = ({ card }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
     const ButtonAddCardExtended = withButton(ButtonAddCard);
     const OrderProp: Order = {
-        // id: ,
         name: card.title,
         weight: card.weight,
         key: card.id,
