@@ -11,23 +11,21 @@ import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/Butt
 import Link from "next/link";
 import { db, Order, Sticks } from "@/services/db";
 import { useEffect, useState } from "react";
+import { withButton } from "@/components/buttons/HOC/withButton";
+import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCart";
+import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
 
 export default function Page() {
     const [error, setError] = useState("");
     const [setsOrder, setOrderSets] = useState<Order[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
-    const sticksOrder: Sticks = {
-        count: 1,
-        price: 30,
-    };
-    const AddStick = async (_sticksOrder: Sticks) => {
-        try {
-            const countSticksDB = await db.sticks.toArray();
-            if (countSticksDB.length === 0) await db.sticks.add(_sticksOrder);
-        } catch (error) {
-            setError(`Error ${error}`);
-        }
-    };
+    const ButtonSticksExtended = withButton(ButtonListCartSticks);
+    const ButtonOrderExtended = withButton(ButtonListCart);
+    const ButtonClearCartExtended = withButton(ButtonDeleteCart);
+    const PRICE_STICK = 0;
+    const sticksOrder: Sticks[] = [{ id: 0, count: 1, price: PRICE_STICK }];
+    const [totalPriceSticks, setTotalPriceSticks] =
+        useState<number>(PRICE_STICK);
 
     const GetSets = async () => {
         try {
@@ -50,11 +48,22 @@ export default function Page() {
             setError(`Error ${error}`);
         }
     };
-
+    const GetTotalPriceSticks = async () => {
+        try {
+            const resStick = await db.sticks.toArray();
+            resStick.forEach((stick) => {
+                setTotalPriceSticks(
+                    (prevPrice) => prevPrice + stick.price * stick.count
+                );
+            });
+        } catch (error) {
+            setError(`Error ${error}`);
+        }
+    };
     useEffect(() => {
-        AddStick(sticksOrder);
-        GetSets();
         GetTotalPrice();
+        GetTotalPriceSticks();
+        GetSets();
     }, []);
 
     return (
@@ -68,6 +77,14 @@ export default function Page() {
                             <h1>
                                 <b>Корзина</b>
                             </h1>
+                            <ButtonClearCartExtended clearAll>
+                                <Image
+                                    width={18}
+                                    height={18}
+                                    src="/trash-svgrepo-com.svg"
+                                    alt="delete"
+                                />
+                            </ButtonClearCartExtended>
                         </div>
                         {error ? (
                             <h1>{error}</h1>
@@ -86,7 +103,7 @@ export default function Page() {
                                             <p>{setOrder.weight}</p>
                                         </h3>
                                     </div>
-                                    {/* <ButtonListCart Order={setOrder} /> */}
+                                    <ButtonOrderExtended props={setOrder} />
                                     <div className="cart__price">
                                         <h3>{setOrder.price} ₸</h3>
                                     </div>
@@ -124,14 +141,17 @@ export default function Page() {
                                     <b>Палочки</b>
                                 </h3>
                             </div>
-                            {/* <ButtonListCart /> */}
+                            <ButtonSticksExtended props={sticksOrder[0]} />
                             <div className="cart__price">
-                                <h3>{30} ₸</h3>
+                                <h3>{totalPriceSticks} ₸</h3>
                             </div>
                         </div>
                         <div className="order-details">
                             <h2>
-                                <b>Сумма заказа: {totalPrice} ₸</b>
+                                <b>
+                                    Сумма заказа:{" "}
+                                    {totalPrice + totalPriceSticks} ₸
+                                </b>
                             </h2>
                             <div className="order-details__button-conainer">
                                 <Link href="/">
