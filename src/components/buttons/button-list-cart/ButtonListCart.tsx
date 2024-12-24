@@ -19,7 +19,7 @@ export const ButtonListCart = ({ props }: ButtonProps): React.JSX.Element => {
         });
     };
 
-    const handleOrderPlus = () => {
+    const handleOrderPlusSticks = () => {
         if (count < 10) {
             const newOrderCount = count + 1;
             setCount(count + 1);
@@ -31,7 +31,7 @@ export const ButtonListCart = ({ props }: ButtonProps): React.JSX.Element => {
         }
     };
 
-    const handleOrderMinus = () => {
+    const handleOrderMinusSticks = () => {
         if (count <= 1) {
             const newOrderCount = count - 1;
             setCount(newOrderCount);
@@ -53,7 +53,7 @@ export const ButtonListCart = ({ props }: ButtonProps): React.JSX.Element => {
                 className={
                     count === 1 ? "button-counter disable" : "button-counter"
                 }
-                onClick={handleOrderMinus}
+                onClick={handleOrderMinusSticks}
                 disabled={count === 1}
             >
                 -
@@ -61,7 +61,7 @@ export const ButtonListCart = ({ props }: ButtonProps): React.JSX.Element => {
             <h3 className="counter">
                 <b>{count}</b>
             </h3>
-            <button className="button-counter" onClick={handleOrderPlus}>
+            <button className="button-counter" onClick={handleOrderPlusSticks}>
                 +
             </button>
         </div>

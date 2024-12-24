@@ -12,7 +12,7 @@ import Link from "next/link";
 import { db, Order, Sticks } from "@/services/db";
 import { useEffect, useState } from "react";
 import { withButton } from "@/components/buttons/HOC/withButton";
-import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCart";
+import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCartSticks";
 import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
 
 export default function Page() {
@@ -22,10 +22,14 @@ export default function Page() {
     const ButtonSticksExtended = withButton(ButtonListCartSticks);
     const ButtonOrderExtended = withButton(ButtonListCart);
     const ButtonClearCartExtended = withButton(ButtonDeleteCart);
-    const PRICE_STICK = 0;
+    const PRICE_STICK = 30;
     const sticksOrder: Sticks[] = [{ id: 0, count: 1, price: PRICE_STICK }];
     const [totalPriceSticks, setTotalPriceSticks] =
         useState<number>(PRICE_STICK);
+
+    const handleGetSticks = async (_totalPriceSticks: number) => {
+        setTotalPriceSticks(totalPriceSticks + _totalPriceSticks);
+    };
 
     const GetSets = async () => {
         try {
@@ -141,7 +145,10 @@ export default function Page() {
                                     <b>Палочки</b>
                                 </h3>
                             </div>
-                            <ButtonSticksExtended props={sticksOrder[0]} />
+                            <ButtonSticksExtended
+                                onSendTotalPrice={handleGetSticks}
+                                props={sticksOrder[0]}
+                            />
                             <div className="cart__price">
                                 <h3>{totalPriceSticks} ₸</h3>
                             </div>

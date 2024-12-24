@@ -4,12 +4,20 @@ import { db, Sticks } from "@/services/db";
 
 interface ButtonProps {
     props: Sticks;
+    onSendTotalPrice: (value: number) => void;
 }
 
 export const ButtonListCartSticks = ({
     props,
+    onSendTotalPrice,
 }: ButtonProps): React.JSX.Element => {
     const [count, setCount] = React.useState<number>(1);
+    const [totalPriceSticks, setTotalPriceSticks] = React.useState<number>(30);
+
+    const handleSticksTotalPrice = () => {
+        onSendTotalPrice(totalPriceSticks);
+        console.log(totalPriceSticks);
+    };
 
     const GetStickCount = async () => {
         try {
@@ -44,19 +52,26 @@ export const ButtonListCartSticks = ({
             const newOrderCount = count + 1;
             setCount(count + 1);
             EditOrder(newOrderCount);
+            setTotalPriceSticks(totalPriceSticks + 30);
+            handleSticksTotalPrice();
         } else {
             const newOrderCount = 10;
             setCount(newOrderCount);
             EditOrder(newOrderCount);
+            setTotalPriceSticks(totalPriceSticks);
         }
     };
 
     const handleOrderMinus = () => {
-        if (count <= 1) setCount(1);
-        else {
+        if (count <= 1) {
+            setCount(1);
+            setTotalPriceSticks(30);
+        } else {
             const newOrderCount = count - 1;
             setCount(newOrderCount);
             EditOrder(newOrderCount);
+            setTotalPriceSticks(totalPriceSticks - 30);
+            handleSticksTotalPrice();
         }
     };
 
