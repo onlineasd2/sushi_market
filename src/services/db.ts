@@ -22,7 +22,7 @@ const db = new Dexie("OrdersDatabase") as Dexie & {
 
 db.version(1).stores({
     orders: "++id, name, weight, key, count, price",
-    sticks: "++id, count, price",
+    sticks: "0, count, price",
 });
 
 export type { Order };
