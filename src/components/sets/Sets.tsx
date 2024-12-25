@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import { Card } from "@/components/card/Card";
 import { ICard } from "@/components/sets/ICard";
@@ -24,17 +24,18 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const PAGE_LIMIT = 5;
     const ButtonLoginExtended = withButton(ButtonLogin);
 
-    const fetchSets = useCallback(async () => {
+    const fetchSets = async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
-            setSets((prevSets) =>
-                currentPage === 1 ? data : [...prevSets, ...data]
-            );
+            setSets((prevSets) => [...prevSets, ...data]);
+            console.log(currentPage);
             setIsLoading(false);
         } catch (error) {
             setErrorSets(String(error));
         }
-    }, [currentPage, PAGE_LIMIT]);
+    };
+
+    console.log(sets);
 
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
@@ -42,7 +43,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
     useEffect(() => {
         fetchSets();
-    }, []);
+    }, [currentPage]);
 
     return (
         <Section>

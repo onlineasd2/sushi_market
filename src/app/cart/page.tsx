@@ -13,21 +13,25 @@ import { db, Order, Sticks } from "@/services/db";
 import { useEffect, useState } from "react";
 import { withButton } from "@/components/buttons/HOC/withButton";
 import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCartSticks";
-import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
+// import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
+import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 
 export default function Page() {
     const [error, setError] = useState("");
     const [setsOrder, setOrderSets] = useState<Order[]>([]);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    // const [totalSticksCount, setTotalSticksCount] = useState(0);
     const ButtonSticksExtended = withButton(ButtonListCartSticks);
-    const ButtonOrderExtended = withButton(ButtonListCart);
+    // const ButtonOrderExtended = withButton(ButtonListCart);
     const ButtonClearCartExtended = withButton(ButtonDeleteCart);
     const PRICE_STICK = 30;
     const sticksOrder: Sticks[] = [{ id: 0, count: 1, price: PRICE_STICK }];
     const [totalPriceSticks, setTotalPriceSticks] =
         useState<number>(PRICE_STICK);
 
-    const handleGetSticks = async (_totalPriceSticks: number) => {
+    // const totalPrice = setsOrder посчитать тут полную цену
+
+    const handleGetSticks = (_totalPriceSticks: number) => {
         setTotalPriceSticks(totalPriceSticks + _totalPriceSticks);
     };
 
@@ -107,7 +111,27 @@ export default function Page() {
                                             <p>{setOrder.weight}</p>
                                         </h3>
                                     </div>
-                                    <ButtonOrderExtended props={setOrder} />
+                                    <ButtonCounter
+                                        value={setOrder.count}
+                                        onChange={(e) => {
+                                            setOrderSets((prevState) => {
+                                                const prevState1 =
+                                                    prevState.filter(
+                                                        (set) =>
+                                                            set.key !==
+                                                            setOrder.key
+                                                    );
+                                                return [
+                                                    ...prevState1,
+                                                    {
+                                                        ...setOrder,
+                                                        count:
+                                                            setOrder.count + e,
+                                                    },
+                                                ];
+                                            });
+                                        }}
+                                    />
                                     <div className="cart__price">
                                         <h3>{setOrder.price} ₸</h3>
                                     </div>
