@@ -11,7 +11,7 @@
     color: var(--color-light);
 }
 
-.counter-order {
+.counter-order-sticks {
     height: 40px;
     min-width: 140px;
     display: flex;
@@ -23,7 +23,7 @@
     color: var(--typography-secondary-color);
     font-weight: bold;
 }
-.counter-order .button-counter {
+.counter-order-sticks .button-counter {
     height: 100%;
     border-radius: var(--border-radius);
     background-color: transparent;
@@ -32,14 +32,14 @@
     color: var(--typography-secondary-color);
     padding: 0px 20px;
 }
-.counter-order .button-counter:hover {
+.counter-order-sticks .button-counter:hover {
     background-color: var(--color-accent);
     color: var(--color-light);
 }
-.counter-order .button-counter.disable {
+.counter-order-sticks .button-counter.disable {
     background-color: var(--color-light-gray) !important;
     color: var(--color-light) !important;
     cursor: auto;
 }
 
-/*# sourceMappingURL=styles.module.css.map */
+/*# sourceMappingURL=styles.css.map */

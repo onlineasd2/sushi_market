@@ -35,8 +35,6 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
         }
     };
 
-    console.log(sets);
-
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
     };
@@ -100,7 +98,12 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                           </div>
                                       ))
                                 : sets.map((set) => (
-                                      <Card key={set.id} card={set} />
+                                      <Card
+                                          key={set.id}
+                                          card={set}
+                                          count={0}
+                                          onChange={() => {}}
+                                      />
                                   ))}
                         </div>
                         {sets.length > 0 && (
