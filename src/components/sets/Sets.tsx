@@ -101,7 +101,6 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                       <Card
                                           key={set.id}
                                           card={set}
-                                          count={0}
                                           onChange={() => {}}
                                       />
                                   ))}
