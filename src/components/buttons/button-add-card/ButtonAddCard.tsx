@@ -1,111 +1,86 @@
 import "./styles.scss";
-import React, { useEffect } from "react";
-import { db, Order } from "@/services/db";
+import React from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 
 interface ButtonProps {
-    children?: React.ReactNode;
-    Order: Order;
+    value?: number;
+    onChange?: (e: number) => void;
+    count: number;
 }
 
 export const ButtonAddCard = ({
-    children,
-    Order,
+    value,
+    onChange,
+    count,
 }: ButtonProps): React.JSX.Element => {
-    // const [status, setStatus] = React.useState("");
-    const [count, setCount] = React.useState(1);
-    const [id, setId] = React.useState(0);
-
     // const DeleteOrder = async (): Promise<void> => {
     //     await db.orders.delete(id);
     // };
-
-    const EditOrder = async (newOrderCount: number): Promise<void> => {
-        await db.orders.update(id, {
-            count: newOrderCount,
-        });
-    };
-
-    const AddOrder = async () => {
-        try {
-            const newId = await db.orders.add({
-                name: Order.name,
-                weight: Order.weight,
-                key: Order.key,
-                count: 1,
-                price: Order.price,
-            });
-
-            if (newId !== undefined) setId(newId);
-        } catch (error) {
-            console.log(error);
-            // setStatus(`Error ${error}`);
-        }
-    };
-
-    // const handleOrderPlus = () => {
-    //     if (count < 10) {
-    //         const newOrderCount = count + 1;
-    //         setCount(count + 1);
-    //         EditOrder(newOrderCount);
-    //     } else {
-    //         const newOrderCount = 10;
-    //         setCount(10);
-    //         EditOrder(newOrderCount);
+    // const addDB = async () => {
+    //     try {
+    //         await db.orders.add({
+    //             name: order.title,
+    //             weight: order.weight,
+    //             key: order.id,
+    //             count: 1,
+    //             price: order.price,
+    //         });
+    //     } catch (error) {
+    //         console.error(error);
     //     }
     // };
     //
-    // const handleOrderMinus = () => {
-    //     if (count <= 1) {
-    //         const newOrderCount = count - 1;
-    //         setCount(newOrderCount);
-    //         DeleteOrder();
-    //     } else {
-    //         const newOrderCount = count - 1;
-    //         setCount(newOrderCount);
-    //         EditOrder(newOrderCount);
-    //     }
+    const onCart = () => {
+        onChange?.(1);
+    };
+
+    // const EditOrder = async (newOrderCount: number): Promise<void> => {
+    //     await db.orders.update(id, {
+    //         count: newOrderCount,
+    //     });
     // };
 
-    const handleAddCart = () => {
-        const newOrderCount = count + 1;
-        setCount(1);
-        EditOrder(newOrderCount);
-        AddOrder();
-    };
-
-    const GetStateButton = async () => {
-        try {
-            const res = await db.orders.where("key").equals(Order.key).first();
-            if (res?.key === Order.key) {
-                setCount(res.count);
-                if (res.id !== undefined) setId(res.id);
-                // else setStatus("Status res.id undefined");
-            } else setCount(0);
-        } catch (error) {
-            console.log(error);
-            // setStatus(`Error ${error}`);
-        }
-    };
-
-    useEffect(() => {
-        GetStateButton();
-    }, []);
-
-    useEffect(() => {
-        setCount(count);
-    }, [Order.key, count]);
+    //
+    // const handleAddCart = () => {
+    //     const newOrderCount = count + 1;
+    //     setCount(1);
+    //     EditOrder(newOrderCount);
+    //     AddOrder();
+    // };
+    //
+    // const GetStateButton = async () => {
+    //     try {
+    //         const res = await db.orders.where("key").equals(Order.key).first();
+    //         if (res?.key === Order.key) {
+    //             setCount(res.count);
+    //             if (res.id !== undefined) setId(res.id);
+    //             // else setStatus("Status res.id undefined");
+    //         } else setCount(0);
+    //     } catch (error) {
+    //         console.log(error);
+    //         // setStatus(`Error ${error}`);
+    //     }
+    // };
+    //
+    // useEffect(() => {
+    //     GetStateButton();
+    // }, []);
+    //
+    // useEffect(() => {
+    //     addDB();
+    //     console.log("count", count);
+    // }, [count);
 
     return count !== 0 ? (
-        <ButtonCounter onChange={(e) => setCount(count + e)} value={count} />
+        <ButtonCounter onChange={onChange} value={value} />
     ) : (
         <button
-            onClick={handleAddCart}
+            onClick={onCart}
             className="button button__add-cart"
             tabIndex={0}
-            aria-label="Кнопка"
+            aria-label="Кнопка в корзину"
         >
-            {children}
+            В корзину
         </button>
     );
 };

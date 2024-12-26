@@ -3,21 +3,21 @@ import "./styles.scss";
 import Image from "next/image";
 import { ICard } from "@/components/sets/ICard";
 import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
-import { withButton } from "@/components/buttons/HOC/withButton";
 import { Order } from "@/services/db";
 
 interface CardProps {
+    onChange?: (e: number) => void;
+    count: number;
     card: ICard;
 }
 
-export const Card: React.FC<CardProps> = ({ card }) => {
+export const Card: React.FC<CardProps> = ({ card, onChange, count }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
-    const ButtonAddCardExtended = withButton(ButtonAddCard);
     const OrderProp: Order = {
         name: card.title,
         weight: card.weight,
         key: card.id,
-        count: 1,
+        count,
         price: card.price,
     };
 
@@ -43,9 +43,11 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     <h3 className="card__price">
                         <b>{card.price} ₸</b>
                     </h3>
-                    <ButtonAddCardExtended Order={OrderProp}>
-                        В корзину
-                    </ButtonAddCardExtended>
+                    <ButtonAddCard
+                        value={OrderProp.count}
+                        onChange={onChange}
+                        count={count}
+                    />
                 </div>
             </div>
         </div>
