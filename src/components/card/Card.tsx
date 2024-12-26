@@ -12,7 +12,8 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ card }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
     const [countState, setCountState] = React.useState(0);
-    const [idState, setIdState] = React.useState<number | undefined>(0);
+    const [idState, setIdState] = React.useState<number>(0);
+    const isFirstRender = React.useRef(true);
     const MAX_VALUE = 10;
 
     // const OrderProp: Order = {
@@ -46,7 +47,11 @@ export const Card: React.FC<CardProps> = ({ card }) => {
         });
     };
 
-    const GetStateButton = async () => {
+    const deleteDB = async (): Promise<void> => {
+        await db.orders.delete(idState);
+    };
+
+    const getDB = async () => {
         try {
             const res = await db.orders.where("key").equals(card.id).first();
             if (res?.key === card.id) {
@@ -59,9 +64,12 @@ export const Card: React.FC<CardProps> = ({ card }) => {
     };
 
     useEffect(() => {
-        GetStateButton();
-        if (countState === 1) addDB();
-        else if (countState > 1) editDB();
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            getDB();
+        }
+
+        // if (countState > 0) editDB();
     }, [countState]);
 
     return (
@@ -89,10 +97,28 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     <ButtonAddCard
                         value={countState}
                         onChange={(e) => {
-                            if (countState < MAX_VALUE)
+                            if (e > 0) {
+                                // если мы нажимаем +
+                                if (countState < MAX_VALUE) {
+                                    setCountState(countState + e);
+                                    editDB();
+                                    console.log("Верх");
+                                }
+                                if (countState === 0) {
+                                    setCountState(countState + e);
+                                    console.log("Добавление");
+                                    addDB();
+                                }
+                            } else if (countState <= MAX_VALUE) {
+                                // если мы нажимаем -
                                 setCountState(countState + e);
-                            else if (countState >= MAX_VALUE && e < 0)
+                                editDB();
+                                console.log("Вниз");
+                            } else if (countState === 1) {
                                 setCountState(countState + e);
+                                deleteDB();
+                                console.log("Удаление");
+                            }
                         }}
                     />
                 </div>
