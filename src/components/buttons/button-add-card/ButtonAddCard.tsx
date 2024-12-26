@@ -5,13 +5,11 @@ import { ButtonCounter } from "@/components/buttons/button-counter/button-counte
 interface ButtonProps {
     value?: number;
     onChange?: (e: number) => void;
-    count: number;
 }
 
 export const ButtonAddCard = ({
     value,
     onChange,
-    count,
 }: ButtonProps): React.JSX.Element => {
     // const DeleteOrder = async (): Promise<void> => {
     //     await db.orders.delete(id);
@@ -71,7 +69,7 @@ export const ButtonAddCard = ({
     //     console.log("count", count);
     // }, [count);
 
-    return count !== 0 ? (
+    return value !== 0 ? (
         <ButtonCounter onChange={onChange} value={value} />
     ) : (
         <button

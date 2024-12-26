@@ -7,17 +7,16 @@ import { Order } from "@/services/db";
 
 interface CardProps {
     onChange?: (e: number) => void;
-    count: number;
     card: ICard;
 }
 
-export const Card: React.FC<CardProps> = ({ card, onChange, count }) => {
+export const Card: React.FC<CardProps> = ({ card, onChange }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
     const OrderProp: Order = {
         name: card.title,
         weight: card.weight,
         key: card.id,
-        count,
+        count: 1,
         price: card.price,
     };
 
@@ -46,7 +45,6 @@ export const Card: React.FC<CardProps> = ({ card, onChange, count }) => {
                     <ButtonAddCard
                         value={OrderProp.count}
                         onChange={onChange}
-                        count={count}
                     />
                 </div>
             </div>
