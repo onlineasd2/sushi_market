@@ -48,7 +48,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
             <div className="sets">
                 {errorSets ? (
                     <div className="sets__error">
-                        <h2>Ошибка обращения к серверу</h2>
+                        <h2>Ошибка обращения к серверу {errorSets}</h2>
                         <Image
                             src="/error500.webp"
                             width={100}
@@ -98,11 +98,7 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                           </div>
                                       ))
                                 : sets.map((set) => (
-                                      <Card
-                                          key={set.id}
-                                          card={set}
-                                          onChange={() => {}}
-                                      />
+                                      <Card key={set.id} card={set} />
                                   ))}
                         </div>
                         {sets.length > 0 && (
