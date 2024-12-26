@@ -46,11 +46,22 @@ export const Card: React.FC<CardProps> = ({ card }) => {
         });
     };
 
+    const GetStateButton = async () => {
+        try {
+            const res = await db.orders.where("key").equals(card.id).first();
+            if (res?.key === card.id) {
+                setCountState(res.count);
+                if (res.id !== undefined) setIdState(res.id);
+            } else setCountState(0);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
+        GetStateButton();
         if (countState === 1) addDB();
         else if (countState > 1) editDB();
-        console.log("card.id = ", card.id);
-        console.log("DB = ", card);
     }, [countState]);
 
     return (
