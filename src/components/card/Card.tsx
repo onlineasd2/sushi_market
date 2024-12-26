@@ -1,24 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import Image from "next/image";
 import { ICard } from "@/components/sets/ICard";
 import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
-import { Order } from "@/services/db";
+import { db } from "@/services/db";
 
 interface CardProps {
-    onChange?: (e: number) => void;
     card: ICard;
 }
 
-export const Card: React.FC<CardProps> = ({ card, onChange }) => {
+export const Card: React.FC<CardProps> = ({ card }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
-    const OrderProp: Order = {
-        name: card.title,
-        weight: card.weight,
-        key: card.id,
-        count: 1,
-        price: card.price,
+    const [countState, setCountState] = React.useState(0);
+    const [idState, setIdState] = React.useState<number | undefined>(0);
+    const MAX_VALUE = 10;
+
+    // const OrderProp: Order = {
+    //     name: card.title,
+    //     image: card.image,
+    //     weight: card.weight,
+    //     key: card.id,
+    //     count: countState,
+    //     price: card.price,
+    // };
+
+    const addDB = async (): Promise<void> => {
+        try {
+            const id = await db.orders.add({
+                name: card.title,
+                image: card.image,
+                weight: card.weight,
+                key: card.id,
+                count: countState,
+                price: card.price,
+            });
+            if (id !== undefined) setIdState(id);
+        } catch (error) {
+            console.error(error);
+        }
     };
+
+    const editDB = async (): Promise<void> => {
+        await db.orders.update(idState, {
+            count: countState,
+        });
+    };
+
+    useEffect(() => {
+        if (countState === 1) addDB();
+        else if (countState > 1) editDB();
+        console.log("card.id = ", card.id);
+        console.log("DB = ", card);
+    }, [countState]);
 
     return (
         <div key={card.id} className="card">
@@ -43,8 +76,13 @@ export const Card: React.FC<CardProps> = ({ card, onChange }) => {
                         <b>{card.price} ₸</b>
                     </h3>
                     <ButtonAddCard
-                        value={OrderProp.count}
-                        onChange={onChange}
+                        value={countState}
+                        onChange={(e) => {
+                            if (countState < MAX_VALUE)
+                                setCountState(countState + e);
+                            else if (countState >= MAX_VALUE && e < 0)
+                                setCountState(countState + e);
+                        }}
                     />
                 </div>
             </div>
