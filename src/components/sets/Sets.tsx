@@ -9,7 +9,6 @@ import { Section } from "@/components/section/Section";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { withButton } from "@/components/buttons/HOC/withButton";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 
 interface SetsProps {
@@ -22,13 +21,13 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const PAGE_LIMIT = 5;
-    const ButtonLoginExtended = withButton(ButtonLogin);
 
     const fetchSets = async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
-            setSets((prevSets) => [...prevSets, ...data]);
-            console.log(currentPage);
+            setSets((prevSets) =>
+                currentPage === 1 ? data : [...prevSets, ...data]
+            );
             setIsLoading(false);
         } catch (error) {
             setErrorSets(String(error));
@@ -103,9 +102,9 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                         </div>
                         {sets.length > 0 && (
                             <div className="sets__more">
-                                <ButtonLoginExtended onClick={nextPage}>
+                                <ButtonLogin onClick={nextPage}>
                                     Ещё
-                                </ButtonLoginExtended>
+                                </ButtonLogin>
                             </div>
                         )}
                     </>

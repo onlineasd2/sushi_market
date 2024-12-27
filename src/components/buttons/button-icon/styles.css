@@ -1,6 +1,5 @@
 .button {
     border-radius: var(--border-radius);
-    background-color: var(--color-light);
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
 }
@@ -16,4 +15,4 @@
     background-color: var(--color-accent);
 }
 
-/*# sourceMappingURL=styles.module.css.map */
+/*# sourceMappingURL=styles.css.map */

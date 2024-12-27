@@ -10,26 +10,22 @@ import { ButtonOrder } from "@/components/buttons/button-order/ButtonOrder";
 import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 import Link from "next/link";
 import { db, Order, Sticks } from "@/services/db";
-import { useEffect, useState } from "react";
-import { withButton } from "@/components/buttons/HOC/withButton";
-import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCartSticks";
-// import { ButtonListCart } from "@/components/buttons/button-list-cart/ButtonListCart";
+import React, { useEffect, useState } from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
+import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
+import { ButtonListCartSticks } from "@/components/buttons/button-list-cart-sticks/ButtonListCartSticks";
 
 export default function Page() {
     const [error, setError] = useState("");
-    const [setsOrder, setOrderSets] = useState<Order[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    // const [totalSticksCount, setTotalSticksCount] = useState(0);
-    const ButtonSticksExtended = withButton(ButtonListCartSticks);
-    // const ButtonOrderExtended = withButton(ButtonListCart);
-    const ButtonClearCartExtended = withButton(ButtonDeleteCart);
     const PRICE_STICK = 30;
     const sticksOrder: Sticks[] = [{ id: 0, count: 1, price: PRICE_STICK }];
+    // const isFirstRender = React.useRef(true);
     const [totalPriceSticks, setTotalPriceSticks] =
         useState<number>(PRICE_STICK);
 
-    // const totalPrice = setsOrder посчитать тут полную цену
+    // const totalPrice = setOrders посчитать тут полную цену
 
     const handleGetSticks = (_totalPriceSticks: number) => {
         setTotalPriceSticks(totalPriceSticks + _totalPriceSticks);
@@ -38,7 +34,7 @@ export default function Page() {
     const GetSets = async () => {
         try {
             const res = await db.orders.toArray();
-            setOrderSets(res);
+            setOrders(res);
         } catch (error) {
             setError(`Error ${error}`);
         }
@@ -51,28 +47,32 @@ export default function Page() {
                 setTotalPrice(
                     (prevPrice) => prevPrice + order.price * order.count
                 );
+                console.log(order.price);
+                console.log(order.count);
             });
         } catch (error) {
             setError(`Error ${error}`);
         }
     };
-    const GetTotalPriceSticks = async () => {
-        try {
-            const resStick = await db.sticks.toArray();
-            resStick.forEach((stick) => {
-                setTotalPriceSticks(
-                    (prevPrice) => prevPrice + stick.price * stick.count
-                );
-            });
-        } catch (error) {
-            setError(`Error ${error}`);
-        }
-    };
+    // const GetTotalPriceSticks = async () => {
+    //     try {
+    //         const resStick = await db.sticks.toArray();
+    //         resStick.forEach((stick) => {
+    //             setTotalPriceSticks((prevPrice) =>
+    //                 prevPrice !== null ? stick.price * stick.count : 0
+    //             );
+    //         });
+    //     } catch (error) {
+    //         setError(`Error ${error}`);
+    //     }
+    // };
     useEffect(() => {
-        GetTotalPrice();
-        GetTotalPriceSticks();
         GetSets();
     }, []);
+
+    useEffect(() => {
+        GetTotalPrice();
+    }, [orders]);
 
     return (
         <>
@@ -85,57 +85,64 @@ export default function Page() {
                             <h1>
                                 <b>Корзина</b>
                             </h1>
-                            <ButtonClearCartExtended clearAll>
+                            <ButtonIcon>
                                 <Image
                                     width={18}
                                     height={18}
                                     src="/trash-svgrepo-com.svg"
                                     alt="delete"
                                 />
-                            </ButtonClearCartExtended>
+                            </ButtonIcon>
                         </div>
                         {error ? (
                             <h1>{error}</h1>
                         ) : (
-                            setsOrder.map((setOrder) => (
-                                <div key={setOrder.key} className="cart__item">
+                            orders.map((localOrder) => (
+                                <div
+                                    key={localOrder.key}
+                                    className="cart__item"
+                                >
                                     <Image
-                                        src="/sushi-card1.png"
+                                        src={localOrder.image}
                                         width={60}
                                         height={60}
                                         alt="Суша"
                                     />
                                     <div className="cart__text">
                                         <h3>
-                                            <b>{setOrder.name}</b>
-                                            <p>{setOrder.weight}</p>
+                                            <b>{localOrder.name}</b>
+                                            <p>{localOrder.weight}</p>
                                         </h3>
                                     </div>
                                     <ButtonCounter
-                                        value={setOrder.count}
-                                        onChange={(e) => {
-                                            setOrderSets((prevState) => {
+                                        value={localOrder.count}
+                                        onChange={(e: number) => {
+                                            setOrders((prevState) => {
                                                 const prevState1 =
                                                     prevState.filter(
                                                         (set) =>
                                                             set.key !==
-                                                            setOrder.key
+                                                            localOrder.key
                                                     );
-                                                return [
+                                                const arr = [
                                                     ...prevState1,
                                                     {
-                                                        ...setOrder,
+                                                        ...localOrder,
                                                         count:
-                                                            setOrder.count + e,
+                                                            localOrder.count +
+                                                            e,
                                                     },
                                                 ];
+                                                return arr.sort((a, b) => {
+                                                    return a.key - b.key;
+                                                });
                                             });
                                         }}
                                     />
                                     <div className="cart__price">
-                                        <h3>{setOrder.price} ₸</h3>
+                                        <h3>{localOrder.price} ₸</h3>
                                     </div>
-                                    <ButtonDeleteCart Order={setOrder}>
+                                    <ButtonDeleteCart Order={localOrder}>
                                         <Image
                                             width={18}
                                             height={18}
@@ -159,7 +166,7 @@ export default function Page() {
                         </div>
                         <div className="cart__item">
                             <Image
-                                src="/sushi-card1.png"
+                                src="/sticks.webp"
                                 width={60}
                                 height={60}
                                 alt="Суша"
@@ -169,7 +176,7 @@ export default function Page() {
                                     <b>Палочки</b>
                                 </h3>
                             </div>
-                            <ButtonSticksExtended
+                            <ButtonListCartSticks
                                 onSendTotalPrice={handleGetSticks}
                                 props={sticksOrder[0]}
                             />
@@ -179,10 +186,7 @@ export default function Page() {
                         </div>
                         <div className="order-details">
                             <h2>
-                                <b>
-                                    Сумма заказа:{" "}
-                                    {totalPrice + totalPriceSticks} ₸
-                                </b>
+                                <b>Сумма заказа: {totalPrice} ₸</b>
                             </h2>
                             <div className="order-details__button-conainer">
                                 <Link href="/">

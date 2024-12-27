@@ -3,7 +3,6 @@ import "./styles.scss";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/section/Section";
-import { withButton } from "@/components/buttons/HOC/withButton";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
 
@@ -18,8 +17,6 @@ const categories = [
     { id: 8, title: "Специи" },
     { id: 9, title: "Соусы" },
 ];
-const ButtonIconCardExtended = withButton(ButtonIcon);
-const ButtonCartExtended = withButton(ButtonCart);
 
 const CategoryList = () => (
     <div className="category__list">
@@ -49,22 +46,22 @@ const CategoryOptions = () => (
 
 const CategoryFilters = () => (
     <div className="category__filters">
-        <ButtonIconCardExtended>
+        <ButtonIcon>
             <Image
                 width={14}
                 height={14}
                 src="/free-icon-search-8272068.png"
                 alt=""
             />
-        </ButtonIconCardExtended>
-        <ButtonIconCardExtended>
+        </ButtonIcon>
+        <ButtonIcon>
             <Image
                 width={14}
                 height={14}
                 src="/free-icon-sort-8105950.png"
                 alt=""
             />
-        </ButtonIconCardExtended>
+        </ButtonIcon>
     </div>
 );
 
@@ -77,7 +74,7 @@ export const Category = () => (
                     <CategoryOptions />
                     <CategoryFilters />
                 </div>
-                <ButtonCartExtended>В корзину</ButtonCartExtended>
+                <ButtonCart />
             </div>
         </div>
     </Section>
