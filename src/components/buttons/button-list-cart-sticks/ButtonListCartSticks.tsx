@@ -16,7 +16,6 @@ export const ButtonListCartSticks = ({
 
     const handleSticksTotalPrice = () => {
         onSendTotalPrice(totalPriceSticks);
-        console.log(totalPriceSticks);
     };
 
     const GetStickCount = async () => {
@@ -33,7 +32,7 @@ export const ButtonListCartSticks = ({
             const countSticksDB = await db.sticks.toArray();
             if (countSticksDB.length === 0) await db.sticks.add(_sticksOrder);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -43,7 +42,7 @@ export const ButtonListCartSticks = ({
                 count: newOrderCount,
             });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

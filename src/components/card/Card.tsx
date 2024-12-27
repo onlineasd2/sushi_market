@@ -11,44 +11,37 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ card }) => {
     const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
-    const [countState, setCountState] = React.useState(0);
-    const [idState, setIdState] = React.useState<number>(0);
+    const [countState, setCountState] = React.useState<number>(0);
+    const [idState, setIdState] = React.useState<number | null>(null);
     const isFirstRender = React.useRef(true);
     const MAX_VALUE = 10;
-
-    // const OrderProp: Order = {
-    //     name: card.title,
-    //     image: card.image,
-    //     weight: card.weight,
-    //     key: card.id,
-    //     count: countState,
-    //     price: card.price,
-    // };
 
     const addDB = async (): Promise<void> => {
         try {
             const id = await db.orders.add({
                 name: card.title,
-                image: card.image,
+                image: src,
                 weight: card.weight,
                 key: card.id,
                 count: countState,
                 price: card.price,
             });
-            if (id !== undefined) setIdState(id);
+            setIdState(id ?? null);
         } catch (error) {
             console.error(error);
         }
     };
 
     const editDB = async (): Promise<void> => {
-        await db.orders.update(idState, {
-            count: countState,
-        });
+        if (idState !== null)
+            await db.orders.update(idState, {
+                count: countState,
+            });
     };
 
     const deleteDB = async (): Promise<void> => {
-        await db.orders.delete(idState);
+        if (idState !== null) await db.orders.delete(idState);
+        setIdState(null);
     };
 
     const getDB = async () => {
@@ -59,7 +52,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                 if (res.id !== undefined) setIdState(res.id);
             } else setCountState(0);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -69,7 +62,10 @@ export const Card: React.FC<CardProps> = ({ card }) => {
             getDB();
         }
 
-        // if (countState > 0) editDB();
+        if (countState > 1 && countState < MAX_VALUE && countState !== 0)
+            editDB();
+        else if (countState === 1 && idState === null) addDB();
+        else if (countState <= 0 && idState !== null) deleteDB();
     }, [countState]);
 
     return (
@@ -97,28 +93,22 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     <ButtonAddCard
                         value={countState}
                         onChange={(e) => {
-                            if (e > 0) {
-                                // если мы нажимаем +
-                                if (countState < MAX_VALUE) {
-                                    setCountState(countState + e);
-                                    editDB();
-                                    console.log("Верх");
-                                }
-                                if (countState === 0) {
-                                    setCountState(countState + e);
-                                    console.log("Добавление");
-                                    addDB();
-                                }
-                            } else if (countState <= MAX_VALUE) {
-                                // если мы нажимаем -
-                                setCountState(countState + e);
-                                editDB();
-                                console.log("Вниз");
-                            } else if (countState === 1) {
-                                setCountState(countState + e);
-                                deleteDB();
-                                console.log("Удаление");
-                            }
+                            if (e > 0 && countState === 0)
+                                setCountState((prev) => prev + e);
+                            else if (
+                                e > 0 &&
+                                countState < MAX_VALUE &&
+                                countState !== 0
+                            )
+                                setCountState((prev) => prev + e);
+                            else if (
+                                e < 0 &&
+                                countState <= MAX_VALUE &&
+                                countState > 1
+                            )
+                                setCountState((prev) => prev + e);
+                            else if (e < 0 && countState === 1)
+                                setCountState((prev) => prev + e);
                         }}
                     />
                 </div>
