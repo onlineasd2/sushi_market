@@ -24,6 +24,7 @@ export default function Page() {
     // const isFirstRender = React.useRef(true);
     const [totalPriceSticks, setTotalPriceSticks] =
         useState<number>(PRICE_STICK);
+    const MAX_VALUE: number = 10;
 
     // const totalPrice = setOrders посчитать тут полную цену
 
@@ -43,17 +44,14 @@ export default function Page() {
     const GetTotalPrice = async () => {
         try {
             const res = await db.orders.toArray();
-            res.forEach((order) => {
-                setTotalPrice(
-                    (prevPrice) => prevPrice + order.price * order.count
-                );
-                console.log(order.price);
-                console.log(order.count);
-            });
+            const sumTotal = res.reduce((acc, order) => acc + order.price, 0);
+            setTotalPrice(sumTotal);
+            console.log(sumTotal);
         } catch (error) {
             setError(`Error ${error}`);
         }
     };
+
     // const GetTotalPriceSticks = async () => {
     //     try {
     //         const resStick = await db.sticks.toArray();
@@ -66,13 +64,59 @@ export default function Page() {
     //         setError(`Error ${error}`);
     //     }
     // };
+
+    const editDB = async (id: number, countState: number): Promise<void> => {
+        try {
+            await db.orders.update(id, {
+                count: countState,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteDB = async (id: number): Promise<void> => {
+        try {
+            await db.orders.delete(id);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         GetSets();
     }, []);
 
     useEffect(() => {
         GetTotalPrice();
+        console.log("useEFfects");
+        orders.forEach((order) => {
+            if (order.count <= 0) {
+                deleteDB(order.id ?? 0);
+                GetSets();
+            }
+            if (order.count >= 1 && order.count <= MAX_VALUE)
+                editDB(order.id ?? 0, order.count);
+        });
     }, [orders]);
+
+    const changeCounter = (e: number, count: number): boolean => {
+        if (e > 0 && count < MAX_VALUE) {
+            console.log("Edit +");
+            return true;
+        }
+        if (e < 0 && count <= MAX_VALUE && count > 1) {
+            console.log("Edit -");
+            return true;
+        }
+        if (e < 0 && count <= 1) {
+            console.log("Delete");
+
+            return true;
+        }
+
+        return false;
+    };
 
     return (
         <>
@@ -94,8 +138,12 @@ export default function Page() {
                                 />
                             </ButtonIcon>
                         </div>
+                        {/* ИСПРАВИТЬ ТУТ КОД СДЕЛАТЬ НА IF */}
+                        {/* eslint-disable-next-line no-nested-ternary */}
                         {error ? (
                             <h1>{error}</h1>
+                        ) : orders.length === 0 ? (
+                            <h1>Здесь пока пусто</h1>
                         ) : (
                             orders.map((localOrder) => (
                                 <div
@@ -124,13 +172,30 @@ export default function Page() {
                                                             set.key !==
                                                             localOrder.key
                                                     );
+                                                if (
+                                                    changeCounter(
+                                                        e,
+                                                        localOrder.count
+                                                    )
+                                                ) {
+                                                    const arr = [
+                                                        ...prevState1,
+                                                        {
+                                                            ...localOrder,
+                                                            count:
+                                                                localOrder.count +
+                                                                e,
+                                                        },
+                                                    ];
+                                                    return arr.sort((a, b) => {
+                                                        return a.key - b.key;
+                                                    });
+                                                }
                                                 const arr = [
                                                     ...prevState1,
                                                     {
                                                         ...localOrder,
-                                                        count:
-                                                            localOrder.count +
-                                                            e,
+                                                        count: localOrder.count,
                                                     },
                                                 ];
                                                 return arr.sort((a, b) => {
