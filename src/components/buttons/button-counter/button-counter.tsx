@@ -1,5 +1,5 @@
-import "./styles.scss";
 import React from "react";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     value?: number;
@@ -18,14 +18,12 @@ export const ButtonCounter = ({
     };
 
     return (
-        <div className="counter-order">
-            <button className="button-counter" onClick={onRemove}>
+        <div className={styles.counterOrder}>
+            <button className={styles.buttonCounter} onClick={onRemove}>
                 -
             </button>
-            <h3 className="counter">
-                <b>{value}</b>
-            </h3>
-            <button className="button-counter" onClick={onAdd}>
+            <h3 className={styles.counter}>{value}</h3>
+            <button className={styles.buttonCounter} onClick={onAdd}>
                 +
             </button>
         </div>
