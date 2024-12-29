@@ -11,10 +11,6 @@ export const ButtonAddCard = ({
     value,
     onChange,
 }: ButtonProps): React.JSX.Element => {
-    // const DeleteOrder = async (): Promise<void> => {
-    //     await db.orders.delete(id);
-    // };
-
     const onCart = () => {
         onChange?.(1);
     };
