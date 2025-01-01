@@ -1,4 +1,5 @@
-@import "../../app/styles";
+@import "../../app/styles/globals/media";
+@import "../../app/styles/globals/fonts";
 
 .category {
     display: flex;
@@ -12,7 +13,7 @@
         padding: 0;
     }
 
-    &__main-container {
+    &__mainContainer {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -46,13 +47,13 @@
         ul {
             display: flex;
             overflow-x: auto;
-            scrollbar-width: none; /* Убрать полосу прокрутки в Firefox */
-            -ms-overflow-style: none; /* Убрать полосу прокрутки в IE и Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             margin-right: 15px;
             gap: 10px;
 
             &::-webkit-scrollbar {
-                display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
+                display: none;
             }
 
             li {

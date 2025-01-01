@@ -1,6 +1,6 @@
-import "./styles.scss";
 import React from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     value?: number;
@@ -20,7 +20,7 @@ export const ButtonAddCard = ({
     ) : (
         <button
             onClick={onCart}
-            className="button button__add-cart"
+            className={`${styles.button} ${styles.button__addCart}`}
             tabIndex={0}
             aria-label="Кнопка в корзину"
         >

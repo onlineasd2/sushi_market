@@ -1,30 +1,25 @@
 "use client";
 
-import "./styles.scss";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Section } from "@/components/section/Section";
-import { withButton } from "@/components/buttons/HOC/withButton";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
+import styles from "./styles.module.scss";
 
 export const Header = () => {
-    /* Кнопка бургер-меню */
     const [isBurgerActive, setIsBurgerActive] = React.useState(false);
 
     const toggleMenu = () => {
         setIsBurgerActive(!isBurgerActive);
     };
-    /* Кнопка бургер-меню */
-    const ButtonLocationExtended = withButton(ButtonLocation);
-    const ButtonLoginExtended = withButton(ButtonLogin);
 
     return (
         <Section>
-            <div className="header">
-                <div className="header__container">
-                    <div className="header__logo">
+            <div className={styles.header}>
+                <div className={styles.header__container}>
+                    <div className={styles.header__logo}>
                         <Link href="/">
                             <Image
                                 src="/logo.svg"
@@ -34,16 +29,19 @@ export const Header = () => {
                             />
                         </Link>
                     </div>
-                    <div className="header__location">
+                    <div className={styles.header__location}>
                         <h3>
-                            Ваш город <span className="text-red">Павлодар</span>
+                            Ваш город{" "}
+                            <span className={styles.textRed}>Павлодар</span>
                         </h3>
                         <h3>
-                            <span className="text-red">+7 747 095 83 04</span>
+                            <span className={styles.textRed}>
+                                +7 747 095 83 04
+                            </span>
                         </h3>
                     </div>
-                    <div className="header__find">
-                        <ButtonLocationExtended>
+                    <div className={styles.header__find}>
+                        <ButtonLocation>
                             <Image
                                 src="/placeholder.png"
                                 width={16}
@@ -51,15 +49,15 @@ export const Header = () => {
                                 alt=""
                             />
                             Выберите адрес
-                        </ButtonLocationExtended>
+                        </ButtonLocation>
                     </div>
-                    <ButtonLoginExtended>Войти</ButtonLoginExtended>
+                    <ButtonLogin>Войти</ButtonLogin>
                 </div>
             </div>
 
-            <div className="header-mobile">
-                <div className="header-mobile__container">
-                    <div className="header-mobile__content">
+            <div className={styles.headerMobile}>
+                <div className={styles.headerMobile__container}>
+                    <div className={styles.headerMobile__content}>
                         <div
                             role="button"
                             tabIndex={0}
@@ -69,11 +67,11 @@ export const Header = () => {
                                 if (e.key === "Enter" || e.key === " ")
                                     toggleMenu();
                             }}
-                            className={`header-mobile__burger-menu ${isBurgerActive ? "active" : ""}`}
+                            className={`${styles.headerMobile__burgerMenu} ${isBurgerActive ? styles.active : ""}`}
                         >
                             <span />
                         </div>
-                        <ButtonLoginExtended>Позвонить</ButtonLoginExtended>
+                        <ButtonLogin>Позвонить</ButtonLogin>
                     </div>
                     <Image
                         src="./mobileLogo.svg"
@@ -89,7 +87,7 @@ export const Header = () => {
                     />
                 </div>
                 <nav
-                    className={`header-mobile__nav-menu ${isBurgerActive ? "" : "hidden"}`}
+                    className={`${styles.headerMobile__navMenu} ${isBurgerActive ? "" : styles.hidden}`}
                 >
                     <Image
                         onClick={toggleMenu}
@@ -99,9 +97,9 @@ export const Header = () => {
                         height={24}
                         src="/close.png"
                         alt=""
-                        className="header-mobile__close-btn"
+                        className={styles.headerMobile__closeBtn}
                     />
-                    <ul className="header-mobile__menu-box">
+                    <ul className={styles.headerMobile__menuBox}>
                         <li>
                             <Image
                                 src="/free-icon-profile-9344418.png"
@@ -161,13 +159,12 @@ export const Header = () => {
                         </li>
                     </ul>
                 </nav>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
                 <div
                     onClick={toggleMenu}
                     role="button"
                     tabIndex={0}
                     aria-label="toggleMenu"
-                    className={`header-mobile__overlay ${isBurgerActive ? "" : "hidden"}`}
+                    className={`${styles.headerMobile__overlay} ${isBurgerActive ? "" : styles.hidden}`}
                 />
             </div>
         </Section>

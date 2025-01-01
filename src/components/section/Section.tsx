@@ -1,12 +1,12 @@
-import "./styles.scss";
 import React, { ReactNode } from "react";
+import styles from "./styles.module.scss";
 
 interface CategoryProps {
     children: ReactNode;
 }
 
 export const Section: React.FC<CategoryProps> = ({ children }) => (
-    <div className="section">
-        <div className="wrapper">{children}</div>
+    <div className={styles.section}>
+        <div className={styles.wrapper}>{children}</div>
     </div>
 );

@@ -1,5 +1,9 @@
 .button {
-    &__add-cart {
+    border-radius: var(--border-radius);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
+    &__addCart {
         height: 40px;
         min-width: 140px;
         font-size: 16px;

@@ -1,17 +1,29 @@
 .button {
-    &__login {
+    border-radius: var(--border-radius);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
+
+    &__order {
         height: 32px;
         min-height: var(--app-button-min-height);
         padding: 0 12px;
         margin-left: 14px;
+        color: var(--color-light);
         font-size: 16px;
         border: 1px solid var(--color-accent);
-        color: var(--color-accent);
         transition: background-color 0.3s;
+        background-color: var(--color-accent);
+        position: relative;
 
         &:hover {
             background-color: var(--color-accent);
             color: var(--color-light);
+        }
+
+        & span {
+            position: absolute;
+            right: 20px;
         }
     }
 }

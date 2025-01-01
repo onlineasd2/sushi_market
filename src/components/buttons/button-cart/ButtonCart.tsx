@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import "./styles.scss";
 import { db } from "@/services/db";
 import Link from "next/link";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
 }
+
 export const ButtonCart = ({ onClick }: ButtonProps): React.JSX.Element => {
     const [countOrders, setCountOrders] = React.useState<number>(0);
     const GetOrder = async () => {
@@ -25,7 +26,7 @@ export const ButtonCart = ({ onClick }: ButtonProps): React.JSX.Element => {
         <Link href="/cart">
             <button
                 onClick={onClick}
-                className="button button__cart"
+                className={`${styles.button} ${styles.button__cart}`}
                 tabIndex={0}
                 aria-label="Кнопка"
             >

@@ -1,4 +1,8 @@
 .button {
+    border-radius: var(--border-radius);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
     &__cart {
         height: 40px;
         min-width: 140px;

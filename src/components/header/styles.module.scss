@@ -1,4 +1,5 @@
-@import "../../app/styles";
+@import "../../app/styles/globals/media";
+@import "../../app/styles/globals/text-red";
 
 .header {
     display: flex;
@@ -36,13 +37,13 @@
     &__find {
     }
 
-    &__btn-location {
+    &__btnLocation {
     }
 
-    &__btn-login {
+    &__btnLogin {
     }
 
-    &__button-location {
+    &__buttonLocation {
         position: relative;
 
         & img {
@@ -53,7 +54,7 @@
         }
     }
 
-    &-mobile {
+    &Mobile {
         display: none;
         width: 100%;
         padding: 16px 0px;
@@ -83,12 +84,12 @@
             position: relative;
         }
 
-        &__button-login {
+        &__buttonLogin {
             position: absolute;
             left: 40px;
         }
 
-        &__burger-menu {
+        &__burgerMenu {
             display: flex;
             position: relative;
             align-items: center;
@@ -136,12 +137,12 @@
             }
         }
 
-        &__close-btn {
+        &__closeBtn {
             margin-left: 20px;
             margin-top: 20px;
         }
 
-        &__nav-menu {
+        &__navMenu {
             position: fixed;
             width: 85vw;
             height: 100%;
@@ -162,7 +163,7 @@
             }
         }
 
-        &__menu-box {
+        &__menuBox {
             display: flex;
             flex-direction: column;
             padding-top: 40px;
