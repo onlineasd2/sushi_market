@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
@@ -10,7 +10,7 @@ export const ButtonLocation = ({ onClick, children }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className="button button__location header__button-location"
+            className={`${styles.button} ${styles.button__location} ${styles.header__buttonLocation}`}
             tabIndex={0}
             aria-label="Кнопка"
         >

@@ -1,6 +1,6 @@
 import React from "react";
-import "./styles.scss";
 import { db, Order } from "@/services/db";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     children?: React.ReactNode;
@@ -22,7 +22,7 @@ export const ButtonDeleteCart = ({
     return (
         <button
             onClick={clearAll ? DeleteAllOrders : DeleteOrder}
-            className="button button__trash"
+            className={`${styles.button} ${styles.button__trash}`}
             tabIndex={0}
             aria-label="Кнопка"
         >

@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
@@ -13,7 +13,7 @@ export const ButtonIcon = ({
     return (
         <button
             onClick={onClick}
-            className="button button__mobile"
+            className={`${styles.button} ${styles.button__mobile}`}
             tabIndex={0}
             aria-label="Кнопка"
         >

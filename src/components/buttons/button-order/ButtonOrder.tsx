@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
@@ -10,7 +10,7 @@ export const ButtonOrder = ({ onClick, children }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className="button button__order"
+            className={`${styles.button} ${styles.button__order}`}
             tabIndex={0}
             aria-label="Кнопка"
         >

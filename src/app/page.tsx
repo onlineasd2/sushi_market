@@ -2,7 +2,6 @@ import { Category } from "@/components/category/Category";
 import { Header } from "@/components/header/Header";
 import { Sets } from "@/components/sets/Sets";
 import { Modal } from "@/components/modal/Modal";
-import { Slider } from "@/components/slider/Slider";
 import { Footer } from "@/components/footer/Footer";
 
 export default function Home() {
@@ -10,7 +9,6 @@ export default function Home() {
         <>
             <Header />
             <Category />
-            <Slider />
             <Sets titleMain="Наборы" />
             <Modal>
                 <h2>Welcome to the Modal</h2>

@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.scss";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/section/Section";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
+import styles from "./styles.module.scss";
 
 const categories = [
     { id: 1, title: "Наборы" },
@@ -19,10 +19,10 @@ const categories = [
 ];
 
 const CategoryList = () => (
-    <div className="category__list">
+    <div className={styles.category__list}>
         <ul>
             {categories.map((item, index) => (
-                <li key={item.id} className={index === 0 ? "active" : ""}>
+                <li key={item.id} className={index === 0 ? styles.active : ""}>
                     <Link href="/#">{item.title}</Link>
                 </li>
             ))}
@@ -31,12 +31,12 @@ const CategoryList = () => (
 );
 
 const CategoryOptions = () => (
-    <div className="category__options">
-        <div className="category__delivery">
+    <div className={styles.category__options}>
+        <div className={styles.category__delivery}>
             <h4>Доставка и оплата</h4>
         </div>
-        <span className="category__line" />
-        <div className="category__language">
+        <span className={styles.category__line} />
+        <div className={styles.category__language}>
             <h4>RU</h4>
             <h4>/</h4>
             <h4>KZ</h4>
@@ -45,7 +45,7 @@ const CategoryOptions = () => (
 );
 
 const CategoryFilters = () => (
-    <div className="category__filters">
+    <div className={styles.category__filters}>
         <ButtonIcon>
             <Image
                 width={14}
@@ -67,9 +67,9 @@ const CategoryFilters = () => (
 
 export const Category = () => (
     <Section>
-        <div className="category">
-            <div className="category__content">
-                <div className="category__main-container">
+        <div className={styles.category}>
+            <div className={styles.category__content}>
+                <div className={styles.category__mainContainer}>
                     <CategoryList />
                     <CategoryOptions />
                     <CategoryFilters />

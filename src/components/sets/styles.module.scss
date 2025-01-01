@@ -1,4 +1,4 @@
-@import "../../app/styles";
+@import "../../app/styles/globals/media";
 
 .sets {
     display: flex;
@@ -74,7 +74,7 @@
         width: 262px;
     }
 
-    &__space-between {
+    &__spaceBetween {
         display: flex;
         justify-content: space-between;
     }
