@@ -1,6 +1,5 @@
 "use client";
 
-import "./styles.scss";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { Section } from "@/components/section/Section";
@@ -12,6 +11,8 @@ import { db, Order, Sticks } from "@/services/db";
 import React, { useEffect, useState } from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
+import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
+import styles from "./styles.module.scss";
 
 export default function Page() {
     const [error, setError] = useState("");
@@ -33,7 +34,7 @@ export default function Page() {
     const totalSum = sumOrder + sumSticks;
 
     const isSticksLoaded = async (): Promise<boolean> => {
-        return (await db.sticks.get(0)) !== undefined; // Проверка сразу возвращает boolean
+        return (await db.sticks.get(0)) !== undefined;
     };
 
     const addSticksDB = async (): Promise<void> => {
@@ -146,10 +147,10 @@ export default function Page() {
         <>
             <Header />
             <Section>
-                <div className="cart">
-                    <div className="cart__content">
+                <div className={styles.cart}>
+                    <div className={styles.cart__content}>
                         <hr />
-                        <div className="cart__title">
+                        <div className={styles.cart__title}>
                             <h1>
                                 <b>Корзина</b>
                             </h1>
@@ -166,12 +167,11 @@ export default function Page() {
                                 ""
                             )}
                         </div>
-                        {/* Хз как тут сделать */}
                         {/* eslint-disable-next-line no-nested-ternary */}
                         {error ? (
                             <h1>{error}</h1>
                         ) : orders.length === 0 ? (
-                            <div className="not-found">
+                            <div className={styles.notFound}>
                                 <Image
                                     width={240}
                                     height={240}
@@ -181,9 +181,9 @@ export default function Page() {
                                 <h1>Ой, а тут пусто!</h1>
                                 <p>Добавьте что-нибудь из меню</p>
 
-                                <button className="button button__login">
+                                <ButtonLogin>
                                     <Link href="/"> Перейти в меню</Link>
-                                </button>
+                                </ButtonLogin>
                             </div>
                         ) : (
                             orders
@@ -191,7 +191,7 @@ export default function Page() {
                                 .map((localOrder) => (
                                     <div
                                         key={localOrder.key}
-                                        className="cart__item"
+                                        className={styles.cart__item}
                                     >
                                         <Image
                                             src={localOrder.image}
@@ -199,7 +199,7 @@ export default function Page() {
                                             height={60}
                                             alt="Суша"
                                         />
-                                        <div className="cart__text">
+                                        <div className={styles.cart__text}>
                                             <h3>
                                                 <b>{localOrder.name}</b>
                                                 <p>{localOrder.weight}</p>
@@ -252,7 +252,7 @@ export default function Page() {
                                                 });
                                             }}
                                         />
-                                        <div className="cart__price">
+                                        <div className={styles.cart__price}>
                                             <h3>{localOrder.price} ₸</h3>
                                         </div>
                                         <ButtonIcon
@@ -290,22 +290,22 @@ export default function Page() {
                     </div>
                 </div>
 
-                <div className="cart">
-                    <div className="cart__content">
+                <div className={styles.cart}>
+                    <div className={styles.cart__content}>
                         <hr />
-                        <div className="cart__title">
+                        <div className={styles.cart__title}>
                             <h2>
                                 <b>Приборы</b>
                             </h2>
                         </div>
-                        <div className="cart__item">
+                        <div className={styles.cart__item}>
                             <Image
                                 src="/sticks.webp"
                                 width={60}
                                 height={60}
                                 alt="Суша"
                             />
-                            <div className="cart__text">
+                            <div className={styles.cart__text}>
                                 <h3>
                                     <b>Палочки</b>
                                 </h3>
@@ -329,15 +329,17 @@ export default function Page() {
                                         });
                                 }}
                             />
-                            <div className="cart__price">
+                            <div className={styles.cart__price}>
                                 <h3>{sticks[0].price} ₸</h3>
                             </div>
                         </div>
-                        <div className="order-details">
+                        <div className={styles.orderDetails}>
                             <h2>
                                 <b>Сумма заказа: {totalSum} ₸</b>
                             </h2>
-                            <div className="order-details__button-conainer">
+                            <div
+                                className={styles.orderDetails__buttonConainer}
+                            >
                                 <Link href="/">
                                     <ButtonOrderCancel>
                                         Отменить

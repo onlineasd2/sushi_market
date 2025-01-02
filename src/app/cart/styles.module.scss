@@ -41,7 +41,7 @@
     }
 }
 
-.order-details {
+.orderDetails {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -52,7 +52,7 @@
         justify-content: end;
     }
 
-    &__button-conainer {
+    &__buttonConainer {
         display: flex;
         justify-content: space-between;
         padding-top: 40px;
@@ -67,7 +67,7 @@
     }
 }
 
-.not-found {
+.notFound {
     display: flex;
     flex-direction: column;
     justify-content: center;
