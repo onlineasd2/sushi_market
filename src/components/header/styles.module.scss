@@ -6,17 +6,11 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
+    position: relative;
+    width: 100%;
 
     @include tablet {
         display: none;
-    }
-
-    &__container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        width: 100%;
     }
 
     &__location {
@@ -63,25 +57,25 @@
             display: block;
         }
 
-        &__content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            & button {
-                @include mobile {
-                    padding: 0px 10px;
-                    height: 30px;
-                    font-size: 12px;
-                }
-            }
-        }
-
         &__container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
+
+            & > .headerMobile__burgerMenu,
+            & > .buttonLogin {
+                margin-right: 8px;
+            }
+
+            & > :nth-child(3) {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            & > :last-child {
+                margin-left: auto;
+            }
         }
 
         &__buttonLogin {

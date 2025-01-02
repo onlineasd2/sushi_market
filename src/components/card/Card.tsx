@@ -16,7 +16,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
     const isFirstRender = React.useRef(true);
     const MAX_VALUE = 10;
 
-    const addDB = async (): Promise<void> => {
+    const addOrderToDB = async (): Promise<void> => {
         try {
             const id = await db.orders.add({
                 name: card.title,
@@ -32,19 +32,19 @@ export const Card: React.FC<CardProps> = ({ card }) => {
         }
     };
 
-    const editDB = async (): Promise<void> => {
+    const editOrderFromDB = async (): Promise<void> => {
         if (idState !== null)
             await db.orders.update(idState, {
                 count: countState,
             });
     };
 
-    const deleteDB = async (): Promise<void> => {
+    const deletOrderFromDB = async (): Promise<void> => {
         if (idState !== null) await db.orders.delete(idState);
         setIdState(null);
     };
 
-    const getDB = async () => {
+    const getOrderFromDB = async () => {
         try {
             const res = await db.orders.where("key").equals(card.id).first();
             if (res?.key === card.id) {
@@ -59,14 +59,23 @@ export const Card: React.FC<CardProps> = ({ card }) => {
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
-            getDB();
+            getOrderFromDB();
         }
 
         if (countState > 1 && countState < MAX_VALUE && countState !== 0)
-            editDB();
-        else if (countState === 1 && idState === null) addDB();
-        else if (countState <= 0 && idState !== null) deleteDB();
+            editOrderFromDB();
+        else if (countState === 1 && idState === null) addOrderToDB();
+        else if (countState <= 0 && idState !== null) deletOrderFromDB();
     }, [countState]);
+
+    const handlerCounterButton = (e: number) => {
+        if (e > 0 && countState === 0) setCountState((prev) => prev + e);
+        else if (e > 0 && countState < MAX_VALUE && countState !== 0)
+            setCountState((prev) => prev + e);
+        else if (e < 0 && countState <= MAX_VALUE && countState > 1)
+            setCountState((prev) => prev + e);
+        else if (e < 0 && countState === 1) setCountState((prev) => prev + e);
+    };
 
     return (
         <div key={card.id} className={styles.card}>
@@ -92,24 +101,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     </h3>
                     <ButtonAddCard
                         value={countState}
-                        onChange={(e) => {
-                            if (e > 0 && countState === 0)
-                                setCountState((prev) => prev + e);
-                            else if (
-                                e > 0 &&
-                                countState < MAX_VALUE &&
-                                countState !== 0
-                            )
-                                setCountState((prev) => prev + e);
-                            else if (
-                                e < 0 &&
-                                countState <= MAX_VALUE &&
-                                countState > 1
-                            )
-                                setCountState((prev) => prev + e);
-                            else if (e < 0 && countState === 1)
-                                setCountState((prev) => prev + e);
-                        }}
+                        onChange={handlerCounterButton}
                     />
                 </div>
             </div>
