@@ -62,7 +62,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
             getOrderFromDB();
         }
 
-        if (countState > 1 && countState < MAX_VALUE && countState !== 0)
+        if (countState > 1 && countState <= MAX_VALUE && countState !== 0)
             editOrderFromDB();
         else if (countState === 1 && idState === null) addOrderToDB();
         else if (countState <= 0 && idState !== null) deletOrderFromDB();
@@ -72,7 +72,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
         if (e > 0 && countState === 0) setCountState((prev) => prev + e);
         else if (e > 0 && countState < MAX_VALUE && countState !== 0)
             setCountState((prev) => prev + e);
-        else if (e < 0 && countState <= MAX_VALUE && countState > 1)
+        else if (e < 0 && countState <= MAX_VALUE && countState > 0)
             setCountState((prev) => prev + e);
         else if (e < 0 && countState === 1) setCountState((prev) => prev + e);
     };
