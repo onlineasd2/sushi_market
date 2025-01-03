@@ -7,9 +7,13 @@ import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
+    ref?: React.Ref<HTMLButtonElement>;
 }
 
-export const ButtonCart = ({ onClick }: ButtonProps): React.JSX.Element => {
+export const ButtonCart = ({
+    onClick,
+    ref,
+}: ButtonProps): React.JSX.Element => {
     const [countOrders, setCountOrders] = React.useState<number>(0);
     const GetOrder = async () => {
         setCountOrders(
@@ -29,6 +33,7 @@ export const ButtonCart = ({ onClick }: ButtonProps): React.JSX.Element => {
                 className={`${styles.button} ${styles.button__cart}`}
                 tabIndex={0}
                 aria-label="Кнопка"
+                ref={ref}
             >
                 {`${countOrders ? `Корзина | ${countOrders}` : `Корзина`}`}
             </button>

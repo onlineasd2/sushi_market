@@ -264,7 +264,11 @@ export default function Page() {
                                             }
                                         />
                                         <div className={styles.cart__price}>
-                                            <h3>{localOrder.price} ₸</h3>
+                                            <h3>
+                                                {localOrder.price *
+                                                    localOrder.count}{" "}
+                                                ₸
+                                            </h3>
                                         </div>
                                         <ButtonIcon
                                             onClick={() => {
