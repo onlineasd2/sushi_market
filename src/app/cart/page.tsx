@@ -50,7 +50,7 @@ export default function Page() {
         }
     };
 
-    const GetSets = async () => {
+    const getOrdersFromDB = async () => {
         try {
             const res = await db.orders.toArray();
             setOrders(res);
@@ -59,19 +59,23 @@ export default function Page() {
         }
     };
 
-    const GetSticks = async () => {
+    const getSticksFromDB = async () => {
         try {
+            const sticksCount = await db.sticks.count();
+            if (sticksCount === 0) await addSticksDB();
             if (await isSticksLoaded) {
                 const res = await db.sticks.toArray();
                 setSticks(res);
             }
-            addSticksDB();
         } catch (error) {
             setError(`Error ${error}`);
         }
     };
 
-    const editDB = async (id: number, countState: number): Promise<void> => {
+    const editOrdersToDB = async (
+        id: number,
+        countState: number
+    ): Promise<void> => {
         try {
             await db.orders.update(id, {
                 count: countState,
@@ -81,22 +85,22 @@ export default function Page() {
         }
     };
 
-    const editSticksDB = async (
+    const editSticksToDB = async (
         id: number,
         countState: number
     ): Promise<void> => {
         try {
+            if (sticks === null) await addSticksDB();
             if (await isSticksLoaded)
                 await db.sticks.update(id, {
                     count: countState,
                 });
-            addSticksDB();
         } catch (error) {
             console.error(error);
         }
     };
 
-    const deleteDB = async (id: number): Promise<void> => {
+    const deleteOrderFromDB = async (id: number): Promise<void> => {
         try {
             await db.orders.delete(id);
         } catch (error) {
@@ -106,7 +110,7 @@ export default function Page() {
 
     const handleClearAllOrders = () => {
         orders.forEach((order) => {
-            deleteDB(order.id ?? 0);
+            deleteOrderFromDB(order.id ?? 0);
         });
         setOrders([]);
     };
@@ -122,26 +126,71 @@ export default function Page() {
     };
 
     useEffect(() => {
-        if (sticks) addSticksDB();
-        GetSets();
-        GetSticks();
+        getSticksFromDB();
+        getOrdersFromDB();
     }, []);
 
     useEffect(() => {
         orders.forEach((order) => {
             if (order.count <= 0) {
-                deleteDB(order.id ?? 0);
-                GetSets();
+                deleteOrderFromDB(order.id ?? 0);
+                getOrdersFromDB();
             }
             if (order.count >= 1 && order.count <= MAX_VALUE)
-                editDB(order.id ?? 0, order.count);
+                editOrdersToDB(order.id ?? 0, order.count);
         });
 
         sticks.forEach((stick) => {
             if (stick.count >= 0 && stick.count <= MAX_VALUE)
-                editSticksDB(stick.id ?? 0, stick.count);
+                editSticksToDB(stick.id ?? 0, stick.count);
         });
     }, [orders, sticks]);
+
+    const handlerButtonCounter = (e: number, localOrder: Order) => {
+        setOrders((prevState) => {
+            const prevState1 = prevState.filter(
+                (set) => set.key !== localOrder.key
+            );
+            if (changeCounter(e, localOrder.count)) {
+                const arr = [
+                    ...prevState1,
+                    {
+                        ...localOrder,
+                        count: localOrder.count + e,
+                    },
+                ];
+                return arr.sort((a, b) => {
+                    return a.key - b.key;
+                });
+            }
+            const arr = [
+                ...prevState1,
+                {
+                    ...localOrder,
+                    count: localOrder.count,
+                },
+            ];
+            return arr.sort((a, b) => {
+                return a.key - b.key;
+            });
+        });
+    };
+
+    const handlerButtonCounterSticks = (e: number) => {
+        if (changeCounter(e, sticks[0].count))
+            setSticks((prevState) => {
+                const prevState1 = prevState.filter(
+                    (stick) => stick.id !== sticks[0].id
+                );
+                return [
+                    ...prevState1,
+                    {
+                        ...sticks[0],
+                        count: sticks[0].count + e,
+                    },
+                ];
+            });
+    };
 
     return (
         <>
@@ -207,50 +256,12 @@ export default function Page() {
                                         </div>
                                         <ButtonCounter
                                             value={localOrder.count}
-                                            onChange={(e: number) => {
-                                                setOrders((prevState) => {
-                                                    const prevState1 =
-                                                        prevState.filter(
-                                                            (set) =>
-                                                                set.key !==
-                                                                localOrder.key
-                                                        );
-                                                    if (
-                                                        changeCounter(
-                                                            e,
-                                                            localOrder.count
-                                                        )
-                                                    ) {
-                                                        const arr = [
-                                                            ...prevState1,
-                                                            {
-                                                                ...localOrder,
-                                                                count:
-                                                                    localOrder.count +
-                                                                    e,
-                                                            },
-                                                        ];
-                                                        return arr.sort(
-                                                            (a, b) => {
-                                                                return (
-                                                                    a.key -
-                                                                    b.key
-                                                                );
-                                                            }
-                                                        );
-                                                    }
-                                                    const arr = [
-                                                        ...prevState1,
-                                                        {
-                                                            ...localOrder,
-                                                            count: localOrder.count,
-                                                        },
-                                                    ];
-                                                    return arr.sort((a, b) => {
-                                                        return a.key - b.key;
-                                                    });
-                                                });
-                                            }}
+                                            onChange={(e) =>
+                                                handlerButtonCounter(
+                                                    e,
+                                                    localOrder
+                                                )
+                                            }
                                         />
                                         <div className={styles.cart__price}>
                                             <h3>{localOrder.price} ₸</h3>
@@ -312,22 +323,7 @@ export default function Page() {
                             </div>
                             <ButtonCounter
                                 value={sticks[0].count}
-                                onChange={(e: number) => {
-                                    if (changeCounter(e, sticks[0].count))
-                                        setSticks((prevState) => {
-                                            const prevState1 = prevState.filter(
-                                                (stick) =>
-                                                    stick.id !== sticks[0].id
-                                            );
-                                            return [
-                                                ...prevState1,
-                                                {
-                                                    ...sticks[0],
-                                                    count: sticks[0].count + e,
-                                                },
-                                            ];
-                                        });
-                                }}
+                                onChange={handlerButtonCounterSticks}
                             />
                             <div className={styles.cart__price}>
                                 <h3>{sticks[0].price} ₸</h3>
