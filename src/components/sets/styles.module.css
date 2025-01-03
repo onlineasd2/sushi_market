@@ -216,11 +216,13 @@ li {
     --color-footer-gray: #93809f;
     --color-light-gray: #bcc3c6;
     --color-violet: #26033f;
+    --typography-primary-color: #203842;
+    --typography-secondary-color: #5a6a70;
+    --button-text-color: #abadba;
+    --button-bg-color: #e2e2e9;
     --color-bg-alt: #fafafa;
     --color-accent: #e13d48;
     --font-family-base: "MuseoSansCyrl", "sans-serif";
-    --border-radius: 20px;
-    --border-radius: 20px;
     --box-shadow: 0 0 20px 2px rgb(0 0 0 / 9%);
     --container-width: 1160px;
     --container-padding-x: 10px;
@@ -230,15 +232,6 @@ li {
     --border-radius-medium: 10px;
     --border-radius-small: 5px;
     --transition-duration: 0.2s;
-}
-
-.section {
-    display: flex;
-    justify-content: center;
-}
-.section-footer {
-    background-color: var(--color-violet);
-    color: var(--color-footer-gray);
 }
 
 .container {
@@ -255,7 +248,6 @@ li {
     border: 0 !important;
     padding: 0 !important;
     white-space: nowrap !important;
-    -webkit-clip-path: inset(100%) !important;
     clip-path: inset(100%) !important;
     clip: rect(0 0 0 0) !important;
     overflow: hidden !important;
@@ -270,42 +262,6 @@ li {
 @media (min-width: 768px) {
     .visible-mobile {
         display: none !important;
-    }
-}
-
-.wrapper {
-    width: var(--container-width);
-}
-@media (max-width: 1280px) {
-    .wrapper {
-        width: 80%;
-    }
-}
-@media (max-width: 1023px) {
-    .wrapper {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        width: 80%;
-    }
-    .wrapper *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .wrapper a:active,
-    .wrapper button:active,
-    .wrapper input:active,
-    .wrapper select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .wrapper a,
-    .wrapper button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-@media (max-width: 767px) {
-    .wrapper {
-        width: 100%;
     }
 }
 
@@ -376,3 +332,114 @@ li {
         display: block !important;
     }
 }
+
+.sets {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 1px;
+}
+.sets__container {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 36px;
+    padding: 20px 0;
+}
+@media (max-width: 1280px) {
+    .sets__container {
+        display: flex;
+        justify-content: start;
+        gap: 12px;
+    }
+}
+@media (max-width: 1023px) {
+    .sets__container {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        display: flex;
+        justify-content: space-evenly;
+        gap: 20px;
+        padding: 0px;
+    }
+    .sets__container *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .sets__container a:active,
+    .sets__container button:active,
+    .sets__container input:active,
+    .sets__container select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .sets__container a,
+    .sets__container button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+@media (max-width: 1023px) {
+    .sets {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        display: flex;
+        justify-content: center;
+    }
+    .sets *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .sets a:active,
+    .sets button:active,
+    .sets input:active,
+    .sets select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .sets a,
+    .sets button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+.sets__title {
+    padding: 20px 0;
+}
+@media (max-width: 767px) {
+    .sets__title {
+        display: flex;
+        justify-content: center;
+    }
+}
+.sets__more {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+.sets__more button {
+    padding: 0px 25px;
+}
+.sets__error {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0px;
+}
+.sets__error img {
+    width: 400px;
+    height: 400px;
+    padding-top: 20px;
+}
+
+.skeleton__card {
+    display: flex;
+    flex-direction: column;
+    width: 262px;
+}
+.skeleton__space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*# sourceMappingURL=styles.module.css.map */

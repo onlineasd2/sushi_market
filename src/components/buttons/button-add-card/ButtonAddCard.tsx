@@ -1,112 +1,30 @@
-import "./styles.scss";
-import React, { useEffect } from "react";
-import { db } from "@/services/db";
+import React from "react";
+import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
+import styles from "./styles.module.scss";
 
 interface ButtonProps {
-    children?: React.ReactNode;
-    keyCard: number;
+    value?: number;
+    onChange?: (e: number) => void;
 }
 
 export const ButtonAddCard = ({
-    children,
-    keyCard,
+    value,
+    onChange,
 }: ButtonProps): React.JSX.Element => {
-    const [status, setStatus] = React.useState("");
-    const [count, setCount] = React.useState(1);
-    const [key, setKey] = React.useState(0);
-    const [id, setId] = React.useState(0);
-
-    const DeleteOrder = async (): Promise<void> => {
-        await db.orders.delete(id);
+    const onCart = () => {
+        onChange?.(1);
     };
 
-    const EditOrder = async (newOrderCount: number): Promise<void> => {
-        await db.orders.update(id, {
-            count: newOrderCount,
-        });
-    };
-
-    const AddOrder = async () => {
-        try {
-            const newId = await db.orders.add({
-                key,
-                count: 1,
-            });
-            setId(newId);
-        } catch (error) {
-            setStatus(`Error ${error}`);
-        }
-    };
-
-    const handleOrderPlus = () => {
-        if (count < 10) {
-            const newOrderCount = count + 1;
-            setCount(count + 1);
-            EditOrder(newOrderCount);
-        } else {
-            const newOrderCount = 10;
-            setCount(10);
-            EditOrder(newOrderCount);
-        }
-    };
-
-    const handleOrderMinus = () => {
-        if (count <= 1) DeleteOrder();
-        else {
-            const newOrderCount = count - 1;
-            setCount(newOrderCount);
-            EditOrder(newOrderCount);
-        }
-    };
-
-    const handleAddCart = () => {
-        const newOrderCount = count + 1;
-        setCount(1);
-        EditOrder(newOrderCount);
-        AddOrder();
-    };
-
-    const GetStateButton = async () => {
-        try {
-            const res = await db.orders.where("key").equals(keyCard).first();
-            if (res?.key === keyCard) {
-                setCount(res.count);
-                setId(res.id);
-            } else setCount(0);
-        } catch (error) {
-            setStatus(`Error ${error}`);
-        }
-    };
-
-    useEffect(() => {
-        GetStateButton();
-    }, []);
-
-    useEffect(() => {
-        setCount(count);
-        setKey(keyCard);
-    }, [keyCard, count]);
-
-    return count ? (
-        <div className="counter-order">
-            <button className="button-counter" onClick={handleOrderMinus}>
-                -
-            </button>
-            <h3 className="counter">
-                <b>{status || count}</b>
-            </h3>
-            <button className="button-counter" onClick={handleOrderPlus}>
-                +
-            </button>
-        </div>
+    return value !== 0 ? (
+        <ButtonCounter onChange={onChange} value={value} />
     ) : (
         <button
-            onClick={handleAddCart}
-            className="button button__add-cart"
+            onClick={onCart}
+            className={`${styles.button} ${styles.button__addCart}`}
             tabIndex={0}
-            aria-label="Кнопка"
+            aria-label="Кнопка в корзину"
         >
-            {children}
+            В корзину
         </button>
     );
 };

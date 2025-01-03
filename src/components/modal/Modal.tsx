@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 interface ModalProps {
     children: ReactNode;
@@ -19,11 +19,11 @@ export const Modal: React.FC<ModalProps> = ({ children }) => {
             onClick={toggleModal}
             role="button"
             tabIndex={0}
-            className={`overlay ${isModalActive ? "active" : ""}`}
+            className={`${styles.overlay} ${isModalActive ? styles.active : ""}`}
             aria-label="Modal window"
         >
-            <span className="modal__element" />
-            <div className="modal">{children}</div>
+            <span className={styles.modal__element} />
+            <div className={styles.modal}>{children}</div>
         </div>
     );
 };

@@ -216,11 +216,13 @@ li {
     --color-footer-gray: #93809f;
     --color-light-gray: #bcc3c6;
     --color-violet: #26033f;
+    --typography-primary-color: #203842;
+    --typography-secondary-color: #5a6a70;
+    --button-text-color: #abadba;
+    --button-bg-color: #e2e2e9;
     --color-bg-alt: #fafafa;
     --color-accent: #e13d48;
     --font-family-base: "MuseoSansCyrl", "sans-serif";
-    --border-radius: 20px;
-    --border-radius: 20px;
     --box-shadow: 0 0 20px 2px rgb(0 0 0 / 9%);
     --container-width: 1160px;
     --container-padding-x: 10px;
@@ -230,15 +232,6 @@ li {
     --border-radius-medium: 10px;
     --border-radius-small: 5px;
     --transition-duration: 0.2s;
-}
-
-.section {
-    display: flex;
-    justify-content: center;
-}
-.section-footer {
-    background-color: var(--color-violet);
-    color: var(--color-footer-gray);
 }
 
 .container {
@@ -255,7 +248,6 @@ li {
     border: 0 !important;
     padding: 0 !important;
     white-space: nowrap !important;
-    -webkit-clip-path: inset(100%) !important;
     clip-path: inset(100%) !important;
     clip: rect(0 0 0 0) !important;
     overflow: hidden !important;
@@ -270,42 +262,6 @@ li {
 @media (min-width: 768px) {
     .visible-mobile {
         display: none !important;
-    }
-}
-
-.wrapper {
-    width: var(--container-width);
-}
-@media (max-width: 1280px) {
-    .wrapper {
-        width: 80%;
-    }
-}
-@media (max-width: 1023px) {
-    .wrapper {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        width: 80%;
-    }
-    .wrapper *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .wrapper a:active,
-    .wrapper button:active,
-    .wrapper input:active,
-    .wrapper select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .wrapper a,
-    .wrapper button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-@media (max-width: 767px) {
-    .wrapper {
-        width: 100%;
     }
 }
 
@@ -376,3 +332,50 @@ li {
         display: block !important;
     }
 }
+
+.section {
+    display: flex;
+    justify-content: center;
+}
+.section-footer {
+    background-color: var(--color-violet);
+    color: var(--color-footer-gray);
+}
+
+.wrapper {
+    width: var(--container-width);
+}
+@media (max-width: 1280px) {
+    .wrapper {
+        width: 80%;
+    }
+}
+@media (max-width: 1023px) {
+    .wrapper {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        width: 80%;
+    }
+    .wrapper *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .wrapper a:active,
+    .wrapper button:active,
+    .wrapper input:active,
+    .wrapper select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .wrapper a,
+    .wrapper button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+@media (max-width: 767px) {
+    .wrapper {
+        width: 100%;
+    }
+}
+
+/*# sourceMappingURL=styles.module.css.map */

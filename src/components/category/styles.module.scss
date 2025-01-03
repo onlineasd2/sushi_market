@@ -1,0 +1,129 @@
+@import "../../app/styles/globals/media";
+@import "../../app/styles/globals/fonts";
+
+.category {
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    width: 100%;
+    overflow-x: hidden;
+
+    @include tablet {
+        width: 100%;
+        padding: 0;
+    }
+
+    &__mainContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding-right: 20px;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__list {
+        border-right: 1px solid var(--color-gray);
+        width: 670px;
+
+        @include desktop {
+            width: 54%;
+        }
+
+        @include tablet {
+            width: 80%;
+        }
+
+        @include mobile {
+            width: 70%;
+        }
+
+        ul {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            margin-right: 15px;
+            gap: 10px;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            li {
+                white-space: nowrap;
+                font-size: 14px;
+                &.active {
+                    color: var(--color-accent);
+
+                    @include tablet {
+                        color: var(--color-light);
+                    }
+                }
+
+                @include tablet {
+                    padding: 10px;
+                    background-color: var(--color-light-gray);
+                    color: var(--color-text-light-gray);
+                    border-radius: 50px;
+                    border: none;
+
+                    &.active {
+                        color: var(--color-light);
+                        background-color: var(--color-accent);
+                    }
+                }
+            }
+        }
+    }
+
+    &__options {
+        display: flex;
+        gap: 20px;
+        padding-right: 20px;
+        font-size: 14px;
+
+        @include tablet {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
+    &__line {
+        border-right: 1px solid var(--color-gray);
+    }
+
+    &__delivery {
+        padding-left: 10px;
+        font-size: 14px;
+        & h4 {
+            white-space: nowrap;
+        }
+    }
+
+    &__language {
+        display: flex;
+        & h4 {
+            white-space: nowrap;
+        }
+    }
+
+    &__filters {
+        display: flex;
+        gap: 5px;
+
+        @include tablet {
+            justify-content: space-evenly;
+        }
+
+        & img {
+            object-fit: cover;
+        }
+    }
+}

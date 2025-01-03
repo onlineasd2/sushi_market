@@ -1,0 +1,91 @@
+@import "../../app/styles/globals/media";
+
+.footer {
+    padding: 80px 0px;
+
+    & hr {
+        border: 1px solid var(--color-footer-gray);
+        width: 100%;
+    }
+
+    &ShowMobile {
+        display: block;
+        @include desktop-above {
+            width: 100%;
+            display: none;
+        }
+    }
+
+    &__container {
+        display: flex;
+        align-items: start;
+        padding: 40px 0;
+
+        @include desktop {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0px;
+        }
+    }
+
+    &__logo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        @include desktop {
+            margin-bottom: 10px;
+        }
+
+        & h2 {
+            color: var(--color-light);
+            font-size: 24px;
+        }
+    }
+
+    &__apps {
+        display: flex;
+        padding: 20px 20px;
+        gap: 10px;
+
+        @include desktop {
+            padding-left: 0px;
+        }
+
+        & img {
+            object-fit: contain;
+        }
+    }
+
+    &__options {
+        width: 50%;
+        @include desktop {
+            width: 100%;
+        }
+
+        & ul {
+            padding-left: 20px;
+            column-count: 3;
+
+            @include desktop {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px 0px;
+                column-count: 1;
+                padding-left: 0px;
+            }
+
+            & li {
+            }
+        }
+    }
+
+    &__adress {
+        padding: 20px 0px;
+    }
+
+    &__copy {
+        padding: 20px 0px;
+    }
+}
