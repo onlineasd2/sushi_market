@@ -216,11 +216,13 @@ li {
     --color-footer-gray: #93809f;
     --color-light-gray: #bcc3c6;
     --color-violet: #26033f;
+    --typography-primary-color: #203842;
+    --typography-secondary-color: #5a6a70;
+    --button-text-color: #abadba;
+    --button-bg-color: #e2e2e9;
     --color-bg-alt: #fafafa;
     --color-accent: #e13d48;
     --font-family-base: "MuseoSansCyrl", "sans-serif";
-    --border-radius: 20px;
-    --border-radius: 20px;
     --box-shadow: 0 0 20px 2px rgb(0 0 0 / 9%);
     --container-width: 1160px;
     --container-padding-x: 10px;
@@ -230,15 +232,6 @@ li {
     --border-radius-medium: 10px;
     --border-radius-small: 5px;
     --transition-duration: 0.2s;
-}
-
-.section {
-    display: flex;
-    justify-content: center;
-}
-.section-footer {
-    background-color: var(--color-violet);
-    color: var(--color-footer-gray);
 }
 
 .container {
@@ -255,7 +248,6 @@ li {
     border: 0 !important;
     padding: 0 !important;
     white-space: nowrap !important;
-    -webkit-clip-path: inset(100%) !important;
     clip-path: inset(100%) !important;
     clip: rect(0 0 0 0) !important;
     overflow: hidden !important;
@@ -270,42 +262,6 @@ li {
 @media (min-width: 768px) {
     .visible-mobile {
         display: none !important;
-    }
-}
-
-.wrapper {
-    width: var(--container-width);
-}
-@media (max-width: 1280px) {
-    .wrapper {
-        width: 80%;
-    }
-}
-@media (max-width: 1023px) {
-    .wrapper {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        width: 80%;
-    }
-    .wrapper *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .wrapper a:active,
-    .wrapper button:active,
-    .wrapper input:active,
-    .wrapper select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .wrapper a,
-    .wrapper button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-@media (max-width: 767px) {
-    .wrapper {
-        width: 100%;
     }
 }
 
@@ -376,3 +332,229 @@ li {
         display: block !important;
     }
 }
+
+.category {
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    width: 100%;
+    overflow-x: hidden;
+}
+@media (max-width: 1023px) {
+    .category {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        width: 100%;
+        padding: 0;
+    }
+    .category *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category a:active,
+    .category button:active,
+    .category input:active,
+    .category select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category a,
+    .category button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+.category__main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 20px;
+}
+.category__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.category__list {
+    border-right: 1px solid var(--color-gray);
+    width: 670px;
+}
+@media (max-width: 1280px) {
+    .category__list {
+        width: 54%;
+    }
+}
+@media (max-width: 1023px) {
+    .category__list {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        width: 80%;
+    }
+    .category__list *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category__list a:active,
+    .category__list button:active,
+    .category__list input:active,
+    .category__list select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category__list a,
+    .category__list button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+@media (max-width: 767px) {
+    .category__list {
+        width: 70%;
+    }
+}
+.category__list ul {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Убрать полосу прокрутки в Firefox */
+    -ms-overflow-style: none; /* Убрать полосу прокрутки в IE и Edge */
+    margin-right: 15px;
+    gap: 10px;
+}
+.category__list ul::-webkit-scrollbar {
+    display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
+}
+.category__list ul li {
+    white-space: nowrap;
+    font-size: 14px;
+}
+.category__list ul li.active {
+    color: var(--color-accent);
+}
+@media (max-width: 1023px) {
+    .category__list ul li.active {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        color: var(--color-light);
+    }
+    .category__list ul li.active *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category__list ul li.active a:active,
+    .category__list ul li.active button:active,
+    .category__list ul li.active input:active,
+    .category__list ul li.active select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category__list ul li.active a,
+    .category__list ul li.active button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+@media (max-width: 1023px) {
+    .category__list ul li {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        padding: 10px;
+        background-color: var(--color-light-gray);
+        color: var(--color-text-light-gray);
+        border-radius: 50px;
+        border: none;
+    }
+    .category__list ul li *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category__list ul li a:active,
+    .category__list ul li button:active,
+    .category__list ul li input:active,
+    .category__list ul li select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category__list ul li a,
+    .category__list ul li button {
+        outline: none;
+        box-shadow: none;
+    }
+    .category__list ul li.active {
+        color: var(--color-light);
+        background-color: var(--color-accent);
+    }
+}
+.category__options {
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
+    font-size: 14px;
+}
+@media (max-width: 1023px) {
+    .category__options {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        display: none;
+        visibility: hidden;
+    }
+    .category__options *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category__options a:active,
+    .category__options button:active,
+    .category__options input:active,
+    .category__options select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category__options a,
+    .category__options button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+.category__line {
+    border-right: 1px solid var(--color-gray);
+}
+.category__delivery {
+    padding-left: 10px;
+    font-size: 14px;
+}
+.category__delivery h4 {
+    white-space: nowrap;
+}
+.category__language {
+    display: flex;
+}
+.category__language h4 {
+    white-space: nowrap;
+}
+.category__filters {
+    display: flex;
+    gap: 5px;
+}
+@media (max-width: 1023px) {
+    .category__filters {
+        /* Убираем фокус с активных элементов после клика */
+        /* Для ссылок и кнопок при потере фокуса */
+        justify-content: space-evenly;
+    }
+    .category__filters *:focus {
+        outline: none; /* Убираем обводку, если не нужна */
+    }
+    .category__filters a:active,
+    .category__filters button:active,
+    .category__filters input:active,
+    .category__filters select:active {
+        outline: none;
+        box-shadow: none; /* Убираем возможные тени */
+    }
+    .category__filters a,
+    .category__filters button {
+        outline: none;
+        box-shadow: none;
+    }
+}
+.category__filters img {
+    object-fit: cover;
+}
+
+/*# sourceMappingURL=styles.module.css.map */

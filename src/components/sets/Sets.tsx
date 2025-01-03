@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import "./styles.scss";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/card/Card";
 import { ICard } from "@/components/sets/ICard";
 import { sushiApi } from "@/services/sushiApi";
@@ -9,8 +8,8 @@ import { Section } from "@/components/section/Section";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { withButton } from "@/components/buttons/HOC/withButton";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
+import styles from "./styles.module.scss";
 
 interface SetsProps {
     titleMain: string;
@@ -22,17 +21,18 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const PAGE_LIMIT = 5;
-    const ButtonLoginExtended = withButton(ButtonLogin);
 
-    const fetchSets = useCallback(async () => {
+    const fetchSets = async () => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
-            setSets((prevSets) => [...prevSets, ...data]);
+            setSets((prevSets) =>
+                currentPage === 1 ? data : [...prevSets, ...data]
+            );
             setIsLoading(false);
         } catch (error) {
             setErrorSets(String(error));
         }
-    }, [currentPage, PAGE_LIMIT]);
+    };
 
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
@@ -44,10 +44,10 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
 
     return (
         <Section>
-            <div className="sets">
+            <div className={styles.sets}>
                 {errorSets ? (
-                    <div className="sets__error">
-                        <h2>Ошибка обращения к серверу</h2>
+                    <div className={styles.sets__error}>
+                        <h2>Ошибка обращения к серверу {errorSets}</h2>
                         <Image
                             src="/error500.webp"
                             width={100}
@@ -57,23 +57,27 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                     </div>
                 ) : (
                     <>
-                        <h2 className="sets__title">
+                        <h2 className={styles.sets__title}>
                             <b>{titleMain}</b>
                         </h2>
-                        <div className="sets__container">
+                        <div className={styles.sets__container}>
                             {isLoading
                                 ? Array(5)
                                       .fill(null)
                                       .map((_, index) => (
                                           <div
                                               key={index}
-                                              className="skeleton__card"
+                                              className={styles.skeleton__card}
                                           >
                                               <Skeleton
                                                   width={262}
                                                   height={262}
                                               />
-                                              <div className="skeleton__space-between">
+                                              <div
+                                                  className={
+                                                      styles.skeleton__spaceBetween
+                                                  }
+                                              >
                                                   <Skeleton
                                                       width={170}
                                                       height={20}
@@ -84,7 +88,11 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                                   />
                                               </div>
                                               <Skeleton height={100} />
-                                              <div className="skeleton__space-between">
+                                              <div
+                                                  className={
+                                                      styles.skeleton__spaceBetween
+                                                  }
+                                              >
                                                   <Skeleton
                                                       width={72}
                                                       height={40}
@@ -101,10 +109,10 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
                                   ))}
                         </div>
                         {sets.length > 0 && (
-                            <div className="sets__more">
-                                <ButtonLoginExtended onClick={nextPage}>
+                            <div className={styles.sets__more}>
+                                <ButtonLogin onClick={nextPage}>
                                     Ещё
-                                </ButtonLoginExtended>
+                                </ButtonLogin>
                             </div>
                         )}
                     </>
