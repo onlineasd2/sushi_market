@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/section/Section";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
-import { Order } from "@/services/db";
-import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
+import { db, Order } from "@/services/db";
+import {
+    useHover,
+    useFloating,
+    autoUpdate,
+    useInteractions,
+    safePolygon,
+    offset,
+} from "@floating-ui/react";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
@@ -87,8 +94,36 @@ const CategoryFilters = () => (
 
 export const Category = () => {
     const [orders, setOrders] = useState<Order[]>([]);
-    const buttonCartRef = useRef(null);
-    const popOverMenuRef = useRef(null);
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const GAP = 14;
+
+    const { refs, floatingStyles, context } = useFloating({
+        open: isOpen,
+        onOpenChange: setIsOpen,
+        whileElementsMounted: autoUpdate,
+        middleware: [offset(GAP)],
+    });
+
+    const hover = useHover(context, {
+        handleClose: safePolygon(),
+    });
+
+    const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
+
+    const getOrdersFromDB = async () => {
+        try {
+            const res = await db.orders.toArray();
+            setOrders(res);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        getOrdersFromDB();
+    });
 
     const handlerButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
@@ -129,64 +164,85 @@ export const Category = () => {
                         <CategoryOptions />
                         <CategoryFilters />
                     </div>
-                    <ButtonCart ref={buttonCartRef} />
-                    <div ref={popOverMenuRef} className="category__popover">
-                        {orders.length === 0 ? (
-                            <div className={moduleStyles.notFound}>
-                                <Image
-                                    width={240}
-                                    height={240}
-                                    src="/emptyCartIcon.svg"
-                                    alt="icon"
-                                />
-                                <h1>Ой, а тут пусто!</h1>
-                                <p>Добавьте что-нибудь из меню</p>
-
-                                <ButtonLogin>
-                                    <Link href="/"> Перейти в меню</Link>
-                                </ButtonLogin>
-                            </div>
-                        ) : (
-                            orders
-                                .sort((a, b) => a.key - b.key)
-                                .map((localOrder) => (
-                                    <div
-                                        key={localOrder.key}
-                                        className="category__order"
-                                    >
-                                        <Image
-                                            src={localOrder.image}
-                                            width={60}
-                                            height={60}
-                                            alt="Суша"
-                                        />
-                                        <h3>{localOrder.name}</h3>
-                                        <p>{localOrder.weight}</p>
-                                        <ButtonCounter
-                                            value={0}
-                                            onChange={(e) =>
-                                                handlerButtonCounter(
-                                                    e,
-                                                    localOrder
-                                                )
+                    <ButtonCart
+                        ref={refs.setReference}
+                        {...getReferenceProps()}
+                    />
+                    {isOpen && (
+                        <div
+                            className={moduleStyles.category__popoverContent}
+                            ref={refs.setFloating}
+                            style={floatingStyles}
+                            {...getFloatingProps()}
+                        >
+                            {orders.length === 0 ? (
+                                <div className={moduleStyles.notFound}>
+                                    <Image
+                                        width={140}
+                                        height={140}
+                                        src="/emptyCartIcon.svg"
+                                        alt="icon"
+                                    />
+                                    <h2>Ой, а тут пусто!</h2>
+                                    <p>Добавьте что-нибудь из меню</p>
+                                </div>
+                            ) : (
+                                orders
+                                    .sort((a, b) => a.key - b.key)
+                                    .map((localOrder) => (
+                                        <div
+                                            key={localOrder.key}
+                                            className={
+                                                moduleStyles.category__order
                                             }
-                                        />
-                                        <ButtonIcon>
+                                        >
                                             <Image
-                                                width={18}
-                                                height={18}
-                                                src="/trash-svgrepo-com.svg"
-                                                alt="delete"
+                                                src={localOrder.image}
+                                                width={60}
+                                                height={60}
+                                                alt="Суша"
                                             />
-                                        </ButtonIcon>
-                                        <h3>
-                                            {localOrder.price *
-                                                localOrder.count}
-                                        </h3>
-                                    </div>
-                                ))
-                        )}
-                    </div>
+                                            <div
+                                                className={
+                                                    moduleStyles.category__topContainer
+                                                }
+                                            >
+                                                <h3>{localOrder.name}</h3>
+                                                <p>{localOrder.weight}</p>
+                                                <ButtonIcon>
+                                                    <Image
+                                                        width={14}
+                                                        height={14}
+                                                        src="/trash-svgrepo-com.svg"
+                                                        alt="delete"
+                                                    />
+                                                </ButtonIcon>
+                                            </div>
+                                            <div
+                                                className={
+                                                    moduleStyles.category__botContainer
+                                                }
+                                            >
+                                                <ButtonCounter
+                                                    value={0}
+                                                    onChange={(e) =>
+                                                        handlerButtonCounter(
+                                                            e,
+                                                            localOrder
+                                                        )
+                                                    }
+                                                />
+
+                                                <h3>
+                                                    {localOrder.price *
+                                                        localOrder.count}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    ))
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </Section>

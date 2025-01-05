@@ -10,6 +10,7 @@
         "prepare": "husky"
     },
     "dependencies": {
+        "@floating-ui/react": "^0.27.2",
         "@popperjs/core": "^2.11.8",
         "axios": "^1.7.8",
         "dexie": "^4.0.10",
