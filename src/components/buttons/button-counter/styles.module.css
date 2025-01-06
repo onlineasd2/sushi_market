@@ -1,18 +1,27 @@
-.button {
+.counterOrder {
+    height: 40px;
+    min-width: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: var(--border-radius);
-    -webkit-tap-highlight-color: transparent;
+    background-color: var(--button-bg-color);
+    border: 1px solid var(--button-bg-color);
+    color: var(--typography-secondary-color);
+    font-weight: bold;
+}
+.counterOrder .buttonCounter {
+    height: 100%;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    border: 0px solid transparent;
     cursor: pointer;
+    color: var(--typography-secondary-color);
+    padding: 0px 20px;
 }
-.button__mobile {
-    padding: 10px;
-    background-color: var(--color-light-gray);
-    color: var(--color-text-light-gray);
-    border-radius: 50px;
-    border: none;
-}
-.button__mobile.active {
-    color: var(--color-light);
+.counterOrder .buttonCounter:hover {
     background-color: var(--color-accent);
+    color: var(--color-light);
 }
 
 /*# sourceMappingURL=styles.module.css.map */

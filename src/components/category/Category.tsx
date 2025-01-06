@@ -99,6 +99,11 @@ export const Category = () => {
 
     const GAP = 14;
 
+    const sumOrder = orders.reduce(
+        (acc, order) => acc + order.price * order.count,
+        0
+    );
+
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: setIsOpen,
@@ -121,9 +126,26 @@ export const Category = () => {
         }
     };
 
-    useEffect(() => {
-        getOrdersFromDB();
-    });
+    const editOrdersToDB = async (
+        id: number,
+        countState: number
+    ): Promise<void> => {
+        try {
+            await db.orders.update(id, {
+                count: countState,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteOrderFromDB = async (id: number): Promise<void> => {
+        try {
+            await db.orders.delete(id);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handlerButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
@@ -154,6 +176,39 @@ export const Category = () => {
             });
         });
     };
+
+    const handlerDeleteOrder = (localOrder: Order) => {
+        setOrders((prevState) => {
+            const prevState1 = prevState.filter(
+                (set) => set.key !== localOrder.key
+            );
+            const arr = [
+                ...prevState1,
+                {
+                    ...localOrder,
+                    count: 0,
+                },
+            ];
+            return arr.sort((a, b) => {
+                return a.key - b.key;
+            });
+        });
+    };
+
+    useEffect(() => {
+        orders.forEach((order) => {
+            if (order.count <= 0) {
+                deleteOrderFromDB(order.id ?? 0);
+                getOrdersFromDB();
+            }
+            if (order.count >= 1 && order.count <= MAX_VALUE)
+                editOrdersToDB(order.id ?? 0, order.count);
+        });
+    }, [orders]);
+
+    useEffect(() => {
+        getOrdersFromDB();
+    }, []);
 
     return (
         <Section>
@@ -198,8 +253,8 @@ export const Category = () => {
                                         >
                                             <Image
                                                 src={localOrder.image}
-                                                width={60}
-                                                height={60}
+                                                width={80}
+                                                height={80}
                                                 alt="Суша"
                                             />
                                             <div
@@ -209,22 +264,8 @@ export const Category = () => {
                                             >
                                                 <h3>{localOrder.name}</h3>
                                                 <p>{localOrder.weight}</p>
-                                                <ButtonIcon>
-                                                    <Image
-                                                        width={14}
-                                                        height={14}
-                                                        src="/trash-svgrepo-com.svg"
-                                                        alt="delete"
-                                                    />
-                                                </ButtonIcon>
-                                            </div>
-                                            <div
-                                                className={
-                                                    moduleStyles.category__botContainer
-                                                }
-                                            >
                                                 <ButtonCounter
-                                                    value={0}
+                                                    value={localOrder.count}
                                                     onChange={(e) =>
                                                         handlerButtonCounter(
                                                             e,
@@ -232,7 +273,26 @@ export const Category = () => {
                                                         )
                                                     }
                                                 />
-
+                                            </div>
+                                            <div
+                                                className={
+                                                    moduleStyles.category__botContainer
+                                                }
+                                            >
+                                                <ButtonIcon
+                                                    onClick={() =>
+                                                        handlerDeleteOrder(
+                                                            localOrder
+                                                        )
+                                                    }
+                                                >
+                                                    <Image
+                                                        width={14}
+                                                        height={14}
+                                                        src="/trash-svgrepo-com.svg"
+                                                        alt="delete"
+                                                    />
+                                                </ButtonIcon>
                                                 <h3>
                                                     {localOrder.price *
                                                         localOrder.count}
@@ -240,6 +300,18 @@ export const Category = () => {
                                             </div>
                                         </div>
                                     ))
+                            )}
+                            {orders.length === 0 ? (
+                                ""
+                            ) : (
+                                <div
+                                    className={
+                                        moduleStyles.category__totalPrice
+                                    }
+                                >
+                                    <h3>Сумма заказа</h3>
+                                    <h3>{sumOrder}</h3>
+                                </div>
                             )}
                         </div>
                     )}

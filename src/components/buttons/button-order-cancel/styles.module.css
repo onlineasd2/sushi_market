@@ -1,4 +1,10 @@
-.button__order-cancel {
+.button {
+    border-radius: var(--border-radius);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    fill: var(--color-accent);
+}
+.button__orderCancel {
     height: 32px;
     min-height: var(--app-button-min-height);
     padding: 0 12px;
@@ -10,7 +16,7 @@
     transition: background-color 0.3s;
     position: relative;
 }
-.button__order-cancel span {
+.button__orderCancel span {
     position: absolute;
     left: 20px;
 }

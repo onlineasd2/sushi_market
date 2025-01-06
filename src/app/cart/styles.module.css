@@ -35,27 +35,34 @@
     white-space: nowrap;
 }
 
-.order-details {
+.orderDetails {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding-top: 40px;
 }
-.order-details h2 {
+.orderDetails h2 {
     display: flex;
     justify-content: end;
 }
-.order-details__button-conainer {
+.orderDetails__buttonConainer {
     display: flex;
     justify-content: space-between;
     padding-top: 40px;
 }
-.order-details button {
+.orderDetails button {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px 60px;
     font-size: 18px;
+}
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /*# sourceMappingURL=styles.module.css.map */

@@ -192,6 +192,24 @@ export default function Page() {
             });
     };
 
+    const handlerDeleteOrder = (localOrder: Order) => {
+        setOrders((prevState) => {
+            const prevState1 = prevState.filter(
+                (set) => set.key !== localOrder.key
+            );
+            const arr = [
+                ...prevState1,
+                {
+                    ...localOrder,
+                    count: 0,
+                },
+            ];
+            return arr.sort((a, b) => {
+                return a.key - b.key;
+            });
+        });
+    };
+
     return (
         <>
             <Header />
@@ -271,26 +289,9 @@ export default function Page() {
                                             </h3>
                                         </div>
                                         <ButtonIcon
-                                            onClick={() => {
-                                                setOrders((prevState) => {
-                                                    const prevState1 =
-                                                        prevState.filter(
-                                                            (set) =>
-                                                                set.key !==
-                                                                localOrder.key
-                                                        );
-                                                    const arr = [
-                                                        ...prevState1,
-                                                        {
-                                                            ...localOrder,
-                                                            count: 0,
-                                                        },
-                                                    ];
-                                                    return arr.sort((a, b) => {
-                                                        return a.key - b.key;
-                                                    });
-                                                });
-                                            }}
+                                            onClick={() =>
+                                                handlerDeleteOrder(localOrder)
+                                            }
                                         >
                                             <Image
                                                 width={18}
