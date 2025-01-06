@@ -1,560 +1,311 @@
 @charset "UTF-8";
-/**
-  Нормализация блочной модели
- */
-*,
-::before,
-::after {
-    box-sizing: border-box;
-}
-
-/**
-  Убираем внутренние отступы слева тегам списков,
-  у которых есть атрибут class
- */
-:where(ul, ol):where([class]) {
-    padding-left: 0;
-}
-
-/**
-  Убираем внешние отступы body и двум другим тегам,
-  у которых есть атрибут class
- */
-body,
-:where(blockquote, figure):where([class]) {
-    margin: 0;
-}
-
-/**
-  Убираем внешние отступы вертикали нужным тегам,
-  у которых есть атрибут class
- */
-:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
-    margin-block: 0;
-}
-
-:where(dd[class]) {
-    margin-left: 0;
-}
-
-:where(fieldset[class]) {
-    margin-left: 0;
-    padding: 0;
-    border: none;
-}
-
-/**
-  Убираем стандартный маркер маркированному списку,
-  у которого есть атрибут class
- */
-:where(ul[class]) {
-    list-style: none;
-}
-
-:where(address[class]) {
-    font-style: normal;
-}
-
-/**
-  Обнуляем вертикальные внешние отступы параграфа,
-  объявляем локальную переменную для внешнего отступа вниз,
-  чтобы избежать взаимодействие с более сложным селектором
- */
-p {
-    --paragraphMarginBottom: 24px;
-    margin-block: 0;
-}
-
-/**
-  Внешний отступ вниз для параграфа без атрибута class,
-  который расположен не последним среди своих соседних элементов
- */
-p:where(:not([class]):not(:last-child)) {
-    margin-bottom: var(--paragraphMarginBottom);
-}
-
-/**
-  Упрощаем работу с изображениями
- */
-img {
-    display: block;
-    max-width: 100%;
-}
-
-/**
-  Наследуем свойства шрифт для полей ввода
- */
-input,
-textarea,
-select,
-button {
-    font: inherit;
-}
-
-html {
-    /**
-    Пригодится в большинстве ситуаций
-    (когда, например, нужно будет "прижать" футер к низу сайта)
-   */
-    height: 100%;
-}
-
-/**
-  Плавный скролл
- */
-html,
-:has(:target) {
-    scroll-behavior: smooth;
-}
-
-body {
-    /**
-    Пригодится в большинстве ситуаций
-    (когда, например, нужно будет "прижать" футер к низу сайта)
-   */
-    min-height: 100%;
-    /**
-    Унифицированный интерлиньяж
-   */
-    line-height: 1.5;
-}
-
-/**
-  Приводим к единому цвету svg-элементы
- */
-svg *[fill] {
-    fill: currentColor;
-}
-
-svg *[stroke] {
-    stroke: currentColor;
-}
-
-/**
-  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
- */
-svg * {
-    transition-property: fill, stroke;
-}
-
-/**
-  Удаляем все анимации и переходы для людей,
-  которые предпочитают их не использовать
- */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    ::before,
-    ::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-body {
-    font-size: clamp(16px, calc(18 / 1440 * 100) vw, 18px);
-    font-family: var(--font-family-base);
-    font-weight: 500;
-    line-height: 1.28;
-    color: var(--color-dark);
-    background-color: var(--color-light);
-    margin: 0;
-}
-
-a,
-button,
-input,
-textarea,
-svg * {
-    transition-duration: var(--transition-duration);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-h1,
-h2,
-h3,
-h4 {
-    font-weight: 500;
-    margin: 0;
-}
-
-h1 {
-    font-size: clamp(43px, calc(60 / 1440 * 100) vw, 60px);
-}
-
-h2 {
-    font-size: clamp(26px, calc(30 / 1440 * 100) vw, 30px);
-}
-
-h3 {
-    font-size: clamp(18px, calc(20 / 1440 * 100) vw, 20px);
-}
-
-h4 {
-    font-size: clamp(43px, calc(60 / 1440 * 100) vw, 60px);
-}
-
-ul {
-    padding: 0px;
-    margin: 0px;
-}
-
-li {
-    list-style-type: none;
-}
-
-:root {
-    --color-light: #ffffff;
-    --color-dark: #000000;
-    --color-gray-dark: #203842;
-    --color-gray: #bcc3c6;
-    --color-dark-gray: #5a6a70;
-    --color-footer-gray: #93809f;
-    --color-light-gray: #bcc3c6;
-    --color-violet: #26033f;
-    --typography-primary-color: #203842;
-    --typography-secondary-color: #5a6a70;
-    --button-text-color: #abadba;
-    --button-bg-color: #e2e2e9;
-    --color-bg-alt: #fafafa;
-    --color-accent: #e13d48;
-    --font-family-base: "MuseoSansCyrl", "sans-serif";
-    --box-shadow: 0 0 20px 2px rgb(0 0 0 / 9%);
-    --container-width: 1160px;
-    --container-padding-x: 10px;
-    --section-padding-y: 80px;
-    --section-mobile-padding-y: 40px;
-    --border-radius: 20px;
-    --border-radius-medium: 10px;
-    --border-radius-small: 5px;
-    --transition-duration: 0.2s;
-}
-
-.container {
-    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
-    margin-inline: auto;
-    padding-inline: var(--container-padding-x);
-}
-
-.visually-hidden {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    margin: -1px !important;
-    border: 0 !important;
-    padding: 0 !important;
-    white-space: nowrap !important;
-    clip-path: inset(100%) !important;
-    clip: rect(0 0 0 0) !important;
-    overflow: hidden !important;
-}
-
-@media (max-width: 767px) {
-    .hidden-mobile {
-        display: none !important;
-    }
-}
-
-@media (min-width: 768px) {
-    .visible-mobile {
-        display: none !important;
-    }
-}
-
 @font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-100.woff") format("woff");
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MuseoSansCyrl";
+  src: url("./../../fonts/MuseoSansCyrl-100.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-300.woff") format("woff");
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MuseoSansCyrl";
+  src: url("./../../fonts/MuseoSansCyrl-300.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-500.woff") format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MuseoSansCyrl";
+  src: url("./../../fonts/MuseoSansCyrl-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-700.woff") format("woff");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MuseoSansCyrl";
+  src: url("./../../fonts/MuseoSansCyrl-700.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-900.woff") format("woff");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MuseoSansCyrl";
+  src: url("./../../fonts/MuseoSansCyrl-900.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
 }
-.text-red {
-    color: var(--color-accent);
-}
-
-@media (max-width: 1023px) {
-    .mobile__hidden {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        display: none !important;
-    }
-    .mobile__hidden *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .mobile__hidden a:active,
-    .mobile__hidden button:active,
-    .mobile__hidden input:active,
-    .mobile__hidden select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .mobile__hidden a,
-    .mobile__hidden button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-
-@media (max-width: 1280px) {
-    .mobile__active {
-        display: block !important;
-    }
-}
-
 .category {
-    display: flex;
-    justify-content: space-between;
-    height: 64px;
-    width: 100%;
-    overflow-x: hidden;
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  width: 100%;
+  overflow-x: hidden;
 }
 @media (max-width: 1023px) {
-    .category {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        width: 100%;
-        padding: 0;
-    }
-    .category *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category a:active,
-    .category button:active,
-    .category input:active,
-    .category select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category a,
-    .category button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-.category__main-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .category {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
     width: 100%;
-    padding-right: 20px;
+    padding: 0;
+  }
+  .category *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category a:active, .category button:active, .category input:active, .category select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category a, .category button {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.category__mainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 20px;
 }
 .category__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .category__list {
-    border-right: 1px solid var(--color-gray);
-    width: 670px;
+  border-right: 1px solid var(--color-gray);
+  width: 670px;
 }
 @media (max-width: 1280px) {
-    .category__list {
-        width: 54%;
-    }
+  .category__list {
+    width: 54%;
+  }
 }
 @media (max-width: 1023px) {
-    .category__list {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        width: 80%;
-    }
-    .category__list *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category__list a:active,
-    .category__list button:active,
-    .category__list input:active,
-    .category__list select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category__list a,
-    .category__list button {
-        outline: none;
-        box-shadow: none;
-    }
+  .category__list {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
+    width: 80%;
+  }
+  .category__list *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category__list a:active, .category__list button:active, .category__list input:active, .category__list select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category__list a, .category__list button {
+    outline: none;
+    box-shadow: none;
+  }
 }
 @media (max-width: 767px) {
-    .category__list {
-        width: 70%;
-    }
+  .category__list {
+    width: 70%;
+  }
 }
 .category__list ul {
-    display: flex;
-    overflow-x: auto;
-    scrollbar-width: none; /* Убрать полосу прокрутки в Firefox */
-    -ms-overflow-style: none; /* Убрать полосу прокрутки в IE и Edge */
-    margin-right: 15px;
-    gap: 10px;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-right: 15px;
+  gap: 10px;
 }
 .category__list ul::-webkit-scrollbar {
-    display: none; /* Убрать полосу прокрутки в Chrome, Safari и Edge */
+  display: none;
 }
 .category__list ul li {
-    white-space: nowrap;
-    font-size: 14px;
+  white-space: nowrap;
+  font-size: 14px;
 }
 .category__list ul li.active {
-    color: var(--color-accent);
+  color: var(--color-accent);
 }
 @media (max-width: 1023px) {
-    .category__list ul li.active {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        color: var(--color-light);
-    }
-    .category__list ul li.active *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category__list ul li.active a:active,
-    .category__list ul li.active button:active,
-    .category__list ul li.active input:active,
-    .category__list ul li.active select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category__list ul li.active a,
-    .category__list ul li.active button {
-        outline: none;
-        box-shadow: none;
-    }
+  .category__list ul li.active {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
+    color: var(--color-light);
+  }
+  .category__list ul li.active *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category__list ul li.active a:active, .category__list ul li.active button:active, .category__list ul li.active input:active, .category__list ul li.active select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category__list ul li.active a, .category__list ul li.active button {
+    outline: none;
+    box-shadow: none;
+  }
 }
 @media (max-width: 1023px) {
-    .category__list ul li {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        padding: 10px;
-        background-color: var(--color-light-gray);
-        color: var(--color-text-light-gray);
-        border-radius: 50px;
-        border: none;
-    }
-    .category__list ul li *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category__list ul li a:active,
-    .category__list ul li button:active,
-    .category__list ul li input:active,
-    .category__list ul li select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category__list ul li a,
-    .category__list ul li button {
-        outline: none;
-        box-shadow: none;
-    }
-    .category__list ul li.active {
-        color: var(--color-light);
-        background-color: var(--color-accent);
-    }
+  .category__list ul li {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
+    padding: 10px;
+    background-color: var(--color-light-gray);
+    color: var(--color-text-light-gray);
+    border-radius: 50px;
+    border: none;
+  }
+  .category__list ul li *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category__list ul li a:active, .category__list ul li button:active, .category__list ul li input:active, .category__list ul li select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category__list ul li a, .category__list ul li button {
+    outline: none;
+    box-shadow: none;
+  }
+  .category__list ul li.active {
+    color: var(--color-light);
+    background-color: var(--color-accent);
+  }
 }
 .category__options {
-    display: flex;
-    gap: 20px;
-    padding-right: 20px;
-    font-size: 14px;
+  display: flex;
+  gap: 20px;
+  padding-right: 20px;
+  font-size: 14px;
 }
 @media (max-width: 1023px) {
-    .category__options {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        display: none;
-        visibility: hidden;
-    }
-    .category__options *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category__options a:active,
-    .category__options button:active,
-    .category__options input:active,
-    .category__options select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category__options a,
-    .category__options button {
-        outline: none;
-        box-shadow: none;
-    }
+  .category__options {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
+    display: none;
+    visibility: hidden;
+  }
+  .category__options *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category__options a:active, .category__options button:active, .category__options input:active, .category__options select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category__options a, .category__options button {
+    outline: none;
+    box-shadow: none;
+  }
 }
 .category__line {
-    border-right: 1px solid var(--color-gray);
+  border-right: 1px solid var(--color-gray);
 }
 .category__delivery {
-    padding-left: 10px;
-    font-size: 14px;
+  padding-left: 10px;
+  font-size: 14px;
 }
 .category__delivery h4 {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 .category__language {
-    display: flex;
+  display: flex;
 }
 .category__language h4 {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 .category__filters {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 @media (max-width: 1023px) {
-    .category__filters {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        justify-content: space-evenly;
-    }
-    .category__filters *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .category__filters a:active,
-    .category__filters button:active,
-    .category__filters input:active,
-    .category__filters select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .category__filters a,
-    .category__filters button {
-        outline: none;
-        box-shadow: none;
-    }
+  .category__filters {
+    /* Убираем фокус с активных элементов после клика */
+    /* Для ссылок и кнопок при потере фокуса */
+    justify-content: space-evenly;
+  }
+  .category__filters *:focus {
+    outline: none; /* Убираем обводку, если не нужна */
+  }
+  .category__filters a:active, .category__filters button:active, .category__filters input:active, .category__filters select:active {
+    outline: none;
+    box-shadow: none; /* Убираем возможные тени */
+  }
+  .category__filters a, .category__filters button {
+    outline: none;
+    box-shadow: none;
+  }
 }
 .category__filters img {
-    object-fit: cover;
+  object-fit: cover;
+}
+.category__popoverContent {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-light);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  max-height: 400px;
+  overflow: auto;
+}
+.category__popoverContent img:first-child {
+  border-radius: var(--border-radius-small);
+}
+.category__order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  border-bottom: var(--color-gray) solid 1px;
+  padding: 20px 0px;
+  height: 120px;
+  width: 100%;
+}
+.category__topContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  align-items: start;
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.category__topContainer > div {
+  width: 35px;
+  height: 30px;
+  min-width: 100px;
+}
+.category__topContainer div:last-child > button {
+  padding: 0px 14px;
+}
+.category__botContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+}
+.category__botContainer > image {
+  width: 24px;
+  height: 24px;
+}
+.category__botContainer > button {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.category__totalPrice {
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  padding: 20px 10px;
+}
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=styles.module.css.map */
