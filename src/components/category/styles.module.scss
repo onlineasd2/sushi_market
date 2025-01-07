@@ -159,7 +159,7 @@
         width: 100%;
     }
 
-    &__topContainer {
+    &__leftContainer {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -181,7 +181,7 @@
         }
     }
 
-    &__botContainer {
+    &__rightContainer {
         display: flex;
         height: 100%;
         flex-direction: column;
