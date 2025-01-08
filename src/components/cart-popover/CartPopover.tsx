@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
-import moduleStyles from "@/components/category/styles.module.scss";
 import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { db, Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
+import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 
@@ -130,7 +130,7 @@ export const CartPopover = () => {
             />
             {popover.isOpen && (
                 <div
-                    className={moduleStyles.category__popoverContent}
+                    className={moduleStyles.popoverContent}
                     ref={popover.refs.setFloating}
                     style={popover.floatingStyles}
                     {...popover.getFloatingProps()}
