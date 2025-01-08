@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/section/Section";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
-import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
-import styles from "./styles.module.scss";
+import { CartPopover } from "@/components/cart-popover/CartPopover";
+import moduleStyles from "./styles.module.scss";
 
 const categories = [
     { id: 1, title: "Наборы" },
@@ -19,10 +21,13 @@ const categories = [
 ];
 
 const CategoryList = () => (
-    <div className={styles.category__list}>
+    <div className={moduleStyles.category__list}>
         <ul>
             {categories.map((item, index) => (
-                <li key={item.id} className={index === 0 ? styles.active : ""}>
+                <li
+                    key={item.id}
+                    className={index === 0 ? moduleStyles.active : ""}
+                >
                     <Link href="/#">{item.title}</Link>
                 </li>
             ))}
@@ -31,12 +36,12 @@ const CategoryList = () => (
 );
 
 const CategoryOptions = () => (
-    <div className={styles.category__options}>
-        <div className={styles.category__delivery}>
+    <div className={moduleStyles.category__options}>
+        <div className={moduleStyles.category__delivery}>
             <h4>Доставка и оплата</h4>
         </div>
-        <span className={styles.category__line} />
-        <div className={styles.category__language}>
+        <span className={moduleStyles.category__line} />
+        <div className={moduleStyles.category__language}>
             <h4>RU</h4>
             <h4>/</h4>
             <h4>KZ</h4>
@@ -45,7 +50,7 @@ const CategoryOptions = () => (
 );
 
 const CategoryFilters = () => (
-    <div className={styles.category__filters}>
+    <div className={moduleStyles.category__filters}>
         <ButtonIcon>
             <Image
                 width={14}
@@ -65,17 +70,19 @@ const CategoryFilters = () => (
     </div>
 );
 
-export const Category = () => (
-    <Section>
-        <div className={styles.category}>
-            <div className={styles.category__content}>
-                <div className={styles.category__mainContainer}>
-                    <CategoryList />
-                    <CategoryOptions />
-                    <CategoryFilters />
+export const Category = () => {
+    return (
+        <Section>
+            <div className={moduleStyles.category}>
+                <div className={moduleStyles.category__content}>
+                    <div className={moduleStyles.category__mainContainer}>
+                        <CategoryList />
+                        <CategoryOptions />
+                        <CategoryFilters />
+                    </div>
+                    <CartPopover />
                 </div>
-                <ButtonCart />
             </div>
-        </div>
-    </Section>
-);
+        </Section>
+    );
+};
