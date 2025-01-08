@@ -146,14 +146,14 @@ export default function Page() {
         });
     }, [orders, sticks]);
 
-    const handlerButtonCounter = (e: number, localOrder: Order) => {
+    const handleButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const filteredPrevState = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             if (changeCounter(e, localOrder.count)) {
                 const arr = [
-                    ...prevState1,
+                    ...filteredPrevState,
                     {
                         ...localOrder,
                         count: localOrder.count + e,
@@ -164,7 +164,7 @@ export default function Page() {
                 });
             }
             const arr = [
-                ...prevState1,
+                ...filteredPrevState,
                 {
                     ...localOrder,
                     count: localOrder.count,
@@ -176,14 +176,14 @@ export default function Page() {
         });
     };
 
-    const handlerButtonCounterSticks = (e: number) => {
+    const handleButtonCounterSticks = (e: number) => {
         if (changeCounter(e, sticks[0].count))
             setSticks((prevState) => {
-                const prevState1 = prevState.filter(
+                const filteredPrevState = prevState.filter(
                     (stick) => stick.id !== sticks[0].id
                 );
                 return [
-                    ...prevState1,
+                    ...filteredPrevState,
                     {
                         ...sticks[0],
                         count: sticks[0].count + e,
@@ -192,13 +192,13 @@ export default function Page() {
             });
     };
 
-    const handlerDeleteOrder = (localOrder: Order) => {
+    const handleDeleteOrder = (localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const filteredPrevState = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             const arr = [
-                ...prevState1,
+                ...filteredPrevState,
                 {
                     ...localOrder,
                     count: 0,
@@ -218,15 +218,15 @@ export default function Page() {
                     <OrderList
                         orders={orders}
                         handleClearAllOrders={handleClearAllOrders}
-                        handlerDeleteOrder={handlerDeleteOrder}
-                        handlerButtonCounter={handlerButtonCounter}
+                        handlerDeleteOrder={handleDeleteOrder}
+                        handlerButtonCounter={handleButtonCounter}
                         error={error}
                     />
                 </CartWrapper>
                 <CartWrapper>
                     <SticksList
                         sticks={sticks}
-                        handlerButtonCounterSticks={handlerButtonCounterSticks}
+                        handlerButtonCounterSticks={handleButtonCounterSticks}
                     />
                 </CartWrapper>
                 <CartWrapper>
