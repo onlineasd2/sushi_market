@@ -29,7 +29,7 @@ export const OrderList = ({
                 <h1>
                     <b>Корзина</b>
                 </h1>
-                {orders.length !== 0 ? (
+                {orders.length !== 0 && (
                     <ButtonIcon onClick={handleClearAllOrders}>
                         <Image
                             width={18}
@@ -38,8 +38,6 @@ export const OrderList = ({
                             alt="delete"
                         />
                     </ButtonIcon>
-                ) : (
-                    ""
                 )}
             </div>
             {/* eslint-disable-next-line no-nested-ternary */}
