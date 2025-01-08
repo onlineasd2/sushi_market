@@ -1,8 +1,8 @@
-import styles from "@/app/cart/styles.module.scss";
 import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import React from "react";
 import { Sticks } from "@/services/db";
+import styles from "./styles.module.scss";
 
 interface Props {
     sticks: Sticks[];
@@ -13,14 +13,14 @@ export const SticksList = ({ handlerButtonCounterSticks, sticks }: Props) => {
     return (
         <>
             <hr />
-            <div className={styles.cart__title}>
+            <div className={styles.title}>
                 <h2>
                     <b>Приборы</b>
                 </h2>
             </div>
-            <div className={styles.cart__item}>
+            <div className={styles.item}>
                 <Image src="/sticks.webp" width={60} height={60} alt="Суша" />
-                <div className={styles.cart__text}>
+                <div className={styles.text}>
                     <h3>
                         <b>Палочки</b>
                     </h3>
@@ -29,7 +29,7 @@ export const SticksList = ({ handlerButtonCounterSticks, sticks }: Props) => {
                     value={sticks[0].count}
                     onChange={handlerButtonCounterSticks}
                 />
-                <div className={styles.cart__price}>
+                <div className={styles.price}>
                     <h3>{sticks[0].price} ₸</h3>
                 </div>
             </div>

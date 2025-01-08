@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "@/app/cart/styles.module.scss";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import Image from "next/image";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import Link from "next/link";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { Order } from "@/services/db";
+import styles from "./styles.module.scss";
 
 interface Props {
     orders: Order[];
@@ -25,7 +25,7 @@ export const OrderList = ({
     return (
         <>
             <hr />
-            <div className={styles.cart__title}>
+            <div className={styles.title}>
                 <h1>
                     <b>Корзина</b>
                 </h1>
@@ -64,14 +64,14 @@ export const OrderList = ({
                 orders
                     .sort((a, b) => a.key - b.key)
                     .map((localOrder) => (
-                        <div key={localOrder.key} className={styles.cart__item}>
+                        <div key={localOrder.key} className={styles.item}>
                             <Image
                                 src={localOrder.image}
                                 width={60}
                                 height={60}
                                 alt="Суша"
                             />
-                            <div className={styles.cart__text}>
+                            <div className={styles.text}>
                                 <h3>
                                     <b>{localOrder.name}</b>
                                     <p>{localOrder.weight}</p>
@@ -83,7 +83,7 @@ export const OrderList = ({
                                     handlerButtonCounter(e, localOrder)
                                 }
                             />
-                            <div className={styles.cart__price}>
+                            <div className={styles.price}>
                                 <h3>{localOrder.price * localOrder.count} ₸</h3>
                             </div>
                             <ButtonIcon

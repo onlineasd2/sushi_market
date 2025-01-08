@@ -1,0 +1,14 @@
+.cart {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content {
+    width: 626px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0px;
+}
+
+/*# sourceMappingURL=styles.module.css.map */

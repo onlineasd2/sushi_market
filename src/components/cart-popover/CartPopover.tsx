@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
-import moduleStyles from "@/components/category/styles.module.scss";
 import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
@@ -13,6 +12,7 @@ import {
     safePolygon,
     offset,
 } from "@floating-ui/react";
+import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 
@@ -149,7 +149,7 @@ export const CartPopover = () => {
             <ButtonCart ref={refs.setReference} {...getReferenceProps()} />
             {isOpen && (
                 <div
-                    className={moduleStyles.category__popoverContent}
+                    className={moduleStyles.popoverContent}
                     ref={refs.setFloating}
                     style={floatingStyles}
                     {...getFloatingProps()}
@@ -171,7 +171,7 @@ export const CartPopover = () => {
                             .map((localOrder) => (
                                 <div
                                     key={localOrder.key}
-                                    className={moduleStyles.category__order}
+                                    className={moduleStyles.order}
                                 >
                                     <Image
                                         src={localOrder.image}
@@ -179,11 +179,7 @@ export const CartPopover = () => {
                                         height={80}
                                         alt="Суша"
                                     />
-                                    <div
-                                        className={
-                                            moduleStyles.category__leftContainer
-                                        }
-                                    >
+                                    <div className={moduleStyles.leftContainer}>
                                         <h3>{localOrder.name}</h3>
                                         <p>{localOrder.weight}</p>
                                         <ButtonCounter
@@ -197,9 +193,7 @@ export const CartPopover = () => {
                                         />
                                     </div>
                                     <div
-                                        className={
-                                            moduleStyles.category__rightContainer
-                                        }
+                                        className={moduleStyles.rightContainer}
                                     >
                                         <ButtonIcon
                                             onClick={() =>
@@ -224,7 +218,7 @@ export const CartPopover = () => {
                     {orders.length === 0 ? (
                         ""
                     ) : (
-                        <div className={moduleStyles.category__totalPrice}>
+                        <div className={moduleStyles.totalPrice}>
                             <h3>Сумма заказа</h3>
                             <h3>{sumOrder}</h3>
                         </div>
