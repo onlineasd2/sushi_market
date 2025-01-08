@@ -1,0 +1,39 @@
+.title {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+.item img {
+    border-radius: var(--border-radius-small);
+}
+
+.text {
+    width: 200px;
+}
+.text h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    width: 80px;
+}
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*# sourceMappingURL=styles.module.css.map */
