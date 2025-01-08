@@ -2,4 +2,4 @@
 *.tsx text eol=lf
 *.css text eol=lf
 *.scss text eol=lf
-* text=auto
+* text=aut

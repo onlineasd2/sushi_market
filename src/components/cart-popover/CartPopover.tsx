@@ -5,14 +5,7 @@ import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { db, Order } from "@/services/db";
-import {
-    useHover,
-    useFloating,
-    autoUpdate,
-    useInteractions,
-    safePolygon,
-    offset,
-} from "@floating-ui/react";
+import { usePopover } from "@/hooks/usePopover";
 
 const MAX_VALUE = 10;
 
@@ -50,27 +43,12 @@ const deleteOrderFromDB = async (id: number): Promise<void> => {
 export const CartPopover = () => {
     const [orders, setOrders] = useState<Order[]>([]);
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const GAP = 14;
-
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
         0
     );
 
-    const { refs, floatingStyles, context } = useFloating({
-        open: isOpen,
-        onOpenChange: setIsOpen,
-        whileElementsMounted: autoUpdate,
-        middleware: [offset(GAP)],
-    });
-
-    const hover = useHover(context, {
-        handleClose: safePolygon(),
-    });
-
-    const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
+    const popover = usePopover();
 
     const getOrdersFromDB = async () => {
         try {
@@ -146,13 +124,16 @@ export const CartPopover = () => {
 
     return (
         <>
-            <ButtonCart ref={refs.setReference} {...getReferenceProps()} />
-            {isOpen && (
+            <ButtonCart
+                ref={popover.refs.setReference}
+                {...popover.getReferenceProps()}
+            />
+            {popover.isOpen && (
                 <div
                     className={moduleStyles.category__popoverContent}
-                    ref={refs.setFloating}
-                    style={floatingStyles}
-                    {...getFloatingProps()}
+                    ref={popover.refs.setFloating}
+                    style={popover.floatingStyles}
+                    {...popover.getFloatingProps()}
                 >
                     {orders.length === 0 ? (
                         <div className={moduleStyles.notFound}>
