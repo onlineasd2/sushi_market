@@ -146,14 +146,14 @@ export default function Page() {
         });
     }, [orders, sticks]);
 
-    const handlerButtonCounter = (e: number, localOrder: Order) => {
+    const handleButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const filteredPrevState = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             if (changeCounter(e, localOrder.count)) {
                 const arr = [
-                    ...prevState1,
+                    ...filteredPrevState,
                     {
                         ...localOrder,
                         count: localOrder.count + e,
@@ -164,7 +164,7 @@ export default function Page() {
                 });
             }
             const arr = [
-                ...prevState1,
+                ...filteredPrevState,
                 {
                     ...localOrder,
                     count: localOrder.count,
@@ -176,14 +176,14 @@ export default function Page() {
         });
     };
 
-    const handlerButtonCounterSticks = (e: number) => {
+    const handleButtonCounterSticks = (e: number) => {
         if (changeCounter(e, sticks[0].count))
             setSticks((prevState) => {
-                const prevState1 = prevState.filter(
+                const filteredPrevState = prevState.filter(
                     (stick) => stick.id !== sticks[0].id
                 );
                 return [
-                    ...prevState1,
+                    ...filteredPrevState,
                     {
                         ...sticks[0],
                         count: sticks[0].count + e,
@@ -192,13 +192,13 @@ export default function Page() {
             });
     };
 
-    const handlerDeleteOrder = (localOrder: Order) => {
+    const handleDeleteOrder = (localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const filteredPrevState = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             const arr = [
-                ...prevState1,
+                ...filteredPrevState,
                 {
                     ...localOrder,
                     count: 0,
@@ -221,7 +221,7 @@ export default function Page() {
                             <h1>
                                 <b>Корзина</b>
                             </h1>
-                            {orders.length !== 0 ? (
+                            {orders.length !== 0 && (
                                 <ButtonIcon onClick={handleClearAllOrders}>
                                     <Image
                                         width={18}
@@ -230,8 +230,6 @@ export default function Page() {
                                         alt="delete"
                                     />
                                 </ButtonIcon>
-                            ) : (
-                                ""
                             )}
                         </div>
                         {/* eslint-disable-next-line no-nested-ternary */}
@@ -275,7 +273,7 @@ export default function Page() {
                                         <ButtonCounter
                                             value={localOrder.count}
                                             onChange={(e) =>
-                                                handlerButtonCounter(
+                                                handleButtonCounter(
                                                     e,
                                                     localOrder
                                                 )
@@ -290,7 +288,7 @@ export default function Page() {
                                         </div>
                                         <ButtonIcon
                                             onClick={() =>
-                                                handlerDeleteOrder(localOrder)
+                                                handleDeleteOrder(localOrder)
                                             }
                                         >
                                             <Image
@@ -328,7 +326,7 @@ export default function Page() {
                             </div>
                             <ButtonCounter
                                 value={sticks[0].count}
-                                onChange={handlerButtonCounterSticks}
+                                onChange={handleButtonCounterSticks}
                             />
                             <div className={styles.cart__price}>
                                 <h3>{sticks[0].price} ₸</h3>
