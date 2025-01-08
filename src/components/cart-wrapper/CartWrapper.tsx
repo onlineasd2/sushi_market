@@ -1,4 +1,4 @@
-import styles from "@/app/cart/styles.module.scss";
+import styles from "./styles.module.scss";
 
 interface CartWrapperProps {
     children: React.ReactNode;
@@ -7,7 +7,7 @@ interface CartWrapperProps {
 export const CartWrapper: React.FC<CartWrapperProps> = ({ children }) => {
     return (
         <div className={styles.cart}>
-            <div className={styles.cart__content}>{children}</div>
+            <div className={styles.content}>{children}</div>
         </div>
     );
 };
