@@ -50,6 +50,10 @@
         "react/jsx-one-expression-per-line": "off",
         "react/display-name": "off",
         "react/jsx-props-no-spreading": "off",
-        "jsx-a11y/click-events-have-key-events": "off"
+        "jsx-a11y/click-events-have-key-events": "off",
+        "max-lines": [
+            "error",
+            { "max": 230, "skipBlankLines": true, "skipComments": true }
+        ]
     }
 }

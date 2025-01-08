@@ -1,336 +1,6 @@
 @charset "UTF-8";
-/**
-  Нормализация блочной модели
- */
-*,
-::before,
-::after {
-    box-sizing: border-box;
-}
-
-/**
-  Убираем внутренние отступы слева тегам списков,
-  у которых есть атрибут class
- */
-:where(ul, ol):where([class]) {
-    padding-left: 0;
-}
-
-/**
-  Убираем внешние отступы body и двум другим тегам,
-  у которых есть атрибут class
- */
-body,
-:where(blockquote, figure):where([class]) {
-    margin: 0;
-}
-
-/**
-  Убираем внешние отступы вертикали нужным тегам,
-  у которых есть атрибут class
- */
-:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
-    margin-block: 0;
-}
-
-:where(dd[class]) {
-    margin-left: 0;
-}
-
-:where(fieldset[class]) {
-    margin-left: 0;
-    padding: 0;
-    border: none;
-}
-
-/**
-  Убираем стандартный маркер маркированному списку,
-  у которого есть атрибут class
- */
-:where(ul[class]) {
-    list-style: none;
-}
-
-:where(address[class]) {
-    font-style: normal;
-}
-
-/**
-  Обнуляем вертикальные внешние отступы параграфа,
-  объявляем локальную переменную для внешнего отступа вниз,
-  чтобы избежать взаимодействие с более сложным селектором
- */
-p {
-    --paragraphMarginBottom: 24px;
-    margin-block: 0;
-}
-
-/**
-  Внешний отступ вниз для параграфа без атрибута class,
-  который расположен не последним среди своих соседних элементов
- */
-p:where(:not([class]):not(:last-child)) {
-    margin-bottom: var(--paragraphMarginBottom);
-}
-
-/**
-  Упрощаем работу с изображениями
- */
-img {
-    display: block;
-    max-width: 100%;
-}
-
-/**
-  Наследуем свойства шрифт для полей ввода
- */
-input,
-textarea,
-select,
-button {
-    font: inherit;
-}
-
-html {
-    /**
-    Пригодится в большинстве ситуаций
-    (когда, например, нужно будет "прижать" футер к низу сайта)
-   */
-    height: 100%;
-}
-
-/**
-  Плавный скролл
- */
-html,
-:has(:target) {
-    scroll-behavior: smooth;
-}
-
-body {
-    /**
-    Пригодится в большинстве ситуаций
-    (когда, например, нужно будет "прижать" футер к низу сайта)
-   */
-    min-height: 100%;
-    /**
-    Унифицированный интерлиньяж
-   */
-    line-height: 1.5;
-}
-
-/**
-  Приводим к единому цвету svg-элементы
- */
-svg *[fill] {
-    fill: currentColor;
-}
-
-svg *[stroke] {
-    stroke: currentColor;
-}
-
-/**
-  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
- */
-svg * {
-    transition-property: fill, stroke;
-}
-
-/**
-  Удаляем все анимации и переходы для людей,
-  которые предпочитают их не использовать
- */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    ::before,
-    ::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-body {
-    font-size: clamp(16px, calc(18 / 1440 * 100) vw, 18px);
-    font-family: var(--font-family-base);
-    font-weight: 500;
-    line-height: 1.28;
-    color: var(--color-dark);
-    background-color: var(--color-light);
-    margin: 0;
-}
-
-a,
-button,
-input,
-textarea,
-svg * {
-    transition-duration: var(--transition-duration);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-h1,
-h2,
-h3,
-h4 {
-    font-weight: 500;
-    margin: 0;
-}
-
-h1 {
-    font-size: clamp(43px, calc(60 / 1440 * 100) vw, 60px);
-}
-
-h2 {
-    font-size: clamp(26px, calc(30 / 1440 * 100) vw, 30px);
-}
-
-h3 {
-    font-size: clamp(18px, calc(20 / 1440 * 100) vw, 20px);
-}
-
-h4 {
-    font-size: clamp(43px, calc(60 / 1440 * 100) vw, 60px);
-}
-
-ul {
-    padding: 0px;
-    margin: 0px;
-}
-
-li {
-    list-style-type: none;
-}
-
-:root {
-    --color-light: #ffffff;
-    --color-dark: #000000;
-    --color-gray-dark: #203842;
-    --color-gray: #bcc3c6;
-    --color-dark-gray: #5a6a70;
-    --color-footer-gray: #93809f;
-    --color-light-gray: #bcc3c6;
-    --color-violet: #26033f;
-    --typography-primary-color: #203842;
-    --typography-secondary-color: #5a6a70;
-    --button-text-color: #abadba;
-    --button-bg-color: #e2e2e9;
-    --color-bg-alt: #fafafa;
-    --color-accent: #e13d48;
-    --font-family-base: "MuseoSansCyrl", "sans-serif";
-    --box-shadow: 0 0 20px 2px rgb(0 0 0 / 9%);
-    --container-width: 1160px;
-    --container-padding-x: 10px;
-    --section-padding-y: 80px;
-    --section-mobile-padding-y: 40px;
-    --border-radius: 20px;
-    --border-radius-medium: 10px;
-    --border-radius-small: 5px;
-    --transition-duration: 0.2s;
-}
-
-.container {
-    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
-    margin-inline: auto;
-    padding-inline: var(--container-padding-x);
-}
-
-.visually-hidden {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    margin: -1px !important;
-    border: 0 !important;
-    padding: 0 !important;
-    white-space: nowrap !important;
-    clip-path: inset(100%) !important;
-    clip: rect(0 0 0 0) !important;
-    overflow: hidden !important;
-}
-
-@media (max-width: 767px) {
-    .hidden-mobile {
-        display: none !important;
-    }
-}
-
-@media (min-width: 768px) {
-    .visible-mobile {
-        display: none !important;
-    }
-}
-
-@font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-100.woff") format("woff");
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-300.woff") format("woff");
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-500.woff") format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-700.woff") format("woff");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: "MuseoSansCyrl";
-    src: url("./../../fonts/MuseoSansCyrl-900.woff") format("woff");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
 .text-red {
     color: var(--color-accent);
-}
-
-@media (max-width: 1023px) {
-    .mobile__hidden {
-        /* Убираем фокус с активных элементов после клика */
-        /* Для ссылок и кнопок при потере фокуса */
-        display: none !important;
-    }
-    .mobile__hidden *:focus {
-        outline: none; /* Убираем обводку, если не нужна */
-    }
-    .mobile__hidden a:active,
-    .mobile__hidden button:active,
-    .mobile__hidden input:active,
-    .mobile__hidden select:active {
-        outline: none;
-        box-shadow: none; /* Убираем возможные тени */
-    }
-    .mobile__hidden a,
-    .mobile__hidden button {
-        outline: none;
-        box-shadow: none;
-    }
-}
-
-@media (max-width: 1280px) {
-    .mobile__active {
-        display: block !important;
-    }
 }
 
 .header {
@@ -338,6 +8,8 @@ li {
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
+    position: relative;
+    width: 100%;
 }
 @media (max-width: 1023px) {
     .header {
@@ -361,13 +33,6 @@ li {
         box-shadow: none;
     }
 }
-.header__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    width: 100%;
-}
 .header__location {
     margin: 0 50px;
     font-size: 16px;
@@ -383,65 +48,64 @@ li {
         font-size: 14px;
     }
 }
-.header__button-location {
+.header__buttonLocation {
     position: relative;
 }
-.header__button-location img {
+.header__buttonLocation img {
     width: 16px;
     left: 10px;
     top: 5px;
     position: absolute;
 }
-.header-mobile {
+.headerMobile {
     display: none;
     width: 100%;
     padding: 16px 0px;
 }
 @media (max-width: 1023px) {
-    .header-mobile {
+    .headerMobile {
         /* Убираем фокус с активных элементов после клика */
         /* Для ссылок и кнопок при потере фокуса */
         display: block;
     }
-    .header-mobile *:focus {
+    .headerMobile *:focus {
         outline: none; /* Убираем обводку, если не нужна */
     }
-    .header-mobile a:active,
-    .header-mobile button:active,
-    .header-mobile input:active,
-    .header-mobile select:active {
+    .headerMobile a:active,
+    .headerMobile button:active,
+    .headerMobile input:active,
+    .headerMobile select:active {
         outline: none;
         box-shadow: none; /* Убираем возможные тени */
     }
-    .header-mobile a,
-    .header-mobile button {
+    .headerMobile a,
+    .headerMobile button {
         outline: none;
         box-shadow: none;
     }
 }
-.header-mobile__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-@media (max-width: 767px) {
-    .header-mobile__content button {
-        padding: 0px 10px;
-        height: 30px;
-        font-size: 12px;
-    }
-}
-.header-mobile__container {
+.headerMobile__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
 }
-.header-mobile__button-login {
+.headerMobile__container > .headerMobile__burgerMenu,
+.headerMobile__container > .buttonLogin {
+    margin-right: 8px;
+}
+.headerMobile__container > :nth-child(3) {
+    margin-left: auto;
+    margin-right: auto;
+}
+.headerMobile__container > :last-child {
+    margin-left: auto;
+}
+.headerMobile__buttonLogin {
     position: absolute;
     left: 40px;
 }
-.header-mobile__burger-menu {
+.headerMobile__burgerMenu {
     display: flex;
     position: relative;
     align-items: center;
@@ -449,8 +113,8 @@ li {
     width: 24px;
     height: 24px;
 }
-.header-mobile__burger-menu::before,
-.header-mobile__burger-menu::after {
+.headerMobile__burgerMenu::before,
+.headerMobile__burgerMenu::after {
     content: "";
     position: absolute;
     height: 2px;
@@ -458,34 +122,34 @@ li {
     background-color: var(--color-dark);
     transition: all 0.3s ease 0s;
 }
-.header-mobile__burger-menu::before {
+.headerMobile__burgerMenu::before {
     top: 4px;
 }
-.header-mobile__burger-menu::after {
+.headerMobile__burgerMenu::after {
     bottom: 4px;
 }
-.header-mobile__burger-menu.active span {
+.headerMobile__burgerMenu.active span {
     transform: scale(0);
 }
-.header-mobile__burger-menu.active::before {
+.headerMobile__burgerMenu.active::before {
     top: 50%;
     transform: rotate(-45deg) translate(0, -50%);
 }
-.header-mobile__burger-menu.active::after {
+.headerMobile__burgerMenu.active::after {
     bottom: 50%;
     transform: rotate(45deg) translate(0, 50%);
 }
-.header-mobile__burger-menu span {
+.headerMobile__burgerMenu span {
     height: 2px;
     width: 100%;
     transform: scale(1);
     background: var(--color-dark);
 }
-.header-mobile__close-btn {
+.headerMobile__closeBtn {
     margin-left: 20px;
     margin-top: 20px;
 }
-.header-mobile__nav-menu {
+.headerMobile__navMenu {
     position: fixed;
     width: 85vw;
     height: 100%;
@@ -498,14 +162,14 @@ li {
     transform: translateX(0); /* Начальная трансформация */
 }
 @media (max-width: 767px) {
-    .header-mobile__nav-menu {
+    .headerMobile__navMenu {
         width: 100vw;
     }
 }
-.header-mobile__nav-menu.hidden {
+.headerMobile__navMenu.hidden {
     transform: translateX(-100%); /* Выезд внутрь экрана */
 }
-.header-mobile__menu-box {
+.headerMobile__menuBox {
     display: flex;
     flex-direction: column;
     padding-top: 40px;
@@ -514,7 +178,7 @@ li {
     z-index: 50;
     gap: 10px;
 }
-.header-mobile__menu-box li {
+.headerMobile__menuBox li {
     display: flex;
     align-items: center;
     background: var(--color-light);
@@ -523,17 +187,17 @@ li {
     color: var(--color-dark);
     border-radius: var(--border-radius-small);
 }
-.header-mobile__menu-box li img {
+.headerMobile__menuBox li img {
     object-fit: contain;
     padding-right: 10px;
 }
 @media (max-width: 767px) {
-    .header-mobile__menu-box li img {
+    .headerMobile__menuBox li img {
         width: 30px;
         height: 30px;
     }
 }
-.header-mobile__overlay {
+.headerMobile__overlay {
     display: block;
     position: fixed;
     width: 100vw;
@@ -547,7 +211,7 @@ li {
         opacity 0.3s ease-in-out,
         visibility 0.3s ease-in-out;
 }
-.header-mobile__overlay.hidden {
+.headerMobile__overlay.hidden {
     opacity: 0;
     visibility: hidden;
 }
