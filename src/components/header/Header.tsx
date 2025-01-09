@@ -6,8 +6,9 @@ import React from "react";
 import { Section } from "@/components/section/Section";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
-import { usePopover } from "@/hooks/usePopover";
 import { ModalAdress } from "@/components/modal-adress/ModalAdress";
+import { useModal } from "@/hooks/useModal";
+import { FloatingFocusManager, FloatingOverlay } from "@floating-ui/react";
 import styles from "./styles.module.scss";
 
 export const Header = () => {
@@ -16,10 +17,13 @@ export const Header = () => {
     const {
         refs,
         isOpen,
+        setIsOpen,
         getFloatingProps,
         getReferenceProps,
-        floatingStyles,
-    } = usePopover({ event: ["click"] });
+        context,
+        labelId,
+        descriptionId,
+    } = useModal();
 
     const toggleMenu = () => {
         setIsBurgerActive(!isBurgerActive);
@@ -49,7 +53,7 @@ export const Header = () => {
                 </div>
                 <div className={styles.header__find}>
                     <ButtonLocation
-                        ref={refs.setFloating}
+                        ref={refs.setReference}
                         {...getReferenceProps()}
                     >
                         <Image
@@ -65,11 +69,18 @@ export const Header = () => {
             </div>
 
             {isOpen && (
-                <ModalAdress
-                    ref={refs.setFloating}
-                    style={floatingStyles}
-                    {...getFloatingProps()}
-                />
+                <FloatingOverlay lockScroll className={styles.dialogOverlay}>
+                    <FloatingFocusManager context={context}>
+                        <div
+                            ref={refs.setFloating}
+                            aria-labelledby={labelId}
+                            aria-describedby={descriptionId}
+                            {...getFloatingProps()}
+                        >
+                            <ModalAdress onChange={() => setIsOpen(false)} />
+                        </div>
+                    </FloatingFocusManager>
+                </FloatingOverlay>
             )}
 
             <div className={styles.headerMobile}>
