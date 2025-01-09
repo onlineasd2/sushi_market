@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/input/Input";
 import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 import { db, Address } from "@/services/db";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { AddressSuggestions } from "react-dadata";
 import styles from "./styles.module.scss";
 
 interface ModalAddressProps {
@@ -81,6 +83,7 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
     useEffect(() => {
         getAddressFromDB();
     }, []);
+    const [value, setValue] = useState();
 
     return (
         <div className={styles.modal}>
@@ -91,6 +94,12 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
                 <h3>Ваш город</h3>
                 <h3>Павлодар</h3>
             </div>
+            <AddressSuggestions
+                token="8a19ab7de6ee11d4ef01e0cf68e25b24d2d64775"
+                value={value}
+                onChange={() => setValue}
+                containerClassName={styles.adressFirstLayer}
+            />
             <div className={styles.adressFirstLayer}>
                 <Input
                     onChange={(value) => handleChangeInput("street", value)}
