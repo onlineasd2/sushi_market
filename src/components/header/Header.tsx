@@ -6,10 +6,20 @@ import React from "react";
 import { Section } from "@/components/section/Section";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
+import { usePopover } from "@/hooks/usePopover";
+import { ModalAdress } from "@/components/modal-adress/ModalAdress";
 import styles from "./styles.module.scss";
 
 export const Header = () => {
     const [isBurgerActive, setIsBurgerActive] = React.useState(false);
+
+    const {
+        refs,
+        isOpen,
+        getFloatingProps,
+        getReferenceProps,
+        floatingStyles,
+    } = usePopover({ event: ["click"] });
 
     const toggleMenu = () => {
         setIsBurgerActive(!isBurgerActive);
@@ -38,7 +48,10 @@ export const Header = () => {
                     </h3>
                 </div>
                 <div className={styles.header__find}>
-                    <ButtonLocation>
+                    <ButtonLocation
+                        ref={refs.setFloating}
+                        {...getReferenceProps()}
+                    >
                         <Image
                             src="/placeholder.png"
                             width={16}
@@ -50,6 +63,14 @@ export const Header = () => {
                 </div>
                 <ButtonLogin>Войти</ButtonLogin>
             </div>
+
+            {isOpen && (
+                <ModalAdress
+                    ref={refs.setFloating}
+                    style={floatingStyles}
+                    {...getFloatingProps()}
+                />
+            )}
 
             <div className={styles.headerMobile}>
                 <div className={styles.headerMobile__container}>

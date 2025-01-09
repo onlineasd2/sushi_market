@@ -42,13 +42,20 @@ const deleteOrderFromDB = async (id: number): Promise<void> => {
 
 export const CartPopover = () => {
     const [orders, setOrders] = useState<Order[]>([]);
+    const GAP = 14;
 
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
         0
     );
 
-    const popover = usePopover();
+    const {
+        refs,
+        isOpen,
+        getFloatingProps,
+        getReferenceProps,
+        floatingStyles,
+    } = usePopover({ gap: GAP });
 
     const getOrdersFromDB = async () => {
         try {
@@ -124,16 +131,13 @@ export const CartPopover = () => {
 
     return (
         <>
-            <ButtonCart
-                ref={popover.refs.setReference}
-                {...popover.getReferenceProps()}
-            />
-            {popover.isOpen && (
+            <ButtonCart ref={refs.setReference} {...getReferenceProps()} />
+            {isOpen && (
                 <div
                     className={moduleStyles.popoverContent}
-                    ref={popover.refs.setFloating}
-                    style={popover.floatingStyles}
-                    {...popover.getFloatingProps()}
+                    ref={refs.setFloating}
+                    style={floatingStyles}
+                    {...getFloatingProps()}
                 >
                     {orders.length === 0 ? (
                         <div className={moduleStyles.notFound}>
