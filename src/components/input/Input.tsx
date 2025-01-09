@@ -6,6 +6,8 @@ interface Props {
     title?: string;
     placeholder?: string;
     longText?: boolean;
+    onChange?: (e: string) => void;
+    value?: string;
 }
 
 export const Input = ({
@@ -13,7 +15,15 @@ export const Input = ({
     placeholder,
     required = false,
     longText = false,
+    onChange,
+    value,
 }: Props) => {
+    const handleChangeInput = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        if (onChange) onChange(e.target.value);
+    };
+
     return (
         <div className={styles.content}>
             {!longText ? (
@@ -24,15 +34,19 @@ export const Input = ({
                     </p>
 
                     <input
+                        onChange={handleChangeInput}
                         className={styles.input}
                         type="text"
                         placeholder={placeholder}
+                        value={value}
                     />
                 </>
             ) : (
                 <textarea
+                    onChange={handleChangeInput}
                     className={styles.textarea}
                     placeholder={placeholder}
+                    value={value}
                 />
             )}
         </div>
