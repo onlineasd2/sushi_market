@@ -6,7 +6,7 @@ import React from "react";
 import { Section } from "@/components/section/Section";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
-import { ModalAdress } from "@/components/modal-adress/ModalAdress";
+import { ModalAddress } from "@/components/modal-adress/ModalAdress";
 import { useModal } from "@/hooks/useModal";
 import { FloatingFocusManager, FloatingOverlay } from "@floating-ui/react";
 import styles from "./styles.module.scss";
@@ -77,7 +77,7 @@ export const Header = () => {
                             aria-describedby={descriptionId}
                             {...getFloatingProps()}
                         >
-                            <ModalAdress onChange={() => setIsOpen(false)} />
+                            <ModalAddress onChange={() => setIsOpen(false)} />
                         </div>
                     </FloatingFocusManager>
                 </FloatingOverlay>
