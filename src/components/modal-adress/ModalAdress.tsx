@@ -88,7 +88,6 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
         setStreet(street);
         handleChangeInput("street", street);
     };
-    console.log(street);
 
     return (
         <div className={styles.modal}>
