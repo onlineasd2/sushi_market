@@ -5,20 +5,34 @@ import styles from "./styles.module.scss";
 interface Props {
     setValueStreet: (street: string) => void;
     propsValue: string;
+    title?: string;
+    required?: boolean;
 }
 
-export const InputDaData = ({ setValueStreet, propsValue }: Props) => {
+const API_KEY_DADATA: string = process.env.NEXT_PUBLIC_API_KEY_DADATA!;
+
+export const InputDaData = ({
+    title,
+    required,
+    setValueStreet,
+    propsValue,
+}: Props) => {
     return (
         <div className={styles.content}>
+            <p className={styles.title}>
+                {title}
+                {required && " *"}
+            </p>
             <AddressSuggestions
-                token="8a19ab7de6ee11d4ef01e0cf68e25b24d2d64775"
+                token={API_KEY_DADATA}
                 inputProps={{ value: propsValue, className: styles.input }}
-                highlightClassName={styles.highlights}
+                highlightClassName={styles.transparent}
                 containerClassName={styles.container}
                 suggestionsClassName={styles.suggestions}
                 suggestionClassName={styles.suggestionsText}
                 currentSuggestionClassName={styles.suggestionsText}
                 defaultQuery={propsValue}
+                hintClassName={styles.transparent}
                 onChange={(suggestion) => {
                     if (suggestion)
                         setValueStreet(suggestion.data.street_with_type ?? "");
