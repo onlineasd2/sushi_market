@@ -101,6 +101,7 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
             </div>
             <div className={styles.adressFirstLayer}>
                 <InputDaData
+                    title="Улица"
                     propsValue={addressState[0]?.street}
                     setValueStreet={handleStreetChange}
                 />
