@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/input/Input";
 import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 import { db, Address } from "@/services/db";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AddressSuggestions } from "react-dadata";
+import { InputDaData } from "@/components/input-dadata/Input";
 import styles from "./styles.module.scss";
 
 interface ModalAddressProps {
@@ -14,6 +13,7 @@ interface ModalAddressProps {
 
 export const ModalAddress = ({ onChange }: ModalAddressProps) => {
     const [addressState, setAddressState] = useState<Address[]>([]);
+    const [street, setStreet] = useState<string>("");
 
     const isAddressLoaded = async (): Promise<boolean> => {
         return (await db.sticks.get(0)) !== undefined;
@@ -78,12 +78,17 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
         addressState.forEach((item) => {
             editAddressToDB(item);
         });
-    }, [addressState]);
+    }, [addressState, street]);
 
     useEffect(() => {
         getAddressFromDB();
     }, []);
-    const [value, setValue] = useState();
+
+    const handleStreetChange = (street: string) => {
+        setStreet(street);
+        handleChangeInput("street", street);
+    };
+    console.log(street);
 
     return (
         <div className={styles.modal}>
@@ -94,18 +99,10 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
                 <h3>Ваш город</h3>
                 <h3>Павлодар</h3>
             </div>
-            <AddressSuggestions
-                token="8a19ab7de6ee11d4ef01e0cf68e25b24d2d64775"
-                value={value}
-                onChange={() => setValue}
-                containerClassName={styles.adressFirstLayer}
-            />
             <div className={styles.adressFirstLayer}>
-                <Input
-                    onChange={(value) => handleChangeInput("street", value)}
-                    title="Улица"
-                    required
-                    value={addressState[0]?.street || ""}
+                <InputDaData
+                    propsValue={addressState[0]?.street}
+                    setValueStreet={handleStreetChange}
                 />
                 <Input
                     onChange={(value) => handleChangeInput("house", value)}
