@@ -6,20 +6,30 @@ import { Section } from "@/components/section/Section";
 import { ButtonOrder } from "@/components/buttons/button-order/ButtonOrder";
 import { ButtonOrderCancel } from "@/components/buttons/button-order-cancel/ButtonOrderCancel";
 import Link from "next/link";
-import { db, Order, Sticks } from "@/services/db/db";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { OrderList } from "@/components/order-list/OrderList";
 import { SticksList } from "@/components/sticks-list/SticksList";
 import { CartWrapper } from "@/components/cart-wrapper/CartWrapper";
+import { Order } from "@/services/db";
+import { useDatabase } from "@/hooks/useDatabase";
 import styles from "./styles.module.scss";
 
 const MAX_VALUE: number = 10;
-const PRICE_STICK = 30;
 
 export default function Page() {
-    const [error, setError] = useState("");
-    const [orders, setOrders] = useState<Order[]>([]);
-    const [sticks, setSticks] = useState<Sticks[]>([]);
+    const {
+        getAllSticksFromDB,
+        getAllOrdersFromDB,
+        deleteOrderWithIdFromDB,
+        editOrdersToDB,
+        editSticksToDB,
+        handleClearAllOrders,
+        orders,
+        setOrders,
+        sticks,
+        setSticks,
+        error,
+    } = useDatabase();
 
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
@@ -30,90 +40,6 @@ export default function Page() {
         0
     );
     const totalSum = sumOrder + sumSticks;
-
-    const isSticksLoaded = async (): Promise<boolean> => {
-        const stick = await db.sticks.get(0);
-        return stick !== undefined;
-    };
-
-    const addSticksDB = async (): Promise<void> => {
-        try {
-            const stickExists = await isSticksLoaded();
-            if (!stickExists)
-                await db.sticks.add({
-                    id: 0,
-                    count: 1,
-                    price: PRICE_STICK,
-                });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const getOrdersFromDB = async () => {
-        try {
-            const res = await db.orders.toArray();
-            setOrders(res);
-        } catch (error) {
-            setError(`Error ${error}`);
-        }
-    };
-
-    const getSticksFromDB = async () => {
-        try {
-            const stickExists = await isSticksLoaded();
-            if (!stickExists) await addSticksDB();
-
-            const res = await db.sticks.toArray();
-            setSticks(res);
-        } catch (error) {
-            setError(`Error ${error}`);
-        }
-    };
-
-    const editOrdersToDB = async (
-        id: number,
-        countState: number
-    ): Promise<void> => {
-        try {
-            await db.orders.update(id, {
-                count: countState,
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const editSticksToDB = async (
-        id: number,
-        countState: number
-    ): Promise<void> => {
-        try {
-            const stickExists = await isSticksLoaded();
-            if (!stickExists) await addSticksDB();
-            if (await isSticksLoaded())
-                await db.sticks.update(id, {
-                    count: countState,
-                });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const deleteOrderFromDB = async (id: number): Promise<void> => {
-        try {
-            await db.orders.delete(id);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleClearAllOrders = () => {
-        orders.forEach((order) => {
-            deleteOrderFromDB(order.id ?? 0);
-        });
-        setOrders([]);
-    };
 
     const changeCounter = (e: number, count: number): boolean => {
         if (e > 0 && count < MAX_VALUE) return true;
@@ -191,15 +117,15 @@ export default function Page() {
     };
 
     useEffect(() => {
-        getSticksFromDB();
-        getOrdersFromDB();
+        getAllSticksFromDB();
+        getAllOrdersFromDB();
     }, []);
 
     useEffect(() => {
         orders.forEach((order) => {
             if (order.count <= 0) {
-                deleteOrderFromDB(order.id ?? 0);
-                getOrdersFromDB();
+                deleteOrderWithIdFromDB(order.id ?? 0);
+                getAllOrdersFromDB();
             }
             if (order.count >= 1 && order.count <= MAX_VALUE)
                 editOrdersToDB(order.id ?? 0, order.count);
@@ -219,8 +145,8 @@ export default function Page() {
                     <OrderList
                         orders={orders}
                         handleClearAllOrders={handleClearAllOrders}
-                        handlerDeleteOrder={handleDeleteOrder}
-                        handlerButtonCounter={handleButtonCounter}
+                        handleDeleteOrder={handleDeleteOrder}
+                        handleButtonCounter={handleButtonCounter}
                         error={error}
                     />
                 </CartWrapper>
@@ -228,7 +154,7 @@ export default function Page() {
                     {sticks.length > 0 && (
                         <SticksList
                             sticks={sticks}
-                            handlerButtonCounterSticks={
+                            handleButtonCounterSticks={
                                 handleButtonCounterSticks
                             }
                         />

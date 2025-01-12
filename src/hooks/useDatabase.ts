@@ -92,7 +92,7 @@ export const useDatabase = () => {
         }
     };
 
-    const getSticksFromDB = async () => {
+    const getAllSticksFromDB = async () => {
         try {
             const stickExists = await isSticksLoaded();
             if (!stickExists) await addSticksDB();
@@ -209,7 +209,7 @@ export const useDatabase = () => {
         setCountState,
         PRICE_STICK,
         MAX_VALUE,
-        getSticksFromDB,
+        getAllSticksFromDB,
         addSticksDB,
         editSticksToDB,
         getAllOrdersFromDB,
