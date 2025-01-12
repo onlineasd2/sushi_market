@@ -30,7 +30,7 @@ export const SticksList = ({ handleButtonCounterSticks, sticks }: Props) => {
                     onChange={handleButtonCounterSticks}
                 />
                 <div className={styles.price}>
-                    <h3>{sticks[0].price} ₸</h3>
+                    <h3>{sticks[0].price * sticks[0].count} ₸</h3>
                 </div>
             </div>
         </>
