@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
 
-interface Order {
+export interface Order {
     id?: number;
     name: string;
     image: string;
@@ -10,13 +10,13 @@ interface Order {
     price: number;
 }
 
-interface Sticks {
+export interface Sticks {
     id?: number;
     count: number;
     price: number;
 }
 
-interface Address {
+export interface Address {
     id?: number;
     street: string;
     house: string;
@@ -27,7 +27,7 @@ interface Address {
     description: string;
 }
 
-const db = new Dexie("OrdersDatabase") as Dexie & {
+export const db = new Dexie("OrdersDatabase") as Dexie & {
     orders: EntityTable<Order, "id">;
     sticks: EntityTable<Sticks, "id">;
     address: EntityTable<Address, "id">;
@@ -39,6 +39,3 @@ db.version(1).stores({
     address:
         "id, street, house, structure, entrance, floor, apartment, description",
 });
-
-export type { Order, Sticks, Address };
-export { db };

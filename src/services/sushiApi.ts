@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_KEY_ENV = process.env.NEXT_PUBLIC_API_URL;
+import { API_KEY_ENV } from "@/constants/api";
 
 export const sushiApi = {
     getSushiSets: async (page: number, limit: number) => {
