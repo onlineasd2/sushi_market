@@ -10,16 +10,16 @@ import styles from "./styles.module.scss";
 interface Props {
     orders: Order[];
     handleClearAllOrders(): void;
-    handlerButtonCounter(e: number, localOrder: Order): void;
-    handlerDeleteOrder(localOrder: Order): void;
+    handleButtonCounter(e: number, localOrder: Order): void;
+    handleDeleteOrder(localOrder: Order): void;
     error: string;
 }
 
 export const OrderList = ({
     orders,
     handleClearAllOrders,
-    handlerButtonCounter,
-    handlerDeleteOrder,
+    handleButtonCounter,
+    handleDeleteOrder,
     error,
 }: Props) => {
     return (
@@ -78,14 +78,14 @@ export const OrderList = ({
                             <ButtonCounter
                                 value={localOrder.count}
                                 onChange={(e) =>
-                                    handlerButtonCounter(e, localOrder)
+                                    handleButtonCounter(e, localOrder)
                                 }
                             />
                             <div className={styles.price}>
                                 <h3>{localOrder.price * localOrder.count} ₸</h3>
                             </div>
                             <ButtonIcon
-                                onClick={() => handlerDeleteOrder(localOrder)}
+                                onClick={() => handleDeleteOrder(localOrder)}
                             >
                                 <Image
                                     width={18}

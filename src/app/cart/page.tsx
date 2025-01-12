@@ -218,15 +218,15 @@ export default function Page() {
                     <OrderList
                         orders={orders}
                         handleClearAllOrders={handleClearAllOrders}
-                        handlerDeleteOrder={handleDeleteOrder}
-                        handlerButtonCounter={handleButtonCounter}
+                        handleDeleteOrder={handleDeleteOrder}
+                        handleButtonCounter={handleButtonCounter}
                         error={error}
                     />
                 </CartWrapper>
                 <CartWrapper>
                     <SticksList
                         sticks={sticks}
-                        handlerButtonCounterSticks={handleButtonCounterSticks}
+                        handleButtonCounterSticks={handleButtonCounterSticks}
                     />
                 </CartWrapper>
                 <CartWrapper>

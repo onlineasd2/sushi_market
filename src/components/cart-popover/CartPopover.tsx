@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
 import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
-import { db, Order } from "@/services/db";
+import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
+import { useDatabase } from "@/hooks/useDatabase";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
@@ -19,29 +20,15 @@ const counterLimiter = (e: number, count: number): boolean => {
     return false;
 };
 
-const editOrdersToDB = async (
-    id: number,
-    countState: number
-): Promise<void> => {
-    try {
-        await db.orders.update(id, {
-            count: countState,
-        });
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-const deleteOrderFromDB = async (id: number): Promise<void> => {
-    try {
-        await db.orders.delete(id);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
 export const CartPopover = () => {
-    const [orders, setOrders] = useState<Order[]>([]);
+    const {
+        editOrdersToDB,
+        deleteOrderWithIdFromDB,
+        getAllOrdersFromDB,
+        orders,
+        setOrders,
+    } = useDatabase();
+
     const GAP = 14;
 
     const sumOrder = orders.reduce(
@@ -56,17 +43,7 @@ export const CartPopover = () => {
         getReferenceProps,
         floatingStyles,
     } = usePopover({ gap: GAP });
-
-    const getOrdersFromDB = async () => {
-        try {
-            const res = await db.orders.toArray();
-            setOrders(res);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handlerButtonCounter = (e: number, localOrder: Order) => {
+    const handleButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
             const prevState1 = prevState.filter(
                 (set) => set.key !== localOrder.key
@@ -96,7 +73,7 @@ export const CartPopover = () => {
         });
     };
 
-    const handlerDeleteOrder = (localOrder: Order) => {
+    const handleDeleteOrder = (localOrder: Order) => {
         setOrders((prevState) => {
             const prevState1 = prevState.filter(
                 (set) => set.key !== localOrder.key
@@ -117,8 +94,8 @@ export const CartPopover = () => {
     useEffect(() => {
         orders.forEach((order) => {
             if (order.count <= 0) {
-                deleteOrderFromDB(order.id ?? 0);
-                getOrdersFromDB();
+                deleteOrderWithIdFromDB(order.id ?? 0);
+                getAllOrdersFromDB();
             }
             if (order.count >= 1 && order.count <= MAX_VALUE)
                 editOrdersToDB(order.id ?? 0, order.count);
@@ -126,7 +103,7 @@ export const CartPopover = () => {
     }, [orders]);
 
     useEffect(() => {
-        getOrdersFromDB();
+        getAllOrdersFromDB();
     }, []);
 
     return (
@@ -170,7 +147,7 @@ export const CartPopover = () => {
                                         <ButtonCounter
                                             value={localOrder.count}
                                             onChange={(e) =>
-                                                handlerButtonCounter(
+                                                handleButtonCounter(
                                                     e,
                                                     localOrder
                                                 )
@@ -182,7 +159,7 @@ export const CartPopover = () => {
                                     >
                                         <ButtonIcon
                                             onClick={() =>
-                                                handlerDeleteOrder(localOrder)
+                                                handleDeleteOrder(localOrder)
                                             }
                                         >
                                             <Image
