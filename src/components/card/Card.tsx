@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { ICard } from "@/components/sets/ICard";
 import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
-import { useDatabase } from "@/hooks/useDatabase";
 import styles from "./styles.module.scss";
 
 interface CardProps {
@@ -13,41 +12,9 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ card }: CardProps) => {
     const [src, setSrc] = useState(card.image || "/productBlurIcon.png");
-    const isFirstRender = useRef(true);
-    const {
-        countState,
-        idState,
-        setCountState,
-        addOrderToDB,
-        editOrderFromDB,
-        deleteOrderFromDB,
-        getOrderFromDB,
-    } = useDatabase();
-    const MAX_VALUE = 10;
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            getOrderFromDB(card);
-        }
-
-        if (countState > 1 && countState <= MAX_VALUE && countState !== 0)
-            editOrderFromDB();
-        else if (countState === 1 && idState === null) addOrderToDB(card);
-        else if (countState <= 0 && idState !== null) deleteOrderFromDB();
-    }, [countState]);
-
-    const handleRangeLimitCounterButton = (e: number) => {
-        if (e > 0 && countState === 0) setCountState((prev) => prev + e);
-        else if (e > 0 && countState < MAX_VALUE && countState !== 0)
-            setCountState((prev) => prev + e);
-        else if (e < 0 && countState <= MAX_VALUE && countState > 0)
-            setCountState((prev) => prev + e);
-        else if (e < 0 && countState === 1) setCountState((prev) => prev + e);
-    };
 
     return (
-        <div key={card.id} className={styles.card}>
+        <div className={styles.card}>
             <Image
                 src={src}
                 width={262}
@@ -68,10 +35,7 @@ export const Card: React.FC<CardProps> = ({ card }: CardProps) => {
                     <h3 className={styles.card__price}>
                         <b>{card.price} ₸</b>
                     </h3>
-                    <ButtonAddCard
-                        value={countState}
-                        onChange={handleRangeLimitCounterButton}
-                    />
+                    <ButtonAddCard card={card} />
                 </div>
             </div>
         </div>
