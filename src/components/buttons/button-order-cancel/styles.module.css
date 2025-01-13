@@ -7,8 +7,7 @@
 .button__orderCancel {
     height: 32px;
     min-height: var(--app-button-min-height);
-    padding: 0 12px;
-    margin-left: 14px;
+    padding: 0 35px;
     border: 1px solid var(--button-secondary-border-color);
     color: var(--button-secondary-border-color);
     background-color: var(--color-gray);

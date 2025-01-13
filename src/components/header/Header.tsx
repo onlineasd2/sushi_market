@@ -6,10 +6,24 @@ import React from "react";
 import { Section } from "@/components/section/Section";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { ButtonLocation } from "@/components/buttons/button-location/ButtonLocation";
+import { ModalAddress } from "@/components/modal-adress/ModalAdress";
+import { useModal } from "@/hooks/useModal";
+import { FloatingFocusManager, FloatingOverlay } from "@floating-ui/react";
 import styles from "./styles.module.scss";
 
 export const Header = () => {
     const [isBurgerActive, setIsBurgerActive] = React.useState(false);
+
+    const {
+        refs,
+        isOpen,
+        setIsOpen,
+        getFloatingProps,
+        getReferenceProps,
+        context,
+        labelId,
+        descriptionId,
+    } = useModal();
 
     const toggleMenu = () => {
         setIsBurgerActive(!isBurgerActive);
@@ -38,7 +52,10 @@ export const Header = () => {
                     </h3>
                 </div>
                 <div className={styles.header__find}>
-                    <ButtonLocation>
+                    <ButtonLocation
+                        ref={refs.setReference}
+                        {...getReferenceProps()}
+                    >
                         <Image
                             src="/placeholder.png"
                             width={16}
@@ -50,6 +67,21 @@ export const Header = () => {
                 </div>
                 <ButtonLogin>Войти</ButtonLogin>
             </div>
+
+            {isOpen && (
+                <FloatingOverlay lockScroll className={styles.dialogOverlay}>
+                    <FloatingFocusManager context={context}>
+                        <div
+                            ref={refs.setFloating}
+                            aria-labelledby={labelId}
+                            aria-describedby={descriptionId}
+                            {...getFloatingProps()}
+                        >
+                            <ModalAddress onChange={() => setIsOpen(false)} />
+                        </div>
+                    </FloatingFocusManager>
+                </FloatingOverlay>
+            )}
 
             <div className={styles.headerMobile}>
                 <div className={styles.headerMobile__container}>
