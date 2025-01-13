@@ -68,10 +68,12 @@
 }
 
 .skeleton {
+    z-index: -1;
     &__card {
         display: flex;
         flex-direction: column;
         width: 262px;
+        z-index: -1;
     }
 
     &__spaceBetween {

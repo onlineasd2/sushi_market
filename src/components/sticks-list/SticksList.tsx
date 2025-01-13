@@ -6,10 +6,10 @@ import styles from "./styles.module.scss";
 
 interface Props {
     sticks: Sticks[];
-    handlerButtonCounterSticks: (e: number) => void;
+    handleButtonCounterSticks: (e: number) => void;
 }
 
-export const SticksList = ({ handlerButtonCounterSticks, sticks }: Props) => {
+export const SticksList = ({ handleButtonCounterSticks, sticks }: Props) => {
     return (
         <>
             <hr />
@@ -27,10 +27,10 @@ export const SticksList = ({ handlerButtonCounterSticks, sticks }: Props) => {
                 </div>
                 <ButtonCounter
                     value={sticks[0].count}
-                    onChange={handlerButtonCounterSticks}
+                    onChange={handleButtonCounterSticks}
                 />
                 <div className={styles.price}>
-                    <h3>{sticks[0].price} ₸</h3>
+                    <h3>{sticks[0].price * sticks[0].count} ₸</h3>
                 </div>
             </div>
         </>
