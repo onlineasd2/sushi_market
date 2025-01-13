@@ -1,5 +1,6 @@
 import React from "react";
 import { AddressSuggestions, DaDataAddress } from "react-dadata";
+import { API_KEY_DADATA } from "@/constants/api";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -8,9 +9,6 @@ interface Props {
     title?: string;
     required?: boolean;
 }
-
-const API_KEY_DADATA: string = process.env.NEXT_PUBLIC_API_KEY_DADATA!;
-
 export const InputDaData = ({
     title,
     required,
