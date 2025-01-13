@@ -40,7 +40,7 @@ export const ModalAddress = ({ onChange }: ModalAddressProps) => {
 
     const handleSuggestionInput = (street: string) => {
         setStreet(street);
-        handleChangeInput("street");
+        handleChangeInput("street")(street);
     };
 
     return (
