@@ -21,7 +21,7 @@ export const Input = ({
     const handleChangeInput = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        if (onChange) onChange(e.target.value);
+        onChange?.(e.target.value);
     };
 
     return (

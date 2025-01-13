@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
+
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { ICard } from "@/components/sets/ICard";
 import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
@@ -9,9 +11,9 @@ interface CardProps {
     card: ICard;
 }
 
-export const Card: React.FC<CardProps> = ({ card }) => {
-    const [src, setSrc] = React.useState(card.image || "/productBlurIcon.png");
-    const isFirstRender = React.useRef(true);
+export const Card: React.FC<CardProps> = ({ card }: CardProps) => {
+    const [src, setSrc] = useState(card.image || "/productBlurIcon.png");
+    const isFirstRender = useRef(true);
     const {
         countState,
         idState,
@@ -35,7 +37,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
         else if (countState <= 0 && idState !== null) deleteOrderFromDB();
     }, [countState]);
 
-    const handleCounterButton = (e: number) => {
+    const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0) setCountState((prev) => prev + e);
         else if (e > 0 && countState < MAX_VALUE && countState !== 0)
             setCountState((prev) => prev + e);
@@ -68,7 +70,7 @@ export const Card: React.FC<CardProps> = ({ card }) => {
                     </h3>
                     <ButtonAddCard
                         value={countState}
-                        onChange={handleCounterButton}
+                        onChange={handleRangeLimitCounterButton}
                     />
                 </div>
             </div>
