@@ -22,8 +22,8 @@ export const useDatabase = () => {
         try {
             const response = await axios.head(url);
             if (response.status >= 200 && response.status < 300) return url;
-        } catch {
-            console.error("Ошибка БД");
+        } catch (error) {
+            console.error("Ошибка БД: ", error);
         }
         return "/productBlurIcon.png";
     };
