@@ -3,6 +3,9 @@
 import React, { useEffect } from "react";
 import { db } from "@/services/db";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { replaceAmount } from "@/store/counterSlice";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -14,14 +17,21 @@ export const ButtonCart = ({
     onClick,
     ref,
 }: ButtonProps): React.JSX.Element => {
+    const cartCount = useSelector((state: RootState) => state.cartCount.value);
+    const dispatch = useDispatch();
     const [countOrders, setCountOrders] = React.useState<number>(0);
     const GetOrder = async () => {
-        setCountOrders(
-            await db.orders.toArray().then((values) => {
-                return values.length;
-            })
+        const res = await db.orders.toArray();
+        setCountOrders(res.reduce((acc, order) => acc + order.count, 0));
+        dispatch(
+            replaceAmount(res.reduce((acc, order) => acc + order.count, 0))
         );
     };
+
+    useEffect(() => {
+        setCountOrders(cartCount);
+    }, [cartCount]);
+
     useEffect(() => {
         GetOrder();
     }, []);

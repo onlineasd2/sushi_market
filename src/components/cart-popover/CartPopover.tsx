@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
 import Image from "next/image";
@@ -6,25 +8,16 @@ import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
 import { useDatabase } from "@/hooks/useDatabase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { decrement, increment } from "@/store/counterSlice";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 
-const counterLimiter = (e: number, count: number): boolean => {
-    if (e > 0 && count < MAX_VALUE) return true;
-
-    if (e < 0 && count <= MAX_VALUE && count >= 1) return true;
-
-    if (e < 0 && count <= 1) return false;
-
-    return false;
-};
-
 export const CartPopover = () => {
     const cartCount = useSelector((state: RootState) => state.cartCount.value);
-
+    const dispatch = useDispatch();
     const {
         editOrdersToDB,
         deleteOrderWithIdFromDB,
@@ -40,6 +33,25 @@ export const CartPopover = () => {
         0
     );
 
+    const counterLimiter = (e: number, count: number): boolean => {
+        if (e > 0 && count < MAX_VALUE) {
+            dispatch(increment());
+            return true;
+        }
+
+        if (e < 0 && count <= MAX_VALUE && count >= 1) {
+            dispatch(decrement());
+            return true;
+        }
+
+        if (e < 0 && count <= 1) {
+            dispatch(decrement());
+            return false;
+        }
+
+        return false;
+    };
+
     const {
         refs,
         isOpen,
@@ -47,6 +59,7 @@ export const CartPopover = () => {
         getReferenceProps,
         floatingStyles,
     } = usePopover({ gap: GAP });
+
     const handleButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
             const prevState1 = prevState.filter(
@@ -107,8 +120,12 @@ export const CartPopover = () => {
     }, [orders]);
 
     useEffect(() => {
-        getAllOrdersFromDB();
-    }, []);
+        const fetchOrders = async () => {
+            await getAllOrdersFromDB();
+        };
+
+        fetchOrders();
+    }, [cartCount]);
 
     return (
         <>
