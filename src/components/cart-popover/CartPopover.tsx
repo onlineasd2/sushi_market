@@ -11,12 +11,17 @@ import { useDatabase } from "@/hooks/useDatabase";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { decrement, increment } from "@/store/counterSlice";
+// import { ICard } from "@/components/sets/ICard";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
+const GAP_MODAL_TOP = 14;
 
 export const CartPopover = () => {
     const cartCount = useSelector((state: RootState) => state.cartCount.value);
+    // const cartOrders = useSelector((state: RootState) => state.cartOrders);
+    // Сделать конверт из ICard в Order и вывести
+    // Все записи сохроняются в Redux
     const dispatch = useDispatch();
     const {
         editOrdersToDB,
@@ -25,8 +30,6 @@ export const CartPopover = () => {
         orders,
         setOrders,
     } = useDatabase();
-
-    const GAP = 14;
 
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
@@ -58,16 +61,16 @@ export const CartPopover = () => {
         getFloatingProps,
         getReferenceProps,
         floatingStyles,
-    } = usePopover({ gap: GAP });
+    } = usePopover({ gap: GAP_MODAL_TOP });
 
     const handleButtonCounter = (e: number, localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const prevStateFiltred = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             if (counterLimiter(e, localOrder.count)) {
                 const arr = [
-                    ...prevState1,
+                    ...prevStateFiltred,
                     {
                         ...localOrder,
                         count: localOrder.count + e,
@@ -78,7 +81,7 @@ export const CartPopover = () => {
                 });
             }
             const arr = [
-                ...prevState1,
+                ...prevStateFiltred,
                 {
                     ...localOrder,
                     count: localOrder.count,
@@ -92,11 +95,11 @@ export const CartPopover = () => {
 
     const handleDeleteOrder = (localOrder: Order) => {
         setOrders((prevState) => {
-            const prevState1 = prevState.filter(
+            const prevStateFiltred = prevState.filter(
                 (set) => set.key !== localOrder.key
             );
             const arr = [
-                ...prevState1,
+                ...prevStateFiltred,
                 {
                     ...localOrder,
                     count: 0,
@@ -119,13 +122,11 @@ export const CartPopover = () => {
         });
     }, [orders]);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            await getAllOrdersFromDB();
-        };
+    useEffect(() => {}, [cartCount]);
 
-        fetchOrders();
-    }, [cartCount]);
+    useEffect(() => {
+        getAllOrdersFromDB();
+    }, []);
 
     return (
         <>

@@ -4,15 +4,17 @@ import { useDatabase } from "@/hooks/useDatabase";
 import { ICard } from "@/components/sets/ICard";
 import { useDispatch } from "react-redux";
 import { decrement, increment } from "@/store/counterSlice";
+import { addOrders, deleteOrders } from "@/store/ordersSlice";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
     card: ICard;
 }
 
+const MAX_VALUE = 10;
+
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const dispatch = useDispatch();
-    // const cartCount = useSelector((state: RootState) => state.cartCount.value);
     const isFirstRender = useRef(true);
     const {
         countState,
@@ -23,21 +25,24 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
         deleteOrderFromDB,
         getOrderFromDB,
     } = useDatabase();
-    const MAX_VALUE = 10;
 
     const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0) {
             setCountState((prev) => prev + e);
             dispatch(increment());
+            dispatch(addOrders(card));
         } else if (e > 0 && countState < MAX_VALUE && countState !== 0) {
             setCountState((prev) => prev + e);
             dispatch(increment());
+            dispatch(addOrders(card));
         } else if (e < 0 && countState <= MAX_VALUE && countState > 0) {
             setCountState((prev) => prev + e);
             dispatch(decrement());
+            dispatch(deleteOrders(card));
         } else if (e < 0 && countState === 1) {
             setCountState((prev) => prev + e);
             dispatch(decrement());
+            dispatch(deleteOrders(card));
         }
     };
 
