@@ -6,6 +6,8 @@ import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
 import { useDatabase } from "@/hooks/useDatabase";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
@@ -21,6 +23,8 @@ const counterLimiter = (e: number, count: number): boolean => {
 };
 
 export const CartPopover = () => {
+    const cartCount = useSelector((state: RootState) => state.cartCount.value);
+
     const {
         editOrdersToDB,
         deleteOrderWithIdFromDB,
@@ -177,12 +181,11 @@ export const CartPopover = () => {
                                 </div>
                             ))
                     )}
-                    {orders.length === 0 ? (
-                        ""
-                    ) : (
+                    {orders.length > 0 && (
                         <div className={moduleStyles.totalPrice}>
                             <h3>Сумма заказа</h3>
                             <h3>{sumOrder}</h3>
+                            <h3>{cartCount}</h3>
                         </div>
                     )}
                 </div>
