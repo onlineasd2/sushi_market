@@ -23,7 +23,10 @@ export const useDatabase = () => {
             const response = await axios.head(url);
             if (response.status >= 200 && response.status < 300) return url;
         } catch (error) {
-            console.error("Ошибка БД: ", error);
+            console.error(
+                "Ошибка метод validateImageUrl, картинка не найдена useDatabase: ",
+                error
+            );
         }
         return "/productBlurIcon.png";
     };

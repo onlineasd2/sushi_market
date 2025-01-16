@@ -8,20 +8,14 @@ import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
 import { useDatabase } from "@/hooks/useDatabase";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
 import { decrement, increment } from "@/store/counterSlice";
-// import { ICard } from "@/components/sets/ICard";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 const GAP_MODAL_TOP = 14;
 
 export const CartPopover = () => {
-    const cartCount = useSelector((state: RootState) => state.cartCount.value);
-    // const cartOrders = useSelector((state: RootState) => state.cartOrders);
-    // Сделать конверт из ICard в Order и вывести
-    // Все записи сохроняются в Redux
     const dispatch = useDispatch();
     const {
         editOrdersToDB,
@@ -122,8 +116,6 @@ export const CartPopover = () => {
         });
     }, [orders]);
 
-    useEffect(() => {}, [cartCount]);
-
     useEffect(() => {
         getAllOrdersFromDB();
     }, []);
@@ -203,7 +195,6 @@ export const CartPopover = () => {
                         <div className={moduleStyles.totalPrice}>
                             <h3>Сумма заказа</h3>
                             <h3>{sumOrder}</h3>
-                            <h3>{cartCount}</h3>
                         </div>
                     )}
                 </div>
