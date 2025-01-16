@@ -4,7 +4,6 @@ import { useDatabase } from "@/hooks/useDatabase";
 import { ICard } from "@/components/sets/ICard";
 import { useDispatch } from "react-redux";
 import { decrement, increment } from "@/store/counterSlice";
-import { addOrders, deleteOrders } from "@/store/ordersSlice";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -30,19 +29,17 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
         if (e > 0 && countState === 0) {
             setCountState((prev) => prev + e);
             dispatch(increment());
-            dispatch(addOrders(card));
         } else if (e > 0 && countState < MAX_VALUE && countState !== 0) {
             setCountState((prev) => prev + e);
             dispatch(increment());
-            dispatch(addOrders(card));
         } else if (e < 0 && countState <= MAX_VALUE && countState > 0) {
             setCountState((prev) => prev + e);
             dispatch(decrement());
-            dispatch(deleteOrders(card));
-        } else if (e < 0 && countState === 1) {
+            console.log("Изменить -");
+        } else if (e < 0 && countState <= 1) {
             setCountState((prev) => prev + e);
             dispatch(decrement());
-            dispatch(deleteOrders(card));
+            console.log("Удалить");
         }
     };
 
