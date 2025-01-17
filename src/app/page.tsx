@@ -6,7 +6,7 @@ import { Sets } from "@/components/sets/Sets";
 import { Modal } from "@/components/modal/Modal";
 import { Footer } from "@/components/footer/Footer";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store } from "@/redux/store";
 
 export default function Home() {
     return (

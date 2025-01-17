@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { useDatabase } from "@/hooks/useDatabase";
 import { ICard } from "@/components/sets/ICard";
-import { useDispatch } from "react-redux";
-import { decrement, increment } from "@/store/counterSlice";
+// import { useDispatch } from "react-redux";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -13,7 +12,6 @@ interface ButtonProps {
 const MAX_VALUE = 10;
 
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
-    const dispatch = useDispatch();
     const isFirstRender = useRef(true);
     const {
         countState,
@@ -28,17 +26,15 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0) {
             setCountState((prev) => prev + e);
-            dispatch(increment());
+            console.log("Добавить");
         } else if (e > 0 && countState < MAX_VALUE && countState !== 0) {
             setCountState((prev) => prev + e);
-            dispatch(increment());
+            console.log("Изменить +");
         } else if (e < 0 && countState <= MAX_VALUE && countState > 0) {
             setCountState((prev) => prev + e);
-            dispatch(decrement());
             console.log("Изменить -");
         } else if (e < 0 && countState <= 1) {
             setCountState((prev) => prev + e);
-            dispatch(decrement());
             console.log("Удалить");
         }
     };
