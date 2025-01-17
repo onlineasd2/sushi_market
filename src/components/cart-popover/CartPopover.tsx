@@ -8,15 +8,12 @@ import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
 import { useDatabase } from "@/hooks/useDatabase";
-import { useDispatch } from "react-redux";
-import { decrement, increment } from "@/store/counterSlice";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 const GAP_MODAL_TOP = 14;
 
 export const CartPopover = () => {
-    const dispatch = useDispatch();
     const {
         editOrdersToDB,
         deleteOrderWithIdFromDB,
@@ -31,20 +28,11 @@ export const CartPopover = () => {
     );
 
     const counterLimiter = (e: number, count: number): boolean => {
-        if (e > 0 && count < MAX_VALUE) {
-            dispatch(increment());
-            return true;
-        }
+        if (e > 0 && count < MAX_VALUE) return true;
 
-        if (e < 0 && count <= MAX_VALUE && count >= 1) {
-            dispatch(decrement());
-            return true;
-        }
+        if (e < 0 && count <= MAX_VALUE && count >= 1) return true;
 
-        if (e < 0 && count <= 1) {
-            dispatch(decrement());
-            return false;
-        }
+        if (e < 0 && count <= 1) return false;
 
         return false;
     };

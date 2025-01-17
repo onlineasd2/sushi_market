@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counterSlice";
-import ordersReducer from "./ordersSlice";
+import { thunk } from "redux-thunk";
+import cartReducer from "./cartReducer";
 
 export const store = configureStore({
     reducer: {
-        cartCount: counterReducer,
-        cartOrders: ordersReducer,
+        cart: cartReducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
