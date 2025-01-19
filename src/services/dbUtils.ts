@@ -1,8 +1,6 @@
 import { db, Address, Order, Sticks } from "@/services/db";
 import axios from "axios";
 
-const PRICE_STICK = 30;
-
 const isSticksLoaded = async (): Promise<boolean> => {
     const stick = await db.sticks.get(0);
     return stick !== undefined;
@@ -13,10 +11,7 @@ export const validateImageUrl = async (url: string): Promise<string> => {
         const response = await axios.head(url);
         if (response.status >= 200 && response.status < 300) return url;
     } catch (error) {
-        console.error(
-            "Ошибка метод validateImageUrl, картинка не найдена useDatabase: ",
-            error
-        );
+        throw new Error(String(error));
     }
     return "/productBlurIcon.png";
 };
@@ -35,8 +30,9 @@ export const addOrderToDB = async (card: Order): Promise<Order> => {
             description: card.description,
         });
         return {
-            id: id ?? 0,
             ...card,
+            key: Number(card.id ?? 0),
+            id: id ?? 0,
             count: finalCount,
         };
     } catch (error) {
@@ -58,22 +54,21 @@ export const getOrderFromDB = async (card: Order): Promise<Order> => {
         if (!res) throw new Error("Order не найден");
         return res;
     } catch (error) {
-        console.error(error);
-        throw new Error("Ошибка getOrderFromDB dbUtils");
+        throw new Error(String(error));
     }
 };
 
 export const editOrderFromDB = async (
     id: number,
-    newCount: number
-): Promise<number> => {
+    count: number
+): Promise<{ id: number; count: number }> => {
     try {
-        if (id !== null)
-            await db.orders.update(id, {
-                count: newCount,
-            });
+        const newId = await db.orders.update(id, {
+            count,
+        });
+        console.log("newId: ", newId);
 
-        return id;
+        return { id, count };
     } catch (error) {
         throw new Error(String(error));
     }
@@ -81,6 +76,7 @@ export const editOrderFromDB = async (
 
 export const addSticksDB = async (): Promise<Sticks> => {
     try {
+        const PRICE_STICK = 30;
         const stickExists = await isSticksLoaded();
         if (!stickExists)
             await db.sticks.add({
