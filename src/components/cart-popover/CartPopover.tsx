@@ -144,7 +144,7 @@ export const CartPopover = () => {
                                         alt="Суша"
                                     />
                                     <div className={moduleStyles.leftContainer}>
-                                        <h3>{localOrder.name}</h3>
+                                        <h3>{localOrder.title}</h3>
                                         <p>{localOrder.weight}</p>
                                         <ButtonCounter
                                             value={localOrder.count}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { db, Address, Order, Sticks } from "@/services/db";
-import { ICard } from "@/components/sets/ICard";
 import axios from "axios";
 
 export const useDatabase = () => {
@@ -31,20 +30,25 @@ export const useDatabase = () => {
         return "/productBlurIcon.png";
     };
 
-    const addOrderToDB = async (card: ICard): Promise<void> => {
+    const addOrderToDB = async (card: Order): Promise<Order | string> => {
         try {
             const img = await validateImageUrl(card.image);
             const id = await db.orders.add({
-                name: card.title,
+                title: card.title,
                 image: img,
                 weight: card.weight,
-                key: card.id,
+                key: card.id ?? 0,
                 count: countState,
                 price: card.price,
+                description: card.description,
             });
             setIdState(id ?? null);
+            return {
+                ...card,
+                id: id ?? 0,
+            };
         } catch (error) {
-            console.error(error);
+            return String(error);
         }
     };
 
@@ -53,12 +57,15 @@ export const useDatabase = () => {
         setIdState(null);
     };
 
-    const getOrderFromDB = async (card: ICard) => {
+    const getOrderFromDB = async (card: Order) => {
         try {
-            const res = await db.orders.where("key").equals(card.id).first();
+            const res = await db.orders
+                .where("key")
+                .equals(card.id ?? 0)
+                .first();
             if (res?.key === card.id) {
-                setCountState(res.count);
-                if (res.id !== undefined) setIdState(res.id);
+                setCountState(res?.count ?? 0);
+                if (res?.id !== undefined) setIdState(res.id);
             } else setCountState(0);
         } catch (error) {
             console.error(error);

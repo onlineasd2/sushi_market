@@ -1,23 +1,25 @@
 import React, { useEffect, useRef } from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { useDatabase } from "@/hooks/useDatabase";
-import { ICard } from "@/components/sets/ICard";
-// import { useDispatch } from "react-redux";
+import { Order } from "@/services/db";
+import { useDispatch } from "react-redux";
+import { addOrderToDBRedux } from "@/redux/ordersSlice";
+import { AppDispatch } from "@/redux/store";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
-    card: ICard;
+    card: Order;
 }
 
 const MAX_VALUE = 10;
 
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
+    const dispatch = useDispatch<AppDispatch>();
     const isFirstRender = useRef(true);
     const {
         countState,
         idState,
         setCountState,
-        addOrderToDB,
         editOrderFromDB,
         deleteOrderFromDB,
         getOrderFromDB,
@@ -47,7 +49,8 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
 
         if (countState > 1 && countState <= MAX_VALUE && countState !== 0)
             editOrderFromDB();
-        else if (countState === 1 && idState === null) addOrderToDB(card);
+        else if (countState === 1 && idState === null)
+            dispatch(addOrderToDBRedux(card));
         else if (countState <= 0 && idState !== null) deleteOrderFromDB();
     }, [countState]);
 

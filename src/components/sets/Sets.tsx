@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/card/Card";
-import { ICard } from "@/components/sets/ICard";
 import { sushiApi } from "@/services/sushiApi";
 import { Section } from "@/components/section/Section";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
+import { Order } from "@/services/db";
 import styles from "./styles.module.scss";
 
 interface SetsProps {
@@ -16,7 +16,7 @@ interface SetsProps {
 }
 
 export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
-    const [sets, setSets] = useState<ICard[]>([]);
+    const [sets, setSets] = useState<Order[]>([]);
     const [errorSets, setErrorSets] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
