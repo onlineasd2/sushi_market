@@ -2,9 +2,10 @@ import Dexie, { type EntityTable } from "dexie";
 
 export interface Order {
     id?: number;
-    name: string;
+    title: string;
     image: string;
     weight: number;
+    description: string;
     key: number;
     count: number;
     price: number;
@@ -34,7 +35,7 @@ export const db = new Dexie("OrdersDatabase") as Dexie & {
 };
 
 db.version(1).stores({
-    orders: "++id, name, image, weight, key, count, price",
+    orders: "++id, title, image, weight, key, count, price, description",
     sticks: "id, count, price",
     address:
         "id, street, house, structure, entrance, floor, apartment, description",
