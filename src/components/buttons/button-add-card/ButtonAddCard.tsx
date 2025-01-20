@@ -3,7 +3,11 @@ import { ButtonCounter } from "@/components/buttons/button-counter/button-counte
 import { useDatabase } from "@/hooks/useDatabase";
 import { Order } from "@/services/db";
 import { useDispatch } from "react-redux";
-import { addOrderToDBRedux, editOrderFromDBRedux } from "@/redux/ordersSlice";
+import {
+    addOrderToDBRedux,
+    deleteOrderWithIdFromDBRedux,
+    editOrderFromDBRedux,
+} from "@/redux/ordersSlice";
 import { AppDispatch } from "@/redux/store";
 import styles from "./styles.module.scss";
 
@@ -16,13 +20,8 @@ const MAX_VALUE = 10;
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const dispatch = useDispatch<AppDispatch>();
     const isFirstRender = useRef(true);
-    const {
-        countState,
-        idState,
-        setCountState,
-        deleteOrderFromDB,
-        getOrderFromDB,
-    } = useDatabase();
+    const { countState, idState, setCountState, getOrderFromDB } =
+        useDatabase();
 
     const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0) {
@@ -53,7 +52,8 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
             console.log("card.id ", card.id);
         } else if (countState === 1 && idState === null)
             dispatch(addOrderToDBRedux(card));
-        else if (countState <= 0 && idState !== null) deleteOrderFromDB();
+        else if (countState <= 0 && idState !== null)
+            dispatch(deleteOrderWithIdFromDBRedux(card.id ?? 0));
     }, [countState]);
 
     return countState !== 0 ? (

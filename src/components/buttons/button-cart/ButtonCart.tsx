@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { db } from "@/services/db";
+import React from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -14,15 +15,9 @@ export const ButtonCart = ({
     onClick,
     ref,
 }: ButtonProps): React.JSX.Element => {
-    const [countOrders, setCountOrders] = React.useState<number>(0);
-    const GetOrder = async () => {
-        const res = await db.orders.toArray();
-        setCountOrders(res.reduce((acc, order) => acc + order.count, 0));
-    };
+    const orders = useSelector((state: RootState) => state.cart.orders);
 
-    useEffect(() => {
-        GetOrder();
-    }, []);
+    const totalCount = orders.reduce((acc, order) => acc + order.count, 0);
 
     return (
         <Link href="/cart">
@@ -33,7 +28,7 @@ export const ButtonCart = ({
                 aria-label="Кнопка"
                 ref={ref}
             >
-                {`${countOrders ? `Корзина | ${countOrders}` : `Корзина`}`}
+                {`${totalCount ? `Корзина | ${totalCount}` : `Корзина`}`}
             </button>
         </Link>
     );
