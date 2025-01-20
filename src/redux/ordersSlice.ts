@@ -2,6 +2,7 @@ import { Order } from "@/services/db";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
     addOrderToDB,
+    deleteOrderWithIdFromDB,
     editOrderToDB,
     getAllOrdersFromDB,
 } from "@/services/dbUtils";
@@ -15,6 +16,13 @@ const initialState: OrdersState = {
     orders: [],
     loading: "idle",
 };
+
+export const deleteOrderWithIdFromDBRedux = createAsyncThunk(
+    "orders/deleteId",
+    async (id: number): Promise<number> => {
+        return deleteOrderWithIdFromDB(id ?? 0);
+    }
+);
 
 export const getAllOrdersFromDBRedux = createAsyncThunk(
     "orders/getAllOrders",
@@ -84,6 +92,22 @@ const ordersSlice = createSlice({
                 state.loading = "failed";
                 console.error(
                     "Ошибка редактирования в БД Redux: ",
+                    action.error.message
+                );
+            })
+            .addCase(
+                deleteOrderWithIdFromDBRedux.fulfilled,
+                (state, action) => {
+                    state.loading = "succeeded";
+                    state.orders = state.orders.filter(
+                        (order) => order.id !== action.payload
+                    );
+                }
+            )
+            .addCase(deleteOrderWithIdFromDBRedux.rejected, (state, action) => {
+                state.loading = "failed";
+                console.error(
+                    "Ошибка добавления в БД Redux: ",
                     action.error.message
                 );
             });
