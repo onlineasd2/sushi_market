@@ -1,6 +1,10 @@
 import { Order } from "@/services/db";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addOrderToDB, editOrderFromDB } from "@/services/dbUtils";
+import {
+    addOrderToDB,
+    editOrderToDB,
+    getAllOrdersFromDB,
+} from "@/services/dbUtils";
 
 interface OrdersState {
     orders: Order[];
@@ -11,6 +15,13 @@ const initialState: OrdersState = {
     orders: [],
     loading: "idle",
 };
+
+export const getAllOrdersFromDBRedux = createAsyncThunk(
+    "orders/getAllOrders",
+    async (): Promise<Order[]> => {
+        return getAllOrdersFromDB();
+    }
+);
 
 export const addOrderToDBRedux = createAsyncThunk(
     "orders/addOrder",
@@ -27,9 +38,9 @@ export const editOrderFromDBRedux = createAsyncThunk(
     }: {
         id: number;
         newCount: number;
-    }): Promise<{ id: number; count: number }> => {
-        const res = await editOrderFromDB(id, newCount);
-        return res;
+    }): Promise<{ id: number; newCount: number }> => {
+        const res = await editOrderToDB(id, newCount);
+        return { id: res.id, newCount: res.countState };
     }
 );
 
@@ -39,6 +50,17 @@ const ordersSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(getAllOrdersFromDBRedux.fulfilled, (state, action) => {
+                state.loading = "succeeded";
+                state.orders = action.payload;
+            })
+            .addCase(getAllOrdersFromDBRedux.rejected, (state, action) => {
+                state.loading = "failed";
+                console.error(
+                    "Ошибка добавления в БД Redux: ",
+                    action.error.message
+                );
+            })
             .addCase(addOrderToDBRedux.fulfilled, (state, action) => {
                 state.loading = "succeeded";
                 state.orders.push(action.payload);
@@ -54,10 +76,9 @@ const ordersSlice = createSlice({
                 state.loading = "succeeded";
                 state.orders = state.orders.map((order) =>
                     order.id === action.payload.id
-                        ? { ...order, count: action.payload.count } // Обновляем только count
+                        ? { ...order, count: action.payload.newCount }
                         : order
                 );
-                console.log("state.orders ", state.orders);
             })
             .addCase(editOrderFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";

@@ -9,6 +9,9 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ButtonLogin } from "@/components/buttons/button-login/ButtonLogin";
 import { Order } from "@/services/db";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { getAllOrdersFromDBRedux } from "@/redux/ordersSlice";
 import styles from "./styles.module.scss";
 
 interface SetsProps {
@@ -16,21 +19,24 @@ interface SetsProps {
 }
 
 export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
+    const dispatch = useDispatch<AppDispatch>();
     const [sets, setSets] = useState<Order[]>([]);
     const [errorSets, setErrorSets] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const PAGE_LIMIT = 5;
 
-    const fetchSets = async () => {
+    const fetchSets = async (): Promise<Order[]> => {
         try {
             const data = await sushiApi.getSushiSets(currentPage, PAGE_LIMIT);
             setSets((prevSets) =>
                 currentPage === 1 ? data : [...prevSets, ...data]
             );
             setIsLoading(false);
+            return data;
         } catch (error) {
             setErrorSets(String(error));
+            throw error;
         }
     };
 
@@ -41,6 +47,10 @@ export const Sets: React.FC<SetsProps> = ({ titleMain }) => {
     useEffect(() => {
         fetchSets();
     }, [currentPage]);
+
+    useEffect(() => {
+        dispatch(getAllOrdersFromDBRedux());
+    }, [dispatch]);
 
     return (
         <Section>

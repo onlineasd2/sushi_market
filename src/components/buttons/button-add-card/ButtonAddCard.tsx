@@ -46,11 +46,12 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
             getOrderFromDB(card);
         }
 
-        if (countState > 1 && countState <= MAX_VALUE && countState !== 0)
+        if (countState > 1 && countState <= MAX_VALUE && countState !== 0) {
             dispatch(
                 editOrderFromDBRedux({ id: card.id ?? 0, newCount: countState })
             );
-        else if (countState === 1 && idState === null)
+            console.log("card.id ", card.id);
+        } else if (countState === 1 && idState === null)
             dispatch(addOrderToDBRedux(card));
         else if (countState <= 0 && idState !== null) deleteOrderFromDB();
     }, [countState]);

@@ -20,7 +20,8 @@ export const addOrderToDB = async (card: Order): Promise<Order> => {
     try {
         const img = await validateImageUrl(card.image);
         const finalCount = 1;
-        const id = await db.orders.add({
+        await db.orders.add({
+            id: card.id,
             title: card.title,
             image: img,
             weight: card.weight,
@@ -31,8 +32,8 @@ export const addOrderToDB = async (card: Order): Promise<Order> => {
         });
         return {
             ...card,
-            key: Number(card.id ?? 0),
-            id: id ?? 0,
+            // key: Number(card.id ?? 0),
+            id: card.id,
             count: finalCount,
         };
     } catch (error) {
@@ -53,22 +54,6 @@ export const getOrderFromDB = async (card: Order): Promise<Order> => {
             .first();
         if (!res) throw new Error("Order не найден");
         return res;
-    } catch (error) {
-        throw new Error(String(error));
-    }
-};
-
-export const editOrderFromDB = async (
-    id: number,
-    count: number
-): Promise<{ id: number; count: number }> => {
-    try {
-        const newId = await db.orders.update(id, {
-            count,
-        });
-        console.log("newId: ", newId);
-
-        return { id, count };
     } catch (error) {
         throw new Error(String(error));
     }
@@ -112,14 +97,15 @@ export const getAllSticksFromDB = async (): Promise<Sticks[]> => {
     }
 };
 
-export const editOrdersToDB = async (
+export const editOrderToDB = async (
     id: number,
     countState: number
-): Promise<number> => {
+): Promise<{ id: number; countState: number }> => {
     try {
-        return await db.orders.update(id, {
+        await db.orders.update(id, {
             count: countState,
         });
+        return { id, countState };
     } catch (error) {
         throw new Error(String(error));
     }
