@@ -20,16 +20,17 @@ const MAX_VALUE = 10;
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const dispatch = useDispatch<AppDispatch>();
     const isFirstRender = useRef(true);
-    const { countState, setCountState, getOrderFromDB } = useDatabase();
+    const { countState, idState, setCountState, getOrderFromDB } =
+        useDatabase();
 
     const handleRangeLimitCounterButton = (e: number) => {
-        if (e > 0 && countState === 0) {
+        if (e > 0 && countState <= 0) {
             setCountState((prev) => prev + e);
             console.log("Добавить");
-        } else if (e > 0 && countState < MAX_VALUE && countState !== 0) {
+        } else if (e > 0 && countState < MAX_VALUE && countState >= 1) {
             setCountState((prev) => prev + e);
             console.log("Изменить +");
-        } else if (e < 0 && countState <= MAX_VALUE && countState > 0) {
+        } else if (e < 0 && countState <= MAX_VALUE && countState >= 1) {
             setCountState((prev) => prev + e);
             console.log("Изменить -");
         } else if (e < 0 && countState <= 1) {
@@ -44,13 +45,15 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
             getOrderFromDB(card);
         }
 
-        if (countState > 1 && countState <= MAX_VALUE && countState !== 0) {
+        if (countState >= 1 && countState <= MAX_VALUE && countState !== 0) {
             dispatch(
                 editOrderFromDBRedux({ id: card.id ?? 0, newCount: countState })
             );
             console.log("card.id ", card.id);
-        } else if (countState === 1) dispatch(addOrderToDBRedux(card));
-        else if (countState <= 0)
+            console.log("edit", countState);
+        } else if (countState === 1 && idState === null)
+            dispatch(addOrderToDBRedux(card));
+        else if (countState <= 0 && idState !== null)
             dispatch(deleteOrderWithIdFromDBRedux(card.id ?? 0));
     }, [countState]);
 

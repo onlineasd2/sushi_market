@@ -65,7 +65,7 @@ const ordersSlice = createSlice({
             .addCase(getAllOrdersFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
                 console.error(
-                    "Ошибка добавления в БД Redux: ",
+                    "Ошибка добавления в БД Redux GetAll Func: ",
                     action.error.message
                 );
             })
@@ -76,7 +76,7 @@ const ordersSlice = createSlice({
             .addCase(addOrderToDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
                 console.error(
-                    "Ошибка добавления в БД Redux: ",
+                    "Ошибка добавления в БД Redux Add Func: ",
                     action.error.message
                 );
             })
@@ -91,7 +91,7 @@ const ordersSlice = createSlice({
             .addCase(editOrderFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
                 console.error(
-                    "Ошибка редактирования в БД Redux: ",
+                    "Ошибка редактирования в БД Redux Edit Func: ",
                     action.error.message
                 );
             })
@@ -107,7 +107,7 @@ const ordersSlice = createSlice({
             .addCase(deleteOrderWithIdFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
                 console.error(
-                    "Ошибка добавления в БД Redux: ",
+                    "Ошибка добавления в БД Redux Delete Func: ",
                     action.error.message
                 );
             });
