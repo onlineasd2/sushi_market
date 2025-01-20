@@ -20,21 +20,21 @@ const MAX_VALUE = 10;
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const dispatch = useDispatch<AppDispatch>();
     const isFirstRender = useRef(true);
-    const { countState, idState, setCountState, getOrderFromDB } =
-        useDatabase();
+    const [isOrderCreated, setIsOrderCreated] = React.useState<boolean>(false);
+    const { countState, setCountState, getOrderFromDB } = useDatabase();
 
     const handleRangeLimitCounterButton = (e: number) => {
-        if (e > 0 && countState <= 0) {
-            setCountState((prev) => prev + e);
+        if (e > 0 && countState === 0 && !isOrderCreated) {
+            setCountState(1);
             console.log("Добавить");
-        } else if (e > 0 && countState < MAX_VALUE && countState >= 1) {
+        } else if (e > 0 && countState < MAX_VALUE) {
             setCountState((prev) => prev + e);
             console.log("Изменить +");
-        } else if (e < 0 && countState <= MAX_VALUE && countState >= 1) {
+        } else if (e < 0 && countState > 1) {
             setCountState((prev) => prev + e);
             console.log("Изменить -");
         } else if (e < 0 && countState <= 1) {
-            setCountState((prev) => prev + e);
+            setCountState(0);
             console.log("Удалить");
         }
     };
@@ -44,17 +44,25 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
             isFirstRender.current = false;
             getOrderFromDB(card);
         }
+        console.log("isOrderCreated: ", isOrderCreated);
 
-        if (countState >= 1 && countState <= MAX_VALUE && countState !== 0) {
+        if (countState >= 1 && countState <= MAX_VALUE && isOrderCreated) {
+            console.log("Изменения сработали: ", card.id);
             dispatch(
-                editOrderFromDBRedux({ id: card.id ?? 0, newCount: countState })
+                editOrderFromDBRedux({
+                    id: card.id ?? 0,
+                    newCount: countState,
+                })
             );
-            console.log("card.id ", card.id);
-            console.log("edit", countState);
-        } else if (countState === 1 && idState === null)
+        } else if (countState === 1 && !isOrderCreated) {
+            setIsOrderCreated(true);
+            console.log("Добавление сработало: ", card.id);
             dispatch(addOrderToDBRedux(card));
-        else if (countState <= 0 && idState !== null)
+        } else if (countState <= 0) {
+            setIsOrderCreated(false);
+            console.log("Удаление сработало: ", card.id);
             dispatch(deleteOrderWithIdFromDBRedux(card.id ?? 0));
+        }
     }, [countState]);
 
     return countState !== 0 ? (
