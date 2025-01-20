@@ -20,8 +20,7 @@ const MAX_VALUE = 10;
 export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const dispatch = useDispatch<AppDispatch>();
     const isFirstRender = useRef(true);
-    const { countState, idState, setCountState, getOrderFromDB } =
-        useDatabase();
+    const { countState, setCountState, getOrderFromDB } = useDatabase();
 
     const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0) {
@@ -50,9 +49,8 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
                 editOrderFromDBRedux({ id: card.id ?? 0, newCount: countState })
             );
             console.log("card.id ", card.id);
-        } else if (countState === 1 && idState === null)
-            dispatch(addOrderToDBRedux(card));
-        else if (countState <= 0 && idState !== null)
+        } else if (countState === 1) dispatch(addOrderToDBRedux(card));
+        else if (countState <= 0)
             dispatch(deleteOrderWithIdFromDBRedux(card.id ?? 0));
     }, [countState]);
 
