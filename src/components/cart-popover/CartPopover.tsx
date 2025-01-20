@@ -8,6 +8,8 @@ import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
 import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
 import { useDatabase } from "@/hooks/useDatabase";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
@@ -15,13 +17,13 @@ const GAP_MODAL_TOP = 14;
 
 export const CartPopover = () => {
     const {
-        editOrdersToDB,
-        deleteOrderWithIdFromDB,
+        // editOrdersToDB,
+        // deleteOrderWithIdFromDB,
         getAllOrdersFromDB,
-        orders,
         setOrders,
     } = useDatabase();
 
+    const orders = useSelector((state: RootState) => state.cart.orders);
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
         0
@@ -93,16 +95,16 @@ export const CartPopover = () => {
         });
     };
 
-    useEffect(() => {
-        orders.forEach((order) => {
-            if (order.count <= 0) {
-                deleteOrderWithIdFromDB(order.id ?? 0);
-                getAllOrdersFromDB();
-            }
-            if (order.count >= 1 && order.count <= MAX_VALUE)
-                editOrdersToDB(order.id ?? 0, order.count);
-        });
-    }, [orders]);
+    // useEffect(() => {
+    //     orders.forEach((order) => {
+    //         if (order.count <= 0) {
+    //             deleteOrderWithIdFromDB(order.id ?? 0);
+    //             getAllOrdersFromDB();
+    //         }
+    //         if (order.count >= 1 && order.count <= MAX_VALUE)
+    //             editOrdersToDB(order.id ?? 0, order.count);
+    //     });
+    // }, [orders]);
 
     useEffect(() => {
         getAllOrdersFromDB();
@@ -130,54 +132,46 @@ export const CartPopover = () => {
                             <p>Добавьте что-нибудь из меню</p>
                         </div>
                     ) : (
-                        orders
-                            .sort((a, b) => a.key - b.key)
-                            .map((localOrder) => (
-                                <div
-                                    key={localOrder.key}
-                                    className={moduleStyles.order}
-                                >
-                                    <Image
-                                        src={localOrder.image}
-                                        width={80}
-                                        height={80}
-                                        alt="Суша"
+                        orders.map((localOrder) => (
+                            <div
+                                key={localOrder.key}
+                                className={moduleStyles.order}
+                            >
+                                <Image
+                                    src={localOrder.image}
+                                    width={80}
+                                    height={80}
+                                    alt="Суша"
+                                />
+                                <div className={moduleStyles.leftContainer}>
+                                    <h3>{localOrder.title}</h3>
+                                    <p>{localOrder.weight}</p>
+                                    <ButtonCounter
+                                        value={localOrder.count}
+                                        onChange={(e) =>
+                                            handleButtonCounter(e, localOrder)
+                                        }
                                     />
-                                    <div className={moduleStyles.leftContainer}>
-                                        <h3>{localOrder.title}</h3>
-                                        <p>{localOrder.weight}</p>
-                                        <ButtonCounter
-                                            value={localOrder.count}
-                                            onChange={(e) =>
-                                                handleButtonCounter(
-                                                    e,
-                                                    localOrder
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                    <div
-                                        className={moduleStyles.rightContainer}
-                                    >
-                                        <ButtonIcon
-                                            onClick={() =>
-                                                handleDeleteOrder(localOrder)
-                                            }
-                                        >
-                                            <Image
-                                                width={14}
-                                                height={14}
-                                                src="/trash-svgrepo-com.svg"
-                                                alt="delete"
-                                            />
-                                        </ButtonIcon>
-                                        <h3>
-                                            {localOrder.price *
-                                                localOrder.count}
-                                        </h3>
-                                    </div>
                                 </div>
-                            ))
+                                <div className={moduleStyles.rightContainer}>
+                                    <ButtonIcon
+                                        onClick={() =>
+                                            handleDeleteOrder(localOrder)
+                                        }
+                                    >
+                                        <Image
+                                            width={14}
+                                            height={14}
+                                            src="/trash-svgrepo-com.svg"
+                                            alt="delete"
+                                        />
+                                    </ButtonIcon>
+                                    <h3>
+                                        {localOrder.price * localOrder.count}
+                                    </h3>
+                                </div>
+                            </div>
+                        ))
                     )}
                     {orders.length > 0 && (
                         <div className={moduleStyles.totalPrice}>
