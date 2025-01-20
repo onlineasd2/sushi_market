@@ -11,7 +11,7 @@ export const validateImageUrl = async (url: string): Promise<string> => {
         const response = await axios.head(url);
         if (response.status >= 200 && response.status < 300) return url;
     } catch (error) {
-        throw new Error(String(error));
+        console.log(error);
     }
     return "/productBlurIcon.png";
 };
@@ -32,7 +32,6 @@ export const addOrderToDB = async (card: Order): Promise<Order> => {
         });
         return {
             ...card,
-            // key: Number(card.id ?? 0),
             id: card.id,
             count: finalCount,
         };
