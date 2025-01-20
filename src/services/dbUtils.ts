@@ -33,6 +33,7 @@ export const addOrderToDB = async (card: Order): Promise<Order> => {
         return {
             ...card,
             id: card.id,
+            image: img,
             count: finalCount,
         };
     } catch (error) {
