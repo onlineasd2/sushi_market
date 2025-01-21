@@ -1,31 +1,20 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { db } from "@/services/db";
+import React from "react";
 import Link from "next/link";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
     ref?: React.Ref<HTMLButtonElement>;
+    value?: number;
 }
 
 export const ButtonCart = ({
     onClick,
     ref,
+    value,
 }: ButtonProps): React.JSX.Element => {
-    const [countOrders, setCountOrders] = React.useState<number>(0);
-    const GetOrder = async () => {
-        setCountOrders(
-            await db.orders.toArray().then((values) => {
-                return values.length;
-            })
-        );
-    };
-    useEffect(() => {
-        GetOrder();
-    }, []);
-
     return (
         <Link href="/cart">
             <button
@@ -35,7 +24,7 @@ export const ButtonCart = ({
                 aria-label="Кнопка"
                 ref={ref}
             >
-                {`${countOrders ? `Корзина | ${countOrders}` : `Корзина`}`}
+                {`${value ? `Корзина | ${value}` : `Корзина`}`}
             </button>
         </Link>
     );
