@@ -5,39 +5,28 @@ import { ButtonCart } from "@/components/buttons/button-cart/ButtonCart";
 import Image from "next/image";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { ButtonIcon } from "@/components/buttons/button-icon/ButtonIcon";
-import { Order } from "@/services/db";
 import { usePopover } from "@/hooks/usePopover";
-import { useDatabase } from "@/hooks/useDatabase";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import {
+    deleteOrderWithIdFromDBRedux,
+    editOrderFromDBRedux,
+    getAllOrdersFromDBRedux,
+} from "@/redux/ordersSlice";
 import moduleStyles from "./styles.module.scss";
 
 const MAX_VALUE = 10;
 const GAP_MODAL_TOP = 14;
 
 export const CartPopover = () => {
-    const {
-        // editOrdersToDB,
-        // deleteOrderWithIdFromDB,
-        getAllOrdersFromDB,
-        setOrders,
-    } = useDatabase();
+    const dispatch = useDispatch<AppDispatch>();
 
     const orders = useSelector((state: RootState) => state.cart.orders);
+    const totalCountCart = orders.reduce((acc, order) => acc + order.count, 0);
     const sumOrder = orders.reduce(
         (acc, order) => acc + order.price * order.count,
         0
     );
-
-    const counterLimiter = (e: number, count: number): boolean => {
-        if (e > 0 && count < MAX_VALUE) return true;
-
-        if (e < 0 && count <= MAX_VALUE && count >= 1) return true;
-
-        if (e < 0 && count <= 1) return false;
-
-        return false;
-    };
 
     const {
         refs,
@@ -47,72 +36,37 @@ export const CartPopover = () => {
         floatingStyles,
     } = usePopover({ gap: GAP_MODAL_TOP });
 
-    const handleButtonCounter = (e: number, localOrder: Order) => {
-        setOrders((prevState) => {
-            const prevStateFiltred = prevState.filter(
-                (set) => set.key !== localOrder.key
-            );
-            if (counterLimiter(e, localOrder.count)) {
-                const arr = [
-                    ...prevStateFiltred,
-                    {
-                        ...localOrder,
-                        count: localOrder.count + e,
-                    },
-                ];
-                return arr.sort((a, b) => {
-                    return a.key - b.key;
-                });
-            }
-            const arr = [
-                ...prevStateFiltred,
-                {
-                    ...localOrder,
-                    count: localOrder.count,
-                },
-            ];
-            return arr.sort((a, b) => {
-                return a.key - b.key;
-            });
-        });
+    const counterLimiter = (delta: number, count: number): boolean => {
+        return (
+            (delta > 0 && count < MAX_VALUE) ||
+            (delta < 0 && count > 0 && count <= MAX_VALUE)
+        );
     };
 
-    const handleDeleteOrder = (localOrder: Order) => {
-        setOrders((prevState) => {
-            const prevStateFiltred = prevState.filter(
-                (set) => set.key !== localOrder.key
-            );
-            const arr = [
-                ...prevStateFiltred,
-                {
-                    ...localOrder,
-                    count: 0,
-                },
-            ];
-            return arr.sort((a, b) => {
-                return a.key - b.key;
-            });
-        });
+    const handleButtonCounter = (delta: number, orderId: number) => {
+        const order = orders.find((o) => o.id === orderId);
+        if (!order || !counterLimiter(delta, order.count)) return;
+
+        dispatch(
+            editOrderFromDBRedux({ id: orderId, newCount: order.count + delta })
+        );
     };
 
-    // useEffect(() => {
-    //     orders.forEach((order) => {
-    //         if (order.count <= 0) {
-    //             deleteOrderWithIdFromDB(order.id ?? 0);
-    //             getAllOrdersFromDB();
-    //         }
-    //         if (order.count >= 1 && order.count <= MAX_VALUE)
-    //             editOrdersToDB(order.id ?? 0, order.count);
-    //     });
-    // }, [orders]);
+    const handleDeleteOrder = (orderId: number) => {
+        dispatch(deleteOrderWithIdFromDBRedux(orderId));
+    };
 
     useEffect(() => {
-        getAllOrdersFromDB();
-    }, []);
+        dispatch(getAllOrdersFromDBRedux());
+    }, [dispatch]);
 
     return (
         <>
-            <ButtonCart ref={refs.setReference} {...getReferenceProps()} />
+            <ButtonCart
+                ref={refs.setReference}
+                {...getReferenceProps()}
+                value={totalCountCart}
+            />
             {isOpen && (
                 <div
                     className={moduleStyles.popoverContent}
@@ -132,31 +86,31 @@ export const CartPopover = () => {
                             <p>Добавьте что-нибудь из меню</p>
                         </div>
                     ) : (
-                        orders.map((localOrder) => (
-                            <div
-                                key={localOrder.key}
-                                className={moduleStyles.order}
-                            >
+                        orders.map((order) => (
+                            <div key={order.id} className={moduleStyles.order}>
                                 <Image
-                                    src={localOrder.image}
+                                    src={order.image}
                                     width={80}
                                     height={80}
-                                    alt="Суша"
+                                    alt={order.title}
                                 />
                                 <div className={moduleStyles.leftContainer}>
-                                    <h3>{localOrder.title}</h3>
-                                    <p>{localOrder.weight}</p>
+                                    <h3>{order.title}</h3>
+                                    <p>{order.weight}</p>
                                     <ButtonCounter
-                                        value={localOrder.count}
-                                        onChange={(e) =>
-                                            handleButtonCounter(e, localOrder)
+                                        value={order.count}
+                                        onChange={(localOrder) =>
+                                            handleButtonCounter(
+                                                localOrder,
+                                                order.id ?? 0
+                                            )
                                         }
                                     />
                                 </div>
                                 <div className={moduleStyles.rightContainer}>
                                     <ButtonIcon
                                         onClick={() =>
-                                            handleDeleteOrder(localOrder)
+                                            handleDeleteOrder(order.id ?? 0)
                                         }
                                     >
                                         <Image
@@ -166,9 +120,7 @@ export const CartPopover = () => {
                                             alt="delete"
                                         />
                                     </ButtonIcon>
-                                    <h3>
-                                        {localOrder.price * localOrder.count}
-                                    </h3>
+                                    <h3>{order.price * order.count}</h3>
                                 </div>
                             </div>
                         ))

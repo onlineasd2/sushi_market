@@ -4,11 +4,13 @@ import styles from "./styles.module.scss";
 interface ButtonProps {
     value?: number;
     onChange?: (e: number) => void;
+    disabled?: boolean;
 }
 
 export const ButtonCounter = ({
     value,
     onChange,
+    disabled,
 }: ButtonProps): React.JSX.Element => {
     const onAdd = () => {
         onChange?.(1);
@@ -19,11 +21,19 @@ export const ButtonCounter = ({
 
     return (
         <div className={styles.counterOrder}>
-            <button className={styles.buttonCounter} onClick={onRemove}>
+            <button
+                disabled={disabled}
+                className={styles.buttonCounter}
+                onClick={onRemove}
+            >
                 -
             </button>
             <h3 className={styles.counter}>{value}</h3>
-            <button className={styles.buttonCounter} onClick={onAdd}>
+            <button
+                disabled={disabled}
+                className={styles.buttonCounter}
+                onClick={onAdd}
+            >
                 +
             </button>
         </div>
