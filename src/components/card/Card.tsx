@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ICard } from "@/components/sets/ICard";
 import { ButtonAddCard } from "@/components/buttons/button-add-card/ButtonAddCard";
+import { Order } from "@/services/db";
 import styles from "./styles.module.scss";
 
 interface CardProps {
-    card: ICard;
+    card: Order;
 }
 
 export const Card: React.FC<CardProps> = ({ card }: CardProps) => {

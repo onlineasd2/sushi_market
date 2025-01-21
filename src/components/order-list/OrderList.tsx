@@ -71,7 +71,7 @@ export const OrderList = ({
                             />
                             <div className={styles.text}>
                                 <h3>
-                                    <b>{localOrder.name}</b>
+                                    <b>{localOrder.title}</b>
                                     <p>{localOrder.weight}</p>
                                 </h3>
                             </div>
