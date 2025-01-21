@@ -10,11 +10,13 @@ import {
 interface OrdersState {
     orders: Order[];
     loading: "idle" | "pending" | "succeeded" | "failed";
+    isLoading: boolean;
 }
 
 const initialState: OrdersState = {
     orders: [],
     loading: "idle",
+    isLoading: false,
 };
 
 export const deleteOrderWithIdFromDBRedux = createAsyncThunk(
@@ -58,9 +60,13 @@ const ordersSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(getAllOrdersFromDBRedux.pending, (state) => {
+                state.isLoading = true;
+            })
             .addCase(getAllOrdersFromDBRedux.fulfilled, (state, action) => {
                 state.loading = "succeeded";
                 state.orders = action.payload;
+                state.isLoading = false;
             })
             .addCase(getAllOrdersFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
@@ -68,10 +74,15 @@ const ordersSlice = createSlice({
                     "Ошибка добавления в БД Redux GetAll Func: ",
                     action.error.message
                 );
+                state.isLoading = false;
+            })
+            .addCase(addOrderToDBRedux.pending, (state) => {
+                state.isLoading = true;
             })
             .addCase(addOrderToDBRedux.fulfilled, (state, action) => {
                 state.loading = "succeeded";
                 state.orders.push(action.payload);
+                state.isLoading = false;
             })
             .addCase(addOrderToDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
@@ -79,6 +90,10 @@ const ordersSlice = createSlice({
                     "Ошибка добавления в БД Redux Add Func: ",
                     action.error.message
                 );
+                state.isLoading = false;
+            })
+            .addCase(editOrderFromDBRedux.pending, (state) => {
+                state.isLoading = true;
             })
             .addCase(editOrderFromDBRedux.fulfilled, (state, action) => {
                 state.loading = "succeeded";
@@ -87,6 +102,7 @@ const ordersSlice = createSlice({
                         ? { ...order, count: action.payload.newCount }
                         : order
                 );
+                state.isLoading = false;
             })
             .addCase(editOrderFromDBRedux.rejected, (state, action) => {
                 state.loading = "failed";
@@ -94,6 +110,10 @@ const ordersSlice = createSlice({
                     "Ошибка редактирования в БД Redux Edit Func: ",
                     action.error.message
                 );
+                state.isLoading = false;
+            })
+            .addCase(deleteOrderWithIdFromDBRedux.pending, (state) => {
+                state.isLoading = true;
             })
             .addCase(
                 deleteOrderWithIdFromDBRedux.fulfilled,
@@ -102,6 +122,7 @@ const ordersSlice = createSlice({
                     state.orders = state.orders.filter(
                         (order) => order.id !== action.payload
                     );
+                    state.isLoading = false;
                 }
             )
             .addCase(deleteOrderWithIdFromDBRedux.rejected, (state, action) => {
@@ -110,9 +131,9 @@ const ordersSlice = createSlice({
                     "Ошибка добавления в БД Redux Delete Func: ",
                     action.error.message
                 );
+                state.isLoading = false;
             });
     },
 });
-// export const {  } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

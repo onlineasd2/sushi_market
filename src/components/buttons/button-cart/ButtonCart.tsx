@@ -2,23 +2,19 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
     onClick?: () => void;
     ref?: React.Ref<HTMLButtonElement>;
+    value?: number;
 }
 
 export const ButtonCart = ({
     onClick,
     ref,
+    value,
 }: ButtonProps): React.JSX.Element => {
-    const orders = useSelector((state: RootState) => state.cart.orders);
-
-    const totalCount = orders.reduce((acc, order) => acc + order.count, 0);
-
     return (
         <Link href="/cart">
             <button
@@ -28,7 +24,7 @@ export const ButtonCart = ({
                 aria-label="Кнопка"
                 ref={ref}
             >
-                {`${totalCount ? `Корзина | ${totalCount}` : `Корзина`}`}
+                {`${value ? `Корзина | ${value}` : `Корзина`}`}
             </button>
         </Link>
     );

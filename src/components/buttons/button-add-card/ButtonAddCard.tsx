@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from "react";
 import { ButtonCounter } from "@/components/buttons/button-counter/button-counter";
 import { useDatabase } from "@/hooks/useDatabase";
 import { Order } from "@/services/db";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     addOrderToDBRedux,
     deleteOrderWithIdFromDBRedux,
     editOrderFromDBRedux,
 } from "@/redux/ordersSlice";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import styles from "./styles.module.scss";
 
 interface ButtonProps {
@@ -22,6 +22,8 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
     const isFirstRender = useRef(true);
     const [isOrderCreated, setIsOrderCreated] = React.useState<boolean>(false);
     const { countState, setCountState, getOrderFromDB } = useDatabase();
+    const isLoading = useSelector((state: RootState) => state.cart.isLoading);
+    const orders = useSelector((state: RootState) => state.cart.orders);
 
     const handleRangeLimitCounterButton = (e: number) => {
         if (e > 0 && countState === 0 && !isOrderCreated) {
@@ -65,8 +67,16 @@ export const ButtonAddCard = ({ card }: ButtonProps): React.JSX.Element => {
         }
     }, [countState]);
 
+    useEffect(() => {
+        const foundOrder = orders.find(
+            (order) => (order.id ?? 0) === (card.id ?? 0)
+        );
+        setCountState(foundOrder ? foundOrder.count : 0);
+    }, [orders]);
+
     return countState !== 0 ? (
         <ButtonCounter
+            disabled={isLoading}
             onChange={handleRangeLimitCounterButton}
             value={countState}
         />

@@ -9,6 +9,7 @@
     border: 1px solid var(--button-bg-color);
     color: var(--typography-secondary-color);
     font-weight: bold;
+
     .buttonCounter {
         height: 100%;
         border-radius: var(--border-radius);
@@ -17,6 +18,10 @@
         cursor: pointer;
         color: var(--typography-secondary-color);
         padding: 0px 20px;
+        &:disabled {
+            background-color: var(--color-dark-gray);
+            color: var(--color-light);
+        }
         &:hover {
             background-color: var(--color-accent);
             color: var(--color-light);
