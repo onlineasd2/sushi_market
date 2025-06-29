@@ -23,6 +23,7 @@ export const Card: React.FC<CardProps> = ({ card }: CardProps) => {
                 alt={card.title}
                 onError={() => setSrc("/productBlurIcon.png")}
             />
+            <p>asdasd</p>
             <div className={styles.card__content}>
                 <div className={styles.card__option}>
                     <h4 className={styles.card__title}>
